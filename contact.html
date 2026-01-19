@@ -24,8 +24,8 @@
     <header class="site-header">
         <div class="nav-container">
             <a href="/" class="site-brand">
-                <img src="assets/sb-monogram-light.png" alt="SB" class="brand-monogram">
-                <img src="assets/scott-bertrand-wordmark-light.png" alt="Scott Bertrand" class="brand-wordmark">
+                <img src="assets/sb-monogram-dark.png" alt="SB" class="brand-monogram">
+                <img src="assets/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" class="brand-wordmark">
             </a>
 
             <nav class="nav-menu" id="navMenu">
@@ -33,7 +33,7 @@
                 <a href="/approach.html">Approach</a>
                 <a href="/focus.html">Focus</a>
                 <a href="/contact.html" class="active">Contact</a>
-                <a href="/field-notes.html" class="nav-imprint-image">
+                <a href="https://notes.scottbertrand.com" class="nav-imprint-image">
                     <picture>
                         <source srcset="assets/field-notes-menu-light.avif" type="image/avif" media="(prefers-color-scheme: dark)">
                         <source srcset="assets/field-notes-menu-light.webp" type="image/webp" media="(prefers-color-scheme: dark)">
@@ -42,7 +42,7 @@
                         <img src="assets/field-notes-menu-light.png" alt="Field Notes" class="nav-imprint-img">
                     </picture>
                 </a>
-                <span class="nav-imprint-image nav-placeholder">
+                <button class="nav-imprint-image" data-modal="stillGoodsModal">
                     <picture>
                         <source srcset="assets/still-goods-menu-light.avif" type="image/avif" media="(prefers-color-scheme: dark)">
                         <source srcset="assets/still-goods-menu-light.webp" type="image/webp" media="(prefers-color-scheme: dark)">
@@ -109,6 +109,26 @@
             <button class="modal-close" data-close-modal aria-label="Close">×</button>
             <img src="assets/field-notes-lockup-light.png" alt="Field Notes" class="modal-image">
             <p class="modal-caption">COMING SOON</p>
+        </div>
+    </div>
+
+    <!-- Still Goods Modal -->
+    <div class="modal" id="stillGoodsModal" aria-hidden="true">
+        <div class="modal-overlay" data-close-modal></div>
+        <div class="modal-content">
+            <button class="modal-close" data-close-modal aria-label="Close">×</button>
+            <a href="https://goods.scottbertrand.com" class="modal-link">
+                <picture>
+                    <source srcset="assets/still-goods-light.avif" type="image/avif" media="(prefers-color-scheme: dark)">
+                    <source srcset="assets/still-goods-light.webp" type="image/webp" media="(prefers-color-scheme: dark)">
+                    <source srcset="assets/still-goods-dark.avif" type="image/avif" media="(prefers-color-scheme: light)">
+                    <source srcset="assets/still-goods-dark.webp" type="image/webp" media="(prefers-color-scheme: light)">
+                    <img src="assets/still-goods-light.png" alt="Still Goods" class="modal-image" id="stillGoodsModalImage">
+                </picture>
+            </a>
+            <p class="modal-caption">
+                <a href="https://goods.scottbertrand.com" class="modal-caption-link">Opening soon</a>
+            </p>
         </div>
     </div>
 

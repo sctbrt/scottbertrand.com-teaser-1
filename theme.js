@@ -72,9 +72,15 @@ class ThemeManager {
         }
 
         // Update Field Notes modal image if it exists
-        const modalImage = document.querySelector('.modal-image');
-        if (modalImage) {
-            modalImage.src = `assets/field-notes-lockup-${assetSuffix}.png`;
+        const fieldNotesModalImage = document.querySelector('#fieldNotesModal .modal-image');
+        if (fieldNotesModalImage) {
+            fieldNotesModalImage.src = `assets/field-notes-lockup-${assetSuffix}.png`;
+        }
+
+        // Update Still Goods modal image if it exists
+        const stillGoodsModalImage = document.getElementById('stillGoodsModalImage');
+        if (stillGoodsModalImage) {
+            stillGoodsModalImage.src = `assets/still-goods-${assetSuffix}.png`;
         }
 
         // Update navigation menu images
