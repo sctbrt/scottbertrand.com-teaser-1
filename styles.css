@@ -328,9 +328,10 @@ body.modal-active {
 }
 
 .nav-imprint-img {
-    height: 15px;
+    height: 18px;
     width: auto;
     display: block;
+    max-height: 18px;
 }
 
 /* Right: Utilities */
