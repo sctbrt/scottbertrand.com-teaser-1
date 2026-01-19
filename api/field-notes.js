@@ -1,13 +1,27 @@
 // Vercel Serverless Function to fetch Field Notes from Notion
 import { Client } from '@notionhq/client';
 
-const notion = new Client({
-  auth: process.env.NOTION_API_KEY,
-});
-
-const DATABASE_ID = process.env.NOTION_DATABASE_ID;
-
 export default async function handler(req, res) {
+  // Initialize Notion client inside the handler for serverless context
+  const notion = new Client({
+    auth: process.env.NOTION_API_KEY,
+  });
+
+  const DATABASE_ID = process.env.NOTION_DATABASE_ID;
+
+  // Add validation
+  if (!process.env.NOTION_API_KEY) {
+    return res.status(500).json({
+      error: 'Missing NOTION_API_KEY environment variable',
+    });
+  }
+
+  if (!DATABASE_ID) {
+    return res.status(500).json({
+      error: 'Missing NOTION_DATABASE_ID environment variable',
+    });
+  }
+
   try {
     // Fetch entries from Notion database
     const response = await notion.databases.query({
