@@ -2,6 +2,37 @@
  * Theme Manager
  * Handles light/dark theme switching and image swapping
  */
+
+// Import all image variants so Vite includes them in the build
+import sbMonogramDark from './assets/sb-monogram-dark.png';
+import sbMonogramLight from './assets/sb-monogram-light.png';
+import wordmarkDark from './assets/scott-bertrand-wordmark-dark.png';
+import wordmarkLight from './assets/scott-bertrand-wordmark-light.png';
+import fieldNotesMenuDark from './assets/field-notes-menu-dark.png';
+import fieldNotesMenuLight from './assets/field-notes-menu-light.png';
+import stillGoodsMenuDark from './assets/still-goods-menu-dark.png';
+import stillGoodsMenuLight from './assets/still-goods-menu-light.png';
+import fieldNotesLockupDark from './assets/field-notes-lockup-dark.png';
+import fieldNotesLockupLight from './assets/field-notes-lockup-light.png';
+import stillGoodsDark from './assets/still-goods-dark.png';
+import stillGoodsLight from './assets/still-goods-light.png';
+
+// Create asset map for dynamic access
+const assets = {
+    'sb-monogram-dark': sbMonogramDark,
+    'sb-monogram-light': sbMonogramLight,
+    'scott-bertrand-wordmark-dark': wordmarkDark,
+    'scott-bertrand-wordmark-light': wordmarkLight,
+    'field-notes-menu-dark': fieldNotesMenuDark,
+    'field-notes-menu-light': fieldNotesMenuLight,
+    'still-goods-menu-dark': stillGoodsMenuDark,
+    'still-goods-menu-light': stillGoodsMenuLight,
+    'field-notes-lockup-dark': fieldNotesLockupDark,
+    'field-notes-lockup-light': fieldNotesLockupLight,
+    'still-goods-dark': stillGoodsDark,
+    'still-goods-light': stillGoodsLight
+};
+
 class ThemeManager {
     constructor() {
         this.html = document.documentElement;
@@ -60,31 +91,31 @@ class ThemeManager {
         // Update monograms
         const monograms = document.querySelectorAll('.wordmark-monogram, .nav-monogram, .brand-monogram');
         monograms.forEach(img => {
-            img.src = `assets/sb-monogram-${assetSuffix}.png`;
+            img.src = assets[`sb-monogram-${assetSuffix}`];
         });
 
         // Update wordmarks
         const wordmarks = document.querySelectorAll('.wordmark-text, .nav-wordmark, .brand-wordmark, .hero-wordmark');
         wordmarks.forEach(img => {
-            img.src = `assets/scott-bertrand-wordmark-${assetSuffix}.png`;
+            img.src = assets[`scott-bertrand-wordmark-${assetSuffix}`];
         });
 
         // Update favicon
         const favicon = document.querySelector('link[rel="icon"]');
         if (favicon) {
-            favicon.href = `assets/sb-monogram-${assetSuffix}.png`;
+            favicon.href = assets[`sb-monogram-${assetSuffix}`];
         }
 
         // Update Field Notes modal image if it exists
         const fieldNotesModalImage = document.querySelector('#fieldNotesModal .modal-image');
         if (fieldNotesModalImage) {
-            fieldNotesModalImage.src = `assets/field-notes-lockup-${assetSuffix}.png`;
+            fieldNotesModalImage.src = assets[`field-notes-lockup-${assetSuffix}`];
         }
 
         // Update Still Goods modal image if it exists
         const stillGoodsModalImage = document.getElementById('stillGoodsModalImage');
         if (stillGoodsModalImage) {
-            stillGoodsModalImage.src = `assets/still-goods-${assetSuffix}.png`;
+            stillGoodsModalImage.src = assets[`still-goods-${assetSuffix}`];
         }
 
         // Update navigation menu images
@@ -92,9 +123,9 @@ class ThemeManager {
         navImprintImages.forEach(img => {
             const altText = img.alt;
             if (altText === 'Field Notes') {
-                img.src = `assets/field-notes-menu-${assetSuffix}.png`;
+                img.src = assets[`field-notes-menu-${assetSuffix}`];
             } else if (altText === 'Still Goods') {
-                img.src = `assets/still-goods-menu-${assetSuffix}.png`;
+                img.src = assets[`still-goods-menu-${assetSuffix}`];
             }
         });
     }
