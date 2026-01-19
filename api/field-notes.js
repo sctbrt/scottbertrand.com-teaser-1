@@ -1,16 +1,10 @@
 // Vercel Serverless Function to fetch Field Notes from Notion
-import { Client } from '@notionhq/client';
-
 export default async function handler(req, res) {
-  // Initialize Notion client inside the handler for serverless context
-  const notion = new Client({
-    auth: process.env.NOTION_API_KEY,
-  });
-
+  const NOTION_API_KEY = process.env.NOTION_API_KEY;
   const DATABASE_ID = process.env.NOTION_DATABASE_ID;
 
   // Add validation
-  if (!process.env.NOTION_API_KEY) {
+  if (!NOTION_API_KEY) {
     return res.status(500).json({
       error: 'Missing NOTION_API_KEY environment variable',
     });
@@ -23,29 +17,43 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Fetch entries from Notion database
-    const response = await notion.databases.query({
-      database_id: DATABASE_ID,
-      filter: {
-        property: 'Published',
-        checkbox: {
-          equals: true, // Only show published entries
-        },
+    // Fetch entries from Notion database using REST API directly
+    const response = await fetch(`https://api.notion.com/v1/databases/${DATABASE_ID}/query`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${NOTION_API_KEY}`,
+        'Notion-Version': '2022-06-28',
+        'Content-Type': 'application/json',
       },
-      sorts: [
-        {
-          property: 'Last revisited',
-          direction: 'descending',
+      body: JSON.stringify({
+        filter: {
+          property: 'Published',
+          checkbox: {
+            equals: true,
+          },
         },
-        {
-          property: 'Created',
-          direction: 'descending',
-        },
-      ],
+        sorts: [
+          {
+            property: 'Last revisited',
+            direction: 'descending',
+          },
+          {
+            property: 'Created',
+            direction: 'descending',
+          },
+        ],
+      }),
     });
 
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Notion API request failed');
+    }
+
+    const data = await response.json();
+
     // Transform Notion data into clean format
-    const entries = response.results.map((page) => {
+    const entries = data.results.map((page) => {
       const props = page.properties;
 
       return {
