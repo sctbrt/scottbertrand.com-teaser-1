@@ -70,7 +70,31 @@
         <section class="archive-entries">
             <div class="container">
                 <div id="entriesList" class="entries-grid">
-                    <div class="loading-state">Loading entries...</div>
+                    <!-- Skeleton loaders -->
+                    <div class="skeleton-entry">
+                        <div class="skeleton-meta">
+                            <div class="skeleton skeleton-tag"></div>
+                        </div>
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-focus"></div>
+                        <div class="skeleton skeleton-date"></div>
+                    </div>
+                    <div class="skeleton-entry">
+                        <div class="skeleton-meta">
+                            <div class="skeleton skeleton-tag"></div>
+                        </div>
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-focus"></div>
+                        <div class="skeleton skeleton-date"></div>
+                    </div>
+                    <div class="skeleton-entry">
+                        <div class="skeleton-meta">
+                            <div class="skeleton skeleton-tag"></div>
+                        </div>
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-focus"></div>
+                        <div class="skeleton skeleton-date"></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -133,6 +157,7 @@
                     <div class="error-state">
                         <p>Unable to load entries.</p>
                         <p class="error-detail">${error.message}</p>
+                        <button onclick="location.reload()" class="retry-button" style="margin-top: 1.5rem; padding: 0.5rem 1.5rem; background: rgba(128, 128, 128, 0.1); border: 1px solid rgba(128, 128, 128, 0.2); border-radius: 4px; color: var(--fn-text); font-family: inherit; cursor: pointer;">Retry</button>
                     </div>
                 `;
             }

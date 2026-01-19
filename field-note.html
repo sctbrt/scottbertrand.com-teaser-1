@@ -79,7 +79,14 @@
 
             <!-- Entry Content -->
             <article id="entryContent" class="entry-content">
-                <div class="loading-state">Loading content...</div>
+                <!-- Skeleton loader for content -->
+                <div class="skeleton skeleton-title" style="height: 24px; margin-bottom: 1.5rem;"></div>
+                <div class="skeleton skeleton-focus" style="height: 18px; width: 80%; margin-bottom: 1.5rem;"></div>
+                <div class="skeleton skeleton-focus" style="height: 18px; width: 90%; margin-bottom: 1.5rem;"></div>
+                <div class="skeleton skeleton-focus" style="height: 18px; width: 70%; margin-bottom: 2rem;"></div>
+                <div class="skeleton skeleton-title" style="height: 24px; width: 50%; margin-bottom: 1rem;"></div>
+                <div class="skeleton skeleton-focus" style="height: 18px; width: 85%; margin-bottom: 1.5rem;"></div>
+                <div class="skeleton skeleton-focus" style="height: 18px; width: 95%; margin-bottom: 1.5rem;"></div>
             </article>
         </div>
     </main>
@@ -149,7 +156,8 @@
                     <div class="error-state">
                         <p>Unable to load this entry.</p>
                         <p class="error-detail">${error.message}</p>
-                        <a href="/field-notes.html" class="back-link">← Back to Field Notes</a>
+                        <button onclick="location.reload()" class="retry-button" style="margin: 1.5rem auto 1rem; display: block; padding: 0.5rem 1.5rem; background: rgba(128, 128, 128, 0.1); border: 1px solid rgba(128, 128, 128, 0.2); border-radius: 4px; color: var(--fn-text); font-family: inherit; cursor: pointer;">Retry</button>
+                        <a href="/field-notes.html" class="back-link" style="display: block; margin-top: 1rem;">← Back to Field Notes</a>
                     </div>
                 `;
             }
