@@ -14,10 +14,6 @@ import stillGoodsMenuDark from './assets/still-goods-menu-dark.png';
 import stillGoodsMenuLight from './assets/still-goods-menu-light.png';
 import maxStewartMenuDark from './assets/maxstewart-dark.png';
 import maxStewartMenuLight from './assets/maxstewart-light.png';
-import fieldNotesLockupDark from './assets/field-notes-lockup-dark.png';
-import fieldNotesLockupLight from './assets/field-notes-lockup-light.png';
-import stillGoodsDark from './assets/still-goods-dark.png';
-import stillGoodsLight from './assets/still-goods-light.png';
 
 // Create asset map for dynamic access
 const assets = {
@@ -30,11 +26,7 @@ const assets = {
     'still-goods-menu-dark': stillGoodsMenuDark,
     'still-goods-menu-light': stillGoodsMenuLight,
     'maxstewart-dark': maxStewartMenuDark,
-    'maxstewart-light': maxStewartMenuLight,
-    'field-notes-lockup-dark': fieldNotesLockupDark,
-    'field-notes-lockup-light': fieldNotesLockupLight,
-    'still-goods-dark': stillGoodsDark,
-    'still-goods-light': stillGoodsLight
+    'maxstewart-light': maxStewartMenuLight
 };
 
 class ThemeManager {
@@ -108,18 +100,6 @@ class ThemeManager {
         const favicon = document.querySelector('link[rel="icon"]');
         if (favicon) {
             favicon.href = assets[`sb-monogram-${assetSuffix}`];
-        }
-
-        // Update Field Notes modal image if it exists
-        const fieldNotesModalImage = document.querySelector('#fieldNotesModal .modal-image');
-        if (fieldNotesModalImage) {
-            fieldNotesModalImage.src = assets[`field-notes-lockup-${assetSuffix}`];
-        }
-
-        // Update Still Goods modal image if it exists
-        const stillGoodsModalImage = document.getElementById('stillGoodsModalImage');
-        if (stillGoodsModalImage) {
-            stillGoodsModalImage.src = assets[`still-goods-${assetSuffix}`];
         }
 
         // Update Max Stewart modal image if it exists
