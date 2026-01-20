@@ -17,6 +17,15 @@ export default defineConfig({
         contact: resolve(__dirname, 'contact.html'),
         fieldNotes: resolve(__dirname, 'field-notes.html'),
         fieldNote: resolve(__dirname, 'field-note.html'),
+        // V1.2.0 pages
+        howItWorks: resolve(__dirname, 'how-it-works.html'),
+        request: resolve(__dirname, 'request.html'),
+        // Service detail pages
+        websiteAudit: resolve(__dirname, 'services/website-audit.html'),
+        brandAudit: resolve(__dirname, 'services/brand-audit.html'),
+        brandReset: resolve(__dirname, 'services/brand-reset.html'),
+        websiteFoundation: resolve(__dirname, 'services/website-foundation.html'),
+        fullBrandWebsiteReset: resolve(__dirname, 'services/full-brand-website-reset.html'),
       },
     },
   },
