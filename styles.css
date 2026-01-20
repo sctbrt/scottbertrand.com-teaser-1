@@ -349,6 +349,7 @@ body.modal-active {
     border-radius: 50%;
     border: 1px solid var(--border-subtle);
     background: transparent;
+    color: var(--text-primary);
     cursor: pointer;
     display: flex;
     align-items: center;
