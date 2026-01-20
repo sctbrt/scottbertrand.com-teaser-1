@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
-    <title>Scott Bertrand</title>
-    <meta name="description" content="I design systems and structures that make work feel lighter.">
+    <title>Brand & Web Systems — Scott Bertrand</title>
+    <meta name="description" content="Structured brand and website work for businesses that need clarity, not chaos.">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Scott Bertrand">
-    <meta property="og:description" content="I design systems and structures that make work feel lighter.">
+    <meta property="og:title" content="Brand & Web Systems — Scott Bertrand">
+    <meta property="og:description" content="Structured brand and website work for businesses that need clarity, not chaos.">
     <meta property="og:image" content="assets/og-image.png">
     <meta property="og:type" content="website">
 
@@ -18,6 +18,303 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* V1.2.0 Storefront-specific styles */
+
+        /* Hero refinement */
+        .hero-storefront {
+            min-height: 65dvh;
+        }
+
+        .hero-storefront .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-storefront .subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-storefront .authority-statement {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            opacity: 0.85;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* CTA buttons */
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.875rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            letter-spacing: -0.01em;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-color: var(--text-primary);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.85;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border-color: rgba(128, 128, 128, 0.2);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-primary);
+        }
+
+        /* Section styling */
+        .section {
+            padding: 6rem 2rem;
+            border-top: 1px solid rgba(128, 128, 128, 0.1);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 1.375rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-subtitle {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1.0625rem;
+            color: var(--text-secondary);
+            opacity: 0.85;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Process steps */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .process-step {
+            text-align: center;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
+            background: rgba(128, 128, 128, 0.05);
+            border: 1px solid rgba(128, 128, 128, 0.1);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .step-title {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-description {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+        }
+
+        /* Service catalogue */
+        .service-category {
+            margin-bottom: 4rem;
+        }
+
+        .category-label {
+            font-size: 0.8125rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            opacity: 0.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-grid {
+            display: grid;
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: rgba(128, 128, 128, 0.02);
+            border: 1px solid rgba(128, 128, 128, 0.1);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.2s ease;
+        }
+
+        .service-card:hover {
+            border-color: rgba(128, 128, 128, 0.2);
+            background: rgba(128, 128, 128, 0.03);
+        }
+
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .service-name {
+            font-size: 1.25rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
+        .service-price {
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .service-description {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .service-meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            opacity: 0.75;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-small {
+            padding: 0.625rem 1.25rem;
+            font-size: 0.875rem;
+        }
+
+        /* Boundaries section */
+        .boundaries-content {
+            max-width: 680px;
+            margin: 0 auto;
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 1.0625rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .boundaries-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Field Notes block */
+        .field-notes-block {
+            background: rgba(128, 128, 128, 0.02);
+            border: 1px solid rgba(128, 128, 128, 0.1);
+            border-radius: 8px;
+            padding: 2.5rem;
+            max-width: 680px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .field-notes-block h3 {
+            font-size: 1.125rem;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+
+        .field-notes-block p {
+            font-family: Georgia, 'Times New Roman', serif;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .field-notes-block .btn {
+            font-size: 0.9375rem;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 640px) {
+            .hero-storefront {
+                min-height: auto;
+                padding: 100px 2rem 60px;
+            }
+
+            .hero-storefront .tagline {
+                font-size: 1.25rem;
+            }
+
+            .hero-storefront .subtitle {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 4rem 1.5rem;
+            }
+
+            .service-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .service-actions {
+                flex-direction: column;
+            }
+
+            .btn-small {
+                width: 100%;
+                text-align: center;
+            }
+
+            .cta-group {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .cta-group .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation Header -->
@@ -29,10 +326,8 @@
             </a>
 
             <nav class="nav-menu" id="navMenu">
-                <a href="/about.html">About</a>
-                <a href="/approach.html">Approach</a>
-                <a href="/focus.html">Focus</a>
-                <a href="/contact.html">Contact</a>
+                <a href="/#services" class="active">Services</a>
+                <a href="/how-it-works.html">How It Works</a>
                 <a href="https://notes.scottbertrand.com" class="nav-imprint-image">
                     <img src="assets/field-notes-menu-dark.png" alt="Field Notes" class="nav-imprint-img" width="599" height="110">
                 </a>
@@ -61,7 +356,7 @@
     <!-- Main Content -->
     <main>
         <!-- Hero Section -->
-        <section class="hero">
+        <section class="hero hero-storefront">
             <div class="container">
                 <!-- Primary: Identity -->
                 <div class="hero-identity">
@@ -70,67 +365,231 @@
                         <source srcset="assets/tree-ring-logo.webp" type="image/webp" width="1200" height="1200">
                         <img src="assets/tree-ring-logo.png" alt="Tree Ring Logo" class="hero-tree" width="1200" height="1200">
                     </picture>
-                    <img src="assets/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" class="hero-wordmark" width="2100" height="215">
                 </div>
 
-                <!-- Secondary: Personal voice -->
-                <p class="tagline">
-                    I design systems and structures that make work feel lighter.
+                <!-- Primary: Storefront positioning -->
+                <h1 class="tagline">Brand & Web Systems</h1>
+
+                <p class="subtitle">
+                    Structured brand and website work for businesses that need clarity, not chaos.
                 </p>
 
-                <!-- Tertiary: Philosophical intent -->
-                <p class="philosophy">
-                    Work is heavier than it needs to be. I'm interested in fixing that.
+                <p class="authority-statement">
+                    I work collaboratively with founders and operators, leading strategic and creative direction to produce durable, usable brand and web systems.
                 </p>
 
-                <!-- Scroll cue -->
-                <p class="scroll-cue">
-                    <a href="/about.html">NEXT: ABOUT</a>
-                </p>
+                <!-- CTA -->
+                <div class="cta-group">
+                    <a href="#services" class="btn btn-primary">View Services</a>
+                    <a href="https://notes.scottbertrand.com" class="btn btn-secondary">Read Field Notes</a>
+                </div>
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="section contact-section">
+        <!-- How It Works Section -->
+        <section class="section" id="how-it-works">
             <div class="container">
-                <h2>Contact</h2>
-                <p class="contact-intro">
-                    Reach out for projects, collaborations, or a simple hello. Or follow along—Field Notes ships when there's something worth sharing.
-                </p>
+                <div class="section-header">
+                    <h2 class="section-title">How This Works</h2>
+                    <p class="section-subtitle">A clear, structured process designed to protect scope and deliver results.</p>
+                </div>
 
-                <!-- Email Signup Form -->
-                <div class="email-signup">
-                    <div class="success-message" id="successMessage">
-                        Thank you. You're on the list.
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">Choose a Service</h3>
+                        <p class="step-description">Select from structured offerings below</p>
                     </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">Request & Pay</h3>
+                        <p class="step-description">Complete intake form and secure payment</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">Collaborate</h3>
+                        <p class="step-description">Work begins within defined timeline</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h3 class="step-title">Receive Output</h3>
+                        <p class="step-description">Structured deliverables, on schedule</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                    <form class="email-form" id="emailForm">
-                        <input
-                            type="email"
-                            name="email"
-                            class="email-input"
-                            placeholder="your@email.com"
-                            required
-                            aria-label="Email address"
-                        >
-                        <!-- Honeypot spam protection (hidden field) -->
-                        <input
-                            type="text"
-                            name="website"
-                            style="position: absolute; left: -9999px; width: 1px; height: 1px;"
-                            tabindex="-1"
-                            autocomplete="off"
-                        >
-                        <button type="submit" class="email-submit">Follow</button>
-                    </form>
+        <!-- Service Catalogue Section -->
+        <section class="section" id="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Services</h2>
+                    <p class="section-subtitle">Fixed-scope, transparently priced work designed for growing businesses.</p>
+                </div>
 
-                    <p class="email-microcopy">
-                        No spam. Unsubscribe anytime.
+                <!-- Entry Services -->
+                <div class="service-category">
+                    <p class="category-label">Entry Services</p>
+                    <div class="service-grid">
+                        <div class="service-card">
+                            <div class="service-header">
+                                <h3 class="service-name">Website Audit</h3>
+                                <span class="service-price">$450 CAD</span>
+                            </div>
+                            <p class="service-description">
+                                Comprehensive PDF assessment of your website's UX, messaging, performance, and SEO basics. Includes prioritized recommendations (Now / Next / Later).
+                            </p>
+                            <p class="service-meta">Delivered in 5 business days</p>
+                            <div class="service-actions">
+                                <a href="/services/website-audit.html" class="btn btn-secondary btn-small">Learn More</a>
+                                <a href="/request.html?service=website-audit" class="btn btn-primary btn-small">Request Service</a>
+                            </div>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-header">
+                                <h3 class="service-name">Brand Audit</h3>
+                                <span class="service-price">$550 CAD</span>
+                            </div>
+                            <p class="service-description">
+                                Strategic review of brand clarity, voice & tone, visual cohesion, and positioning. Written PDF with actionable recommendations.
+                            </p>
+                            <p class="service-meta">Delivered in 5–7 business days</p>
+                            <div class="service-actions">
+                                <a href="/services/brand-audit.html" class="btn btn-secondary btn-small">Learn More</a>
+                                <a href="/request.html?service=brand-audit" class="btn btn-primary btn-small">Request Service</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Core Services -->
+                <div class="service-category">
+                    <p class="category-label">Core Services</p>
+                    <div class="service-grid">
+                        <div class="service-card">
+                            <div class="service-header">
+                                <h3 class="service-name">Brand Reset</h3>
+                                <span class="service-price">$3,000 CAD</span>
+                            </div>
+                            <p class="service-description">
+                                Complete brand positioning synthesis (Scott-led), voice & tone framework, visual direction (type, color, layout principles), and brand guide PDF.
+                            </p>
+                            <p class="service-meta">Timeline: 3–4 weeks</p>
+                            <div class="service-actions">
+                                <a href="/services/brand-reset.html" class="btn btn-secondary btn-small">Learn More</a>
+                                <a href="/request.html?service=brand-reset" class="btn btn-primary btn-small">Request Service</a>
+                            </div>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-header">
+                                <h3 class="service-name">Website Foundation</h3>
+                                <span class="service-price">$4,250 CAD</span>
+                            </div>
+                            <p class="service-description">
+                                Full site build: structure & hierarchy, homepage + key page copy refinement, design & development, mobile optimization, SEO basics, and launch support.
+                            </p>
+                            <p class="service-meta">Timeline: 4–6 weeks</p>
+                            <div class="service-actions">
+                                <a href="/services/website-foundation.html" class="btn btn-secondary btn-small">Learn More</a>
+                                <a href="/request.html?service=website-foundation" class="btn btn-primary btn-small">Request Service</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flagship Service -->
+                <div class="service-category">
+                    <p class="category-label">Flagship</p>
+                    <div class="service-grid">
+                        <div class="service-card">
+                            <div class="service-header">
+                                <h3 class="service-name">Full Brand & Website Reset</h3>
+                                <span class="service-price">$6,900 CAD</span>
+                            </div>
+                            <p class="service-description">
+                                Complete system: Brand Reset + Website Foundation with unified strategic thinking, priority scheduling, and end-to-end cohesion.
+                            </p>
+                            <p class="service-meta">Timeline: 6–8 weeks</p>
+                            <div class="service-actions">
+                                <a href="/services/full-reset.html" class="btn btn-secondary btn-small">Learn More</a>
+                                <a href="/request.html?service=full-reset" class="btn btn-primary btn-small">Request Service</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- À La Carte -->
+                <div class="service-category">
+                    <p class="category-label">À La Carte</p>
+                    <div class="service-grid">
+                        <div class="service-card">
+                            <p style="margin-bottom: 1rem;">
+                                <strong>Homepage Copy Rewrite</strong> — $350 CAD<br>
+                                <strong>Landing Page Design</strong> — $700 CAD<br>
+                                <strong>Light Visual Refresh</strong> — $850 CAD<br>
+                                <strong>SEO Metadata Setup</strong> — $275 CAD<br>
+                                <strong>CMS Setup (basic)</strong> — $425 CAD
+                            </p>
+                            <div class="service-actions">
+                                <a href="/services/a-la-carte.html" class="btn btn-secondary btn-small">View Details</a>
+                                <a href="/request.html?service=a-la-carte" class="btn btn-primary btn-small">Request Service</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Collaboration & Boundaries Section -->
+        <section class="section" id="collaboration">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Collaboration & Boundaries</h2>
+                </div>
+
+                <div class="boundaries-content">
+                    <p>
+                        This work is collaborative, but structured to protect clarity, momentum, and outcomes.
+                    </p>
+                    <p>
+                        Your insight into your business, audience, and vision is essential. That input shapes strategic direction. However, the synthesis—the decisions about positioning, hierarchy, visual direction, and structure—is Scott-led.
+                    </p>
+                    <p>
+                        This approach prevents consensus drift and protects what you're paying for: decisive, coherent systems work. Revisions are limited and clearly defined within each service scope.
+                    </p>
+                    <p>
+                        If a project requires significantly more back-and-forth than anticipated, we'll discuss scope adjustments transparently before proceeding.
                     </p>
                 </div>
             </div>
         </section>
+
+        <!-- Field Notes Section -->
+        <section class="section" id="field-notes-promo">
+            <div class="container">
+                <div class="field-notes-block">
+                    <h3>Field Notes</h3>
+                    <p>
+                        A working archive of systems thinking, design decisions, and process observations. Built to support trust, not sell services.
+                    </p>
+                    <a href="https://notes.scottbertrand.com" class="btn btn-secondary">Visit Field Notes →</a>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p class="footer-text">
+                &copy; 2025 Scott Bertrand.
+                <a href="/about.html">About</a> ·
+                <a href="/contact.html">Contact</a>
+            </p>
+        </div>
+    </footer>
 
     <!-- Max Stewart Modal -->
     <div class="modal" id="maxStewartModal" aria-hidden="true">
@@ -146,48 +605,5 @@
     <!-- Scripts -->
     <script type="module" src="theme.js"></script>
     <script type="module" src="modal.js"></script>
-    <script>
-        // Form submission handling
-        const form = document.getElementById('emailForm');
-        const successMessage = document.getElementById('successMessage');
-
-        if (form) {
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                const formData = new FormData(form);
-                const email = formData.get('email');
-                const website = formData.get('website'); // Honeypot field
-
-                try {
-                    const response = await fetch('/api/subscribe', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({ email, website })
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
-                        successMessage.classList.add('show');
-                        form.reset();
-
-                        // Hide success message after 5 seconds
-                        setTimeout(() => {
-                            successMessage.classList.remove('show');
-                        }, 5000);
-                    } else {
-                        alert(data.error || 'Something went wrong. Please try again.');
-                    }
-                } catch (error) {
-                    console.error('Form submission error:', error);
-                    alert('Something went wrong. Please try again.');
-                }
-            });
-        }
-    </script>
 </body>
 </html>
