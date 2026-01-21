@@ -1,8 +1,8 @@
 {
-  "name": "scottbertrand.com-teaser-1",
-  "version": "1.0.0",
+  "name": "scottbertrand.com",
+  "version": "1.2.0",
   "type": "module",
-  "description": "A introductory teaser for scottbertrand.com &amp; the Field Notes feed.",
+  "description": "Brand & Web Systems — Structured brand and website work for businesses that need clarity, not chaos.",
   "main": "modal.js",
   "scripts": {
     "dev": "vite",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sctbrt/scottbertrand.com-teaser-1.git"
+    "url": "git+https://github.com/sctbrt/scottbertrand.com.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sctbrt/scottbertrand.com-teaser-1/issues"
+    "url": "https://github.com/sctbrt/scottbertrand.com/issues"
   },
-  "homepage": "https://github.com/sctbrt/scottbertrand.com-teaser-1#readme",
+  "homepage": "https://github.com/sctbrt/scottbertrand.com#readme",
   "devDependencies": {
     "sharp": "^0.34.5",
     "vite": "^7.3.1",
