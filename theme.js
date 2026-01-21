@@ -1,154 +1,148 @@
 /**
- * Theme Manager
- * Handles light/dark theme switching and image swapping
+ * Theme Manager — v1.3.0
+ * Light-default theme system with OS listener support
  */
-
-// Import all image variants so Vite includes them in the build
-import sbMonogramDark from './assets/sb-monogram-dark.png';
-import sbMonogramLight from './assets/sb-monogram-light.png';
-import wordmarkDark from './assets/scott-bertrand-wordmark-dark.png';
-import wordmarkLight from './assets/scott-bertrand-wordmark-light.png';
-import fieldNotesMenuDark from './assets/field-notes-menu-dark.png';
-import fieldNotesMenuLight from './assets/field-notes-menu-light.png';
-import stillGoodsMenuDark from './assets/still-goods-menu-dark.png';
-import stillGoodsMenuLight from './assets/still-goods-menu-light.png';
-import maxStewartMenuDark from './assets/maxstewart-dark.png';
-import maxStewartMenuLight from './assets/maxstewart-light.png';
-
-// Create asset map for dynamic access
-const assets = {
-    'sb-monogram-dark': sbMonogramDark,
-    'sb-monogram-light': sbMonogramLight,
-    'scott-bertrand-wordmark-dark': wordmarkDark,
-    'scott-bertrand-wordmark-light': wordmarkLight,
-    'field-notes-menu-dark': fieldNotesMenuDark,
-    'field-notes-menu-light': fieldNotesMenuLight,
-    'still-goods-menu-dark': stillGoodsMenuDark,
-    'still-goods-menu-light': stillGoodsMenuLight,
-    'maxstewart-dark': maxStewartMenuDark,
-    'maxstewart-light': maxStewartMenuLight
-};
 
 class ThemeManager {
     constructor() {
         this.html = document.documentElement;
         this.toggle = document.getElementById('themeToggle');
-        this.currentTheme = this.getSavedTheme();
+        this.currentMode = this.getSavedMode();
+        this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
         this.init();
     }
 
     init() {
-        // Apply saved theme on load
-        this.applyTheme(this.currentTheme, false);
+        // Apply theme immediately (before DOM ready to prevent FOUC)
+        this.applyTheme();
 
-        // Toggle on button click
+        // Set up OS listener for system mode
+        this.mediaQuery.addEventListener('change', () => {
+            if (this.currentMode === 'system') {
+                this.applyTheme();
+            }
+        });
+
+        // Toggle on button click (cycles: light → dark → system → light)
         if (this.toggle) {
-            this.toggle.addEventListener('click', () => this.toggleTheme());
+            this.toggle.addEventListener('click', () => this.cycleMode());
         }
     }
 
-    getSavedTheme() {
-        // Check if user has a saved preference
-        const saved = localStorage.getItem('theme');
-        if (saved) {
+    getSavedMode() {
+        // Check localStorage for saved preference
+        const saved = localStorage.getItem('sb-theme');
+        if (saved && ['light', 'dark', 'system'].includes(saved)) {
             return saved;
         }
 
-        // First visit: respect system preference
-        return this.getSystemTheme();
+        // Default to light mode (not system)
+        return 'light';
     }
 
     getSystemTheme() {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        return this.mediaQuery.matches ? 'dark' : 'light';
     }
 
-    toggleTheme() {
-        const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
-        this.applyTheme(newTheme, true);
+    cycleMode() {
+        // Cycle through: light → dark → system → light
+        const modes = ['light', 'dark', 'system'];
+        const currentIndex = modes.indexOf(this.currentMode);
+        const nextIndex = (currentIndex + 1) % modes.length;
+        this.currentMode = modes[nextIndex];
+
+        // Save and apply
+        localStorage.setItem('sb-theme', this.currentMode);
+        this.applyTheme();
     }
 
-    applyTheme(theme, animate = false) {
-        this.currentTheme = theme;
+    applyTheme() {
+        // Determine effective theme
+        let effectiveTheme;
+        if (this.currentMode === 'system') {
+            effectiveTheme = this.getSystemTheme();
+        } else {
+            effectiveTheme = this.currentMode;
+        }
 
-        // Use the user's selected theme directly
-        // Don't override with system preference - user toggle takes precedence
-        const effectiveTheme = theme;
-
-        // Update data-theme attribute with effective theme
+        // Apply data-theme attribute
         this.html.setAttribute('data-theme', effectiveTheme);
-
-        // Save user preference to localStorage
-        localStorage.setItem('theme', theme);
-
-        // Update images (inverse relationship: light theme = dark assets for contrast)
-        const assetSuffix = effectiveTheme === 'light' ? 'dark' : 'light';
-
-        // Update monograms
-        const monograms = document.querySelectorAll('.wordmark-monogram, .nav-monogram, .brand-monogram');
-        monograms.forEach(img => {
-            img.src = assets[`sb-monogram-${assetSuffix}`];
-        });
-
-        // Update wordmarks
-        const wordmarks = document.querySelectorAll('.wordmark-text, .nav-wordmark, .brand-wordmark, .hero-wordmark');
-        wordmarks.forEach(img => {
-            img.src = assets[`scott-bertrand-wordmark-${assetSuffix}`];
-        });
-
-        // Update favicon
-        const favicon = document.querySelector('link[rel="icon"]');
-        if (favicon) {
-            favicon.href = assets[`sb-monogram-${assetSuffix}`];
-        }
-
-        // Update Max Stewart modal image if it exists
-        const maxStewartModalImage = document.getElementById('maxStewartModalImage');
-        if (maxStewartModalImage) {
-            maxStewartModalImage.src = assets[`maxstewart-${assetSuffix}`];
-        }
-
-        // Update navigation menu images (dropdown brand images)
-        const dropdownImages = document.querySelectorAll('.dropdown-brand-img, .nav-imprint-img');
-        dropdownImages.forEach(img => {
-            const altText = img.alt;
-            if (altText === 'Field Notes') {
-                img.src = assets[`field-notes-menu-${assetSuffix}`];
-            } else if (altText === 'Still Goods') {
-                img.src = assets[`still-goods-menu-${assetSuffix}`];
-            } else if (altText === 'Max Stewart') {
-                img.src = assets[`maxstewart-${assetSuffix}`];
-            }
-        });
+        this.html.setAttribute('data-theme-mode', this.currentMode);
     }
 }
 
 /**
- * Hamburger Menu
- * Handles mobile menu toggle
+ * Menu Manager — v1.3.0
+ * Hamburger-on-overflow: collapses nav only when content would spill
  */
 class MenuManager {
     constructor() {
         this.hamburger = document.getElementById('hamburger');
         this.navMenu = document.getElementById('navMenu');
+        this.navContainer = this.navMenu?.parentElement;
 
-        if (this.hamburger && this.navMenu) {
+        if (this.hamburger && this.navMenu && this.navContainer) {
             this.init();
         }
     }
 
     init() {
-        // Toggle menu on hamburger click
+        // Set up hamburger toggle
         this.hamburger.addEventListener('click', () => this.toggleMenu());
 
         // Close menu when clicking menu items
         this.navMenu.querySelectorAll('a, button').forEach(item => {
             item.addEventListener('click', () => this.closeMenu());
         });
+
+        // Close menu on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.navMenu.classList.contains('active')) {
+                this.closeMenu();
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (this.navMenu.classList.contains('active') &&
+                !this.navMenu.contains(e.target) &&
+                !this.hamburger.contains(e.target)) {
+                this.closeMenu();
+            }
+        });
+
+        // Set up overflow detection with ResizeObserver
+        this.setupOverflowDetection();
+    }
+
+    setupOverflowDetection() {
+        const checkOverflow = () => {
+            // Check if nav content would overflow its container
+            const navWidth = this.navMenu.scrollWidth;
+            const containerWidth = this.navContainer.clientWidth;
+            const isOverflowing = navWidth > containerWidth;
+
+            // Toggle collapsed state
+            if (isOverflowing) {
+                this.navContainer.classList.add('nav--collapsed');
+            } else {
+                this.navContainer.classList.remove('nav--collapsed');
+                this.closeMenu(); // Close menu if we're no longer collapsed
+            }
+        };
+
+        // Observe container size changes
+        const resizeObserver = new ResizeObserver(checkOverflow);
+        resizeObserver.observe(this.navContainer);
+
+        // Initial check
+        checkOverflow();
     }
 
     toggleMenu() {
         const isActive = this.navMenu.classList.contains('active');
+        const isExpanded = this.hamburger.getAttribute('aria-expanded') === 'true';
 
         if (isActive) {
             this.closeMenu();
@@ -160,12 +154,14 @@ class MenuManager {
     openMenu() {
         this.navMenu.classList.add('active');
         this.hamburger.classList.add('active');
+        this.hamburger.setAttribute('aria-expanded', 'true');
         document.body.style.overflow = 'hidden';
     }
 
     closeMenu() {
         this.navMenu.classList.remove('active');
         this.hamburger.classList.remove('active');
+        this.hamburger.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
     }
 }
