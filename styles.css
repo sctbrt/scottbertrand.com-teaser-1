@@ -1617,3 +1617,19 @@ body.modal-active {
         min-width: auto;
     }
 }
+
+/* Disabled/Coming Soon state for dropdown items */
+.nav-dropdown-item--disabled {
+    opacity: 0.4;
+    cursor: default;
+    pointer-events: none;
+}
+
+.nav-dropdown-item--disabled:hover {
+    background-color: transparent;
+}
+
+.dropdown-descriptor--coming-soon {
+    font-style: italic;
+    opacity: 0.7;
+}
