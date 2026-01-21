@@ -1517,3 +1517,103 @@ body.modal-active {
         grid-template-columns: 1fr;
     }
 }
+
+/* ===================================
+   Projects Dropdown Navigation
+   =================================== */
+
+.nav-dropdown {
+    position: relative;
+}
+
+.nav-dropdown-toggle {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: color 0.2s ease;
+}
+
+.nav-dropdown-toggle:hover {
+    color: var(--text-secondary);
+}
+
+.dropdown-arrow {
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
+}
+
+.nav-dropdown[aria-expanded="true"] .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 1rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 1rem;
+    min-width: 320px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 1000;
+}
+
+.nav-dropdown-menu[aria-hidden="false"] {
+    opacity: 1;
+    visibility: visible;
+}
+
+.nav-dropdown-item {
+    display: block;
+    padding: 1rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.nav-dropdown-item:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+.nav-dropdown-item + .nav-dropdown-item {
+    margin-top: 0.5rem;
+}
+
+.dropdown-brand-img {
+    max-width: 180px;
+    height: auto;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.dropdown-descriptor {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+/* Mobile dropdown adjustments */
+@media (max-width: 768px) {
+    .nav-dropdown-menu {
+        left: 0;
+        right: 0;
+        transform: none;
+        margin: 1rem;
+        min-width: auto;
+    }
+}
