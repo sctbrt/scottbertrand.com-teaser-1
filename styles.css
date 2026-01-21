@@ -221,7 +221,6 @@ body.modal-active {
 .site-brand {
     display: flex;
     align-items: center;
-    gap: 8px;
     min-height: 44px;
     text-decoration: none;
     opacity: 0.92;
@@ -239,19 +238,11 @@ body.modal-active {
     border-radius: 4px;
 }
 
-.brand-monogram {
-    height: 20px;
-    width: auto;
-}
-
-.brand-tree {
-    height: 22px;
-    width: auto;
-}
-
-.brand-wordmark {
-    height: 13px;
-    width: auto;
+.brand-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
 }
 
 /* Center: Nav Links */
