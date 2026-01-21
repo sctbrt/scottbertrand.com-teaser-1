@@ -240,7 +240,7 @@ body.modal-active {
 }
 
 .brand-monogram {
-    height: 24px;
+    height: 26px;
     width: auto;
     display: block;
 }
@@ -253,7 +253,7 @@ body.modal-active {
 }
 
 .brand-wordmark {
-    height: 24px;
+    height: 21px;
     width: auto;
     display: block;
 }
