@@ -351,15 +351,24 @@
             <nav class="nav-menu" id="navMenu">
                 <a href="/#services" class="active">Services</a>
                 <a href="/how-it-works.html">How It Works</a>
-                <a href="https://notes.scottbertrand.com" class="nav-imprint-image">
-                    <img src="assets/field-notes-menu-dark.png" alt="Field Notes" class="nav-imprint-img" width="599" height="110">
-                </a>
-                <a href="https://goods.scottbertrand.com" class="nav-imprint-image">
-                    <img src="assets/still-goods-menu-dark.png" alt="Still Goods" class="nav-imprint-img" width="1333" height="283">
-                </a>
-                <button class="nav-imprint-image" data-modal="maxStewartModal">
-                    <img src="assets/maxstewart-dark.png" alt="Max Stewart" class="nav-imprint-img" width="2100" height="434">
-                </button>
+                <div class="nav-dropdown">
+                    <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+                        Projects
+                        <span class="dropdown-arrow">▾</span>
+                    </button>
+                    <div class="nav-dropdown-menu" aria-label="Projects submenu">
+                        <a href="https://notes.scottbertrand.com" class="nav-dropdown-item">
+                            <img src="assets/field-notes-menu-dark.png" alt="Field Notes" class="dropdown-brand-img" width="599" height="110">
+                            <span class="dropdown-descriptor">A working archive of systems, drafts, and field observations.</span>
+                        </a>
+                        <a href="https://goods.scottbertrand.com" class="nav-dropdown-item">
+                            <img src="assets/still-goods-menu-dark.png" alt="Still Goods" class="dropdown-brand-img" width="1333" height="283">
+                            <span class="dropdown-descriptor">Objects for everyday use.</span>
+                        </a>
+                    </div>
+                </div>
+                <a href="/about.html">About</a>
+                <a href="/contact.html">Contact</a>
             </nav>
 
             <div class="nav-utilities">
@@ -612,17 +621,6 @@
             </p>
         </div>
     </footer>
-
-    <!-- Max Stewart Modal -->
-    <div class="modal" id="maxStewartModal" aria-hidden="true">
-        <div class="modal-overlay" data-close-modal></div>
-        <div class="modal-content">
-            <button class="modal-close" data-close-modal aria-label="Close">×</button>
-            <img src="assets/maxstewart-dark.png" alt="Max Stewart" class="modal-image" id="maxStewartModalImage" width="2100" height="434">
-            <p class="modal-description">A lifestyle brand exploring recipes, home, and everyday craft.</p>
-            <p class="modal-caption">COMING SOON</p>
-        </div>
-    </div>
 
     <!-- Scripts -->
     <script type="module" src="theme.js"></script>
