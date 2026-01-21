@@ -1594,10 +1594,11 @@ body.modal-active {
 }
 
 .dropdown-brand-img {
-    max-width: 180px;
+    max-width: 120px;
     height: auto;
     display: block;
     margin-bottom: 0.5rem;
+    opacity: 0.9;
 }
 
 .dropdown-descriptor {
