@@ -245,6 +245,23 @@ body.modal-active {
     display: block;
 }
 
+/* Theme-based image switching */
+.brand-monogram--light {
+    display: none;
+}
+
+.brand-monogram--dark {
+    display: block;
+}
+
+[data-theme="dark"] .brand-monogram--light {
+    display: block;
+}
+
+[data-theme="dark"] .brand-monogram--dark {
+    display: none;
+}
+
 .brand-separator {
     font-size: 0.875rem;
     color: var(--text-primary);
@@ -256,6 +273,40 @@ body.modal-active {
     height: 19px;
     width: auto;
     display: block;
+}
+
+/* Theme-based image switching */
+.brand-wordmark--light {
+    display: none;
+}
+
+.brand-wordmark--dark {
+    display: block;
+}
+
+[data-theme="dark"] .brand-wordmark--light {
+    display: block;
+}
+
+[data-theme="dark"] .brand-wordmark--dark {
+    display: none;
+}
+
+/* Dropdown brand image theme switching */
+.dropdown-brand-img--light {
+    display: none;
+}
+
+.dropdown-brand-img--dark {
+    display: block;
+}
+
+[data-theme="dark"] .dropdown-brand-img--light {
+    display: block;
+}
+
+[data-theme="dark"] .dropdown-brand-img--dark {
+    display: none;
 }
 
 /* Center: Nav Links */
@@ -1078,31 +1129,49 @@ body.modal-active {
 }
 
 /* Process Steps */
+#how-it-works .container {
+    max-width: 95%;
+}
+
 .process-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4rem;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .process-steps {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .process-step {
     display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+    align-self: start;
 }
 
 .step-number {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 48px;
+    height: 48px;
     flex-shrink: 0;
-    background: rgba(128, 128, 128, 0.1);
-    border: 1px solid var(--border-subtle);
+    background: rgba(128, 128, 128, 0.05);
+    border: 1px solid rgba(128, 128, 128, 0.1);
     border-radius: 50%;
-    font-size: 14px;
+    font-size: 1.125rem;
     font-weight: 500;
     color: var(--text-primary);
+    margin-bottom: 1.25rem;
 }
 
 .step-content {
@@ -1110,6 +1179,21 @@ body.modal-active {
     display: flex;
     flex-direction: column;
     gap: 4px;
+}
+
+.step-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+
+.step-description {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 100%;
 }
 
 /* Fit Grid */

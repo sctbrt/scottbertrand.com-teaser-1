@@ -119,7 +119,7 @@
     </script>
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles/styles.css">
     <style>
         /* V1.2.0 Storefront-specific styles */
 
@@ -482,21 +482,11 @@
     <header class="site-header">
         <div class="nav-container">
             <a href="https://scottbertrand.com/" class="site-brand">
-                <picture>
-                    <source srcset="assets/sb-monogram-light.avif" type="image/avif" media="(prefers-color-scheme: dark)">
-                    <source srcset="assets/sb-monogram-light.webp" type="image/webp" media="(prefers-color-scheme: dark)">
-                    <source srcset="assets/sb-monogram-dark.avif" type="image/avif" media="(prefers-color-scheme: light)">
-                    <source srcset="assets/sb-monogram-dark.webp" type="image/webp" media="(prefers-color-scheme: light)">
-                    <img src="assets/sb-monogram-dark.png" alt="SB" class="brand-monogram" width="100" height="100">
-                </picture>
+                <img src="assets/sb-monogram-light.png" alt="SB" class="brand-monogram brand-monogram--light" width="100" height="100">
+                <img src="assets/sb-monogram-dark.png" alt="SB" class="brand-monogram brand-monogram--dark" width="100" height="100">
                 <span class="brand-separator">|</span>
-                <picture>
-                    <source srcset="assets/scott-bertrand-wordmark-light.avif" type="image/avif" media="(prefers-color-scheme: dark)">
-                    <source srcset="assets/scott-bertrand-wordmark-light.webp" type="image/webp" media="(prefers-color-scheme: dark)">
-                    <source srcset="assets/scott-bertrand-wordmark-dark.avif" type="image/avif" media="(prefers-color-scheme: light)">
-                    <source srcset="assets/scott-bertrand-wordmark-dark.webp" type="image/webp" media="(prefers-color-scheme: light)">
-                    <img src="assets/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" class="brand-wordmark" width="400" height="100">
-                </picture>
+                <img src="assets/scott-bertrand-wordmark-light.png" alt="Scott Bertrand" class="brand-wordmark brand-wordmark--light" width="400" height="100">
+                <img src="assets/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" class="brand-wordmark brand-wordmark--dark" width="400" height="100">
             </a>
 
             <nav class="nav-menu" id="navMenu">
@@ -510,19 +500,22 @@
                     <div class="nav-dropdown-menu" aria-label="Case Studies submenu" aria-hidden="true">
                         <a href="https://notes.scottbertrand.com/" class="nav-dropdown-item">
                             <div class="dropdown-item-header">
-                                <img src="assets/field-notes-menu-dark.png" alt="Field Notes" class="dropdown-brand-img" width="599" height="110">
+                                <img src="assets/field-notes-menu-light.png" alt="Field Notes" class="dropdown-brand-img dropdown-brand-img--light" width="599" height="110">
+                                <img src="assets/field-notes-menu-dark.png" alt="Field Notes" class="dropdown-brand-img dropdown-brand-img--dark" width="599" height="110">
                             </div>
                             <span class="dropdown-descriptor">Working archive · essays · systems</span>
                         </a>
                         <a href="https://goods.scottbertrand.com/" class="nav-dropdown-item">
                             <div class="dropdown-item-header">
-                                <img src="assets/still-goods-menu-dark.png" alt="Still Goods" class="dropdown-brand-img" width="1333" height="283">
+                                <img src="assets/still-goods-menu-light.png" alt="Still Goods" class="dropdown-brand-img dropdown-brand-img--light" width="1333" height="283">
+                                <img src="assets/still-goods-menu-dark.png" alt="Still Goods" class="dropdown-brand-img dropdown-brand-img--dark" width="1333" height="283">
                             </div>
                             <span class="dropdown-descriptor">Seasonal objects · limited issues</span>
                         </a>
                         <a href="https://maxstewart.life/" class="nav-dropdown-item nav-dropdown-item--disabled">
                             <div class="dropdown-item-header">
-                                <img src="assets/maxstewart-dark.png" alt="Max Stewart" class="dropdown-brand-img" width="2100" height="434">
+                                <img src="assets/maxstewart-light.png" alt="Max Stewart" class="dropdown-brand-img dropdown-brand-img--light" width="2100" height="434">
+                                <img src="assets/maxstewart-dark.png" alt="Max Stewart" class="dropdown-brand-img dropdown-brand-img--dark" width="2100" height="434">
                             </div>
                             <span class="dropdown-descriptor">Lifestyle brand · coming soon</span>
                         </a>
@@ -848,8 +841,8 @@
     </footer>
 
     <!-- Scripts -->
-    <script type="module" src="theme.js"></script>
-    <script type="module" src="modal.js"></script>
-    <script type="module" src="dropdown.js"></script>
+    <script type="module" src="../scripts/theme.js"></script>
+    <script type="module" src="../scripts/modal.js"></script>
+    <script type="module" src="../scripts/dropdown.js"></script>
 </body>
 </html>
