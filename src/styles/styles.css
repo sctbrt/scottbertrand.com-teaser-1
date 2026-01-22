@@ -373,17 +373,14 @@ body.modal-active {
     align-items: center;
     justify-content: center;
     position: fixed;
-    top: 1rem;
-    left: 1rem;
-    right: 1rem;
-    bottom: 1rem;
-    width: auto;
-    height: auto;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     /* Glass treatment matching nav bar */
-    background: rgba(247, 246, 243, 0.85);
+    background: rgba(247, 246, 243, 0.95);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-radius: 16px;
     padding: 2rem;
     z-index: 9999;
     gap: 2rem;
