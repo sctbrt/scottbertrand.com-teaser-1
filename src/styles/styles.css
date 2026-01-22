@@ -298,23 +298,6 @@ body.modal-active {
     display: none;
 }
 
-/* Dropdown brand image theme switching (same convention) */
-.dropdown-brand-img--light {
-    display: none;
-}
-
-.dropdown-brand-img--dark {
-    display: block;
-}
-
-[data-theme="dark"] .dropdown-brand-img--light {
-    display: block;
-}
-
-[data-theme="dark"] .dropdown-brand-img--dark {
-    display: none;
-}
-
 /* Center: Nav Links */
 .nav-menu {
     display: flex;
@@ -1560,13 +1543,13 @@ body.modal-active {
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 1rem;
+    margin-top: 0.75rem;
     background: var(--bg-primary);
     border: 1px solid var(--border-subtle);
     border-radius: 12px;
-    padding: 1.25rem;
-    min-width: 340px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    padding: 0.75rem;
+    min-width: 200px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.2s ease, visibility 0.2s ease;
@@ -1574,7 +1557,9 @@ body.modal-active {
 }
 
 [data-theme="dark"] .nav-dropdown-menu {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    background: rgb(38, 38, 40);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 .nav-dropdown-menu[aria-hidden="false"] {
@@ -1583,7 +1568,9 @@ body.modal-active {
 }
 
 .nav-dropdown-item {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     padding: 1rem 1.25rem;
     text-decoration: none;
     color: var(--text-primary);
@@ -1596,8 +1583,8 @@ body.modal-active {
 }
 
 .nav-dropdown-item + .nav-dropdown-item {
-    margin-top: 0.75rem;
-    padding-top: 1.25rem;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
     border-top: 1px solid var(--border-subtle);
     border-radius: 0;
 }
@@ -1607,22 +1594,44 @@ body.modal-active {
 }
 
 .dropdown-item-header {
-    margin-bottom: 0.625rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
 }
 
 .dropdown-brand-img {
-    max-width: 140px;
+    max-width: 120px;
+    width: auto;
     height: auto;
+    max-height: 28px;
+    object-fit: contain;
+    object-position: left center;
+    opacity: 1;
+}
+
+/* Theme switching for dropdown brand images - must come after base styles */
+.dropdown-brand-img--light {
+    display: none;
+}
+
+.dropdown-brand-img--dark {
     display: block;
-    opacity: 0.9;
+}
+
+[data-theme="dark"] .dropdown-brand-img--light {
+    display: block;
+}
+
+[data-theme="dark"] .dropdown-brand-img--dark {
+    display: none;
 }
 
 .dropdown-descriptor {
     display: block;
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
     color: var(--text-secondary);
-    line-height: 1.5;
-    letter-spacing: 0.01em;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    text-transform: lowercase;
 }
 
 /* Mobile dropdown adjustments */
