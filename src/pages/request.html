@@ -99,6 +99,7 @@
 
             <form
                 class="request-form"
+                id="requestForm"
                 action="https://formspree.io/f/xnjjgoay"
                 method="POST"
                 accept-charset="UTF-8"
@@ -106,6 +107,7 @@
 
                 <!-- Formspree configuration -->
                 <input type="hidden" name="_subject" value="New Service Request — scottbertrand.com">
+                <input type="hidden" name="_next" value="https://scottbertrand.com/request.html?success=true">
 
                 <!-- Metadata -->
                 <input type="hidden" name="source" value="scottbertrand.com — Request Service">
@@ -216,11 +218,21 @@
                         Submit Request
                     </button>
                     <p class="form-note">
-                        I’ll review your request and respond within 24–48 hours.
+                        I'll review your request and respond within 24–48 hours.
+                    </p>
+                    <p class="form-fallback">
+                        Having trouble? Email me directly at <a href="mailto:bertrandbrands@outlook.com">bertrandbrands@outlook.com</a>
                     </p>
                 </div>
 
             </form>
+
+            <!-- Success message -->
+            <div class="success-message" id="successMessage">
+                <h2>Request Received</h2>
+                <p>Thank you for your interest. I'll review your request and respond within 24–48 hours.</p>
+                <a href="/" class="btn btn-secondary">Return Home</a>
+            </div>
         </div>
     </section>
 </main>
@@ -228,5 +240,55 @@
 <!-- Scripts -->
 <script type="module" src="/src/scripts/theme.js"></script>
 <script type="module" src="/src/scripts/dropdown.js"></script>
+<script>
+    const form = document.getElementById('requestForm');
+    const successMessage = document.getElementById('successMessage');
+    const fallbackEmail = 'bertrandbrands@outlook.com';
+
+    // Check for success param (redirect from Formspree)
+    if (new URLSearchParams(window.location.search).get('success') === 'true') {
+        form.style.display = 'none';
+        successMessage.style.display = 'block';
+    }
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                form.style.display = 'none';
+                successMessage.style.display = 'block';
+            } else {
+                // Fallback to mailto if Formspree fails
+                const name = formData.get('name');
+                const email = formData.get('email');
+                const service = formData.get('service');
+                const goals = formData.get('goals');
+                const body = `Name: ${name}%0AEmail: ${email}%0AService: ${service}%0AGoals: ${goals}`;
+                window.location.href = `mailto:${fallbackEmail}?subject=Service%20Request%20-%20scottbertrand.com&body=${body}`;
+            }
+        } catch (error) {
+            // Fallback to mailto
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const service = formData.get('service');
+            const body = `Name: ${name}%0AEmail: ${email}%0AService: ${service}`;
+            window.location.href = `mailto:${fallbackEmail}?subject=Service%20Request%20-%20scottbertrand.com&body=${body}`;
+        }
+    });
+</script>
 </body>
 </html>

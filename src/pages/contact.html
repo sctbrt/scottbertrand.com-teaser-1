@@ -102,9 +102,10 @@
                         Thank you. You're on the list.
                     </div>
 
-                    <form action="https://formspree.io/f/meeeazrq" method="POST" class="email-form" id="emailForm">
+                    <form action="https://formspree.io/f/meeeazrq" method="POST" class="email-form" id="emailForm" data-fallback="mailto:bertrandbrands@outlook.com?subject=Email%20Signup%20-%20scottbertrand.com">
                         <!-- Formspree configuration -->
                         <input type="hidden" name="_subject" value="New Email Signup — scottbertrand.com">
+                        <input type="hidden" name="_next" value="https://scottbertrand.com/contact.html?success=true">
                         <!-- Honeypot spam protection -->
                         <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;">
 
@@ -122,6 +123,10 @@
                     <p class="email-microcopy">
                         Occasional updates and Field Notes. No weekly spam. Just when there's something worth sharing.
                     </p>
+
+                    <p class="form-fallback">
+                        Having trouble? Email me directly at <a href="mailto:bertrandbrands@outlook.com">bertrandbrands@outlook.com</a>
+                    </p>
                 </div>
             </div>
         </section>
@@ -135,11 +140,19 @@
         // Form submission handling
         const form = document.getElementById('emailForm');
         const successMessage = document.getElementById('successMessage');
+        const fallbackEmail = 'bertrandbrands@outlook.com';
+
+        // Check for success param (redirect from Formspree)
+        if (new URLSearchParams(window.location.search).get('success') === 'true') {
+            successMessage.classList.add('show');
+            form.style.display = 'none';
+        }
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const formData = new FormData(form);
+            const email = formData.get('email');
 
             try {
                 const response = await fetch(form.action, {
@@ -154,12 +167,12 @@
                     successMessage.classList.add('show');
                     form.style.display = 'none';
                 } else {
-                    // Fallback to standard form submission if fetch fails
-                    form.submit();
+                    // Fallback to mailto if Formspree fails
+                    window.location.href = `mailto:${fallbackEmail}?subject=Email%20Signup%20-%20scottbertrand.com&body=Please%20add%20me%20to%20your%20email%20list:%20${encodeURIComponent(email)}`;
                 }
             } catch (error) {
-                // Fallback to standard form submission
-                form.submit();
+                // Fallback to mailto
+                window.location.href = `mailto:${fallbackEmail}?subject=Email%20Signup%20-%20scottbertrand.com&body=Please%20add%20me%20to%20your%20email%20list:%20${encodeURIComponent(email)}`;
             }
         });
     </script>
