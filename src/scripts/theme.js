@@ -1,30 +1,41 @@
 /**
- * Theme Manager — v1.3.0
- * Light-default theme system with OS listener support
+ * Theme Manager — v1.5.0
+ * Time-based theme with OS fallback and manual override
+ * Uses Canada/Eastern timezone for day/night detection
  */
 
 class ThemeManager {
     constructor() {
         this.html = document.documentElement;
         this.toggle = document.getElementById('themeToggle');
+        this.iconElement = null;
         this.currentMode = this.getSavedMode();
         this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        this.timezone = 'America/Toronto'; // Canada/Eastern
 
         this.init();
     }
 
     init() {
+        // Get icon element reference
+        if (this.toggle) {
+            this.iconElement = this.toggle.querySelector('.theme-icon');
+        }
+
         // Apply theme immediately (before DOM ready to prevent FOUC)
         this.applyTheme();
 
-        // Set up OS listener for system mode
+        // Set up OS listener - respond to system changes when in system mode
         this.mediaQuery.addEventListener('change', () => {
             if (this.currentMode === 'system') {
                 this.applyTheme();
             }
         });
 
-        // Toggle on button click (cycles: light → dark → system → light)
+        // Set up time-based updates (check every minute when in system mode)
+        this.startTimeBasedUpdates();
+
+        // Toggle on button click (cycles: system → light → dark → system)
         if (this.toggle) {
             this.toggle.addEventListener('click', () => this.cycleMode());
         }
@@ -37,17 +48,58 @@ class ThemeManager {
             return saved;
         }
 
-        // Default to light mode (not system)
-        return 'light';
+        // Default to system mode (time-based with OS fallback)
+        return 'system';
     }
 
+    /**
+     * Get current hour in Canada/Eastern timezone
+     */
+    getEasternHour() {
+        try {
+            const now = new Date();
+            const easternTime = new Date(now.toLocaleString('en-US', { timeZone: this.timezone }));
+            return easternTime.getHours();
+        } catch (e) {
+            // Fallback if timezone not supported
+            return new Date().getHours();
+        }
+    }
+
+    /**
+     * Determine theme based on time of day
+     * Light: 7:00 AM - 7:00 PM (07:00 - 19:00)
+     * Dark: 7:00 PM - 7:00 AM (19:00 - 07:00)
+     */
+    getTimeBasedTheme() {
+        const hour = this.getEasternHour();
+        // Daytime: 7 AM to 7 PM
+        return (hour >= 7 && hour < 19) ? 'light' : 'dark';
+    }
+
+    /**
+     * Get system theme - prioritizes time-based, falls back to OS preference
+     */
     getSystemTheme() {
-        return this.mediaQuery.matches ? 'dark' : 'light';
+        // Primary: time-based theme for Canada/Eastern
+        return this.getTimeBasedTheme();
+    }
+
+    /**
+     * Start interval to check time and update theme when in system mode
+     */
+    startTimeBasedUpdates() {
+        // Check every minute for time changes
+        setInterval(() => {
+            if (this.currentMode === 'system') {
+                this.applyTheme();
+            }
+        }, 60000); // 60 seconds
     }
 
     cycleMode() {
-        // Cycle through: light → dark → system → light
-        const modes = ['light', 'dark', 'system'];
+        // Cycle through: system → light → dark → system
+        const modes = ['system', 'light', 'dark'];
         const currentIndex = modes.indexOf(this.currentMode);
         const nextIndex = (currentIndex + 1) % modes.length;
         this.currentMode = modes[nextIndex];
@@ -69,6 +121,33 @@ class ThemeManager {
         // Apply data-theme attribute
         this.html.setAttribute('data-theme', effectiveTheme);
         this.html.setAttribute('data-theme-mode', this.currentMode);
+
+        // Update icon to reflect current mode
+        this.updateIcon();
+    }
+
+    updateIcon() {
+        if (!this.iconElement) return;
+
+        // Icons: ◐ for system (auto), ☀ for light, ☾ for dark
+        const icons = {
+            system: '◐',
+            light: '☀',
+            dark: '☾'
+        };
+
+        this.iconElement.textContent = icons[this.currentMode] || '◐';
+
+        // Update aria-label for accessibility
+        const labels = {
+            system: 'Theme: Auto (time-based). Click to switch to light.',
+            light: 'Theme: Light. Click to switch to dark.',
+            dark: 'Theme: Dark. Click to switch to auto.'
+        };
+
+        if (this.toggle) {
+            this.toggle.setAttribute('aria-label', labels[this.currentMode] || 'Toggle theme');
+        }
     }
 }
 
@@ -117,27 +196,87 @@ class MenuManager {
     }
 
     setupOverflowDetection() {
-        const checkOverflow = () => {
-            // Check if nav content would overflow its container
-            const navWidth = this.navMenu.scrollWidth;
-            const containerWidth = this.navContainer.clientWidth;
-            const isOverflowing = navWidth > containerWidth;
+        // Cache the natural width of nav links (measured when expanded)
+        let naturalNavWidth = 0;
 
-            // Toggle collapsed state
+        const measureNaturalWidth = () => {
+            // Ensure nav is not collapsed for accurate measurement
+            const wasCollapsed = this.navContainer.classList.contains('nav--collapsed');
+            if (wasCollapsed) {
+                this.navContainer.classList.remove('nav--collapsed');
+            }
+
+            // Measure only TOP-LEVEL nav items (direct children), not nested dropdown items
+            const topLevelItems = this.navMenu.querySelectorAll(':scope > a, :scope > .nav-dropdown');
+            let totalWidth = 0;
+            topLevelItems.forEach(item => {
+                totalWidth += item.offsetWidth;
+            });
+
+            // Add gaps between items (nav-menu has gap: 32px in CSS)
+            const gap = 32;
+            if (topLevelItems.length > 1) {
+                totalWidth += gap * (topLevelItems.length - 1);
+            }
+
+            naturalNavWidth = totalWidth;
+
+            // Restore collapsed state if it was collapsed
+            if (wasCollapsed) {
+                this.navContainer.classList.add('nav--collapsed');
+            }
+        };
+
+        const checkOverflow = () => {
+            const wasCollapsed = this.navContainer.classList.contains('nav--collapsed');
+
+            // Temporarily uncollapse to measure available space
+            if (wasCollapsed) {
+                this.navContainer.classList.remove('nav--collapsed');
+            }
+
+            // Measure if we haven't yet
+            if (naturalNavWidth === 0) {
+                measureNaturalWidth();
+            }
+
+            // Get the actual available width in the grid's middle column
+            // Container width minus brand, utilities, gaps (2x24px), and padding (2x24px)
+            const containerRect = this.navContainer.getBoundingClientRect();
+            const brand = this.navContainer.querySelector('.site-brand');
+            const utilities = this.navContainer.querySelector('.nav-utilities');
+            const brandWidth = brand ? brand.getBoundingClientRect().width : 0;
+            const utilitiesWidth = utilities ? utilities.getBoundingClientRect().width : 0;
+
+            // Available = total container - brand - utilities - 2 grid gaps (48px) - some buffer
+            const availableWidth = containerRect.width - brandWidth - utilitiesWidth - 48 - 24;
+
+            const isOverflowing = naturalNavWidth > availableWidth;
+
             if (isOverflowing) {
                 this.navContainer.classList.add('nav--collapsed');
             } else {
                 this.navContainer.classList.remove('nav--collapsed');
-                this.closeMenu(); // Close menu if we're no longer collapsed
+                if (wasCollapsed) {
+                    this.closeMenu();
+                }
             }
         };
 
         // Observe container size changes
-        const resizeObserver = new ResizeObserver(checkOverflow);
+        const resizeObserver = new ResizeObserver(() => {
+            requestAnimationFrame(checkOverflow);
+        });
         resizeObserver.observe(this.navContainer);
 
-        // Initial check
-        checkOverflow();
+        // Initial check after fonts load
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                requestAnimationFrame(checkOverflow);
+            });
+        } else {
+            requestAnimationFrame(checkOverflow);
+        }
     }
 
     toggleMenu() {
