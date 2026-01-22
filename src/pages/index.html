@@ -159,6 +159,18 @@
             text-align: center;
         }
 
+        /* CTA Microcopy */
+        .cta-microcopy {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: 1rem;
+            opacity: 0.75;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         /* V1.5 Local Trust Signal */
         .local-trust {
             font-size: 0.875rem;
@@ -552,10 +564,12 @@
                     Clear, structured brand and web work that creates clarity and drives results. Based in Sudbury, available remotely across Canada.
                 </p>
 
-                <!-- Single Primary CTA -->
+                <!-- Primary + Secondary CTAs -->
                 <div class="cta-group">
-                    <a href="/request.html" class="btn btn-primary">Request an Audit</a>
+                    <a href="/request.html?service=website-audit" class="btn btn-primary">Start with a Website Review</a>
+                    <a href="/request.html?service=brand-audit" class="btn btn-secondary">Start with a Brand Review</a>
                 </div>
+                <p class="cta-microcopy">Clear, practical feedback on what's working, what's not, and what to fix first.</p>
 
                 <!-- Local Trust Signal -->
                 <p class="local-trust">
@@ -712,7 +726,7 @@
                                 <strong>Brand Direction Consult</strong> (90 min) — $400 CAD
                             </p>
                             <div class="service-actions">
-                                <a href="/request.html" class="btn btn-secondary btn-small">Request an Audit First</a>
+                                <a href="/request.html?service=website-audit" class="btn btn-secondary btn-small">Start with a Review</a>
                             </div>
                         </div>
                     </div>
@@ -822,7 +836,7 @@
 
                 <!-- Final CTA -->
                 <div style="text-align: center; margin-top: 3rem;">
-                    <a href="/request.html" class="btn btn-primary">Request an Audit</a>
+                    <a href="/request.html?service=website-audit" class="btn btn-primary">Start with a Website Review</a>
                 </div>
             </div>
         </section>
