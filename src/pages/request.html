@@ -251,6 +251,18 @@
         successMessage.style.display = 'block';
     }
 
+    // Pre-select service from URL param (e.g., ?service=website-audit)
+    const serviceParam = new URLSearchParams(window.location.search).get('service');
+    if (serviceParam) {
+        const serviceSelect = form.querySelector('select[name="service"]');
+        if (serviceSelect) {
+            const option = serviceSelect.querySelector(`option[value="${serviceParam}"]`);
+            if (option) {
+                serviceSelect.value = serviceParam;
+            }
+        }
+    }
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
