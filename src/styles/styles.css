@@ -377,48 +377,115 @@ body.modal-active {
     left: 0;
     width: 100vw;
     height: 100vh;
-    /* Frosted glass - 75% opacity, warm off-white */
-    background: rgba(247, 246, 243, 0.75);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    height: 100dvh; /* Dynamic viewport height for mobile */
+    /* Outer frosted layer - warm off-white */
+    background: rgba(247, 246, 243, 0.82);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
     padding: 2rem;
     z-index: 9999;
-    gap: 2rem;
-    isolation: isolate;
+    gap: 0;
 }
 
-/* Dark mode: frosted near-black */
+/* Dark mode outer frosted glass */
 [data-theme="dark"] .nav--collapsed .nav-menu.active {
-    background: rgba(10, 10, 10, 0.75);
+    background: rgba(10, 10, 10, 0.82);
 }
 
-/* Inner container for menu items */
+/* Inner frosted container for menu items */
 .nav--collapsed .nav-menu.active::before {
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: calc(100% - 2rem);
-    max-width: 320px;
-    height: auto;
-    min-height: 280px;
-    padding: 3rem 2rem;
-    background: rgba(255, 255, 255, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    z-index: -1;
+    transform: translate(-50%, calc(-50% - 1.5rem)); /* Offset up to account for close button */
+    width: calc(100% - 2.5rem);
+    max-width: 300px;
+    padding: 2.5rem 2rem;
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 24px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    z-index: 0;
+    pointer-events: none;
 }
 
-/* Dark mode container */
 [data-theme="dark"] .nav--collapsed .nav-menu.active::before {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.06);
     border-color: rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-.nav--collapsed .nav-menu.active a {
+/* Menu items layout */
+.nav--collapsed .nav-menu.active > a,
+.nav--collapsed .nav-menu.active > .nav-dropdown {
+    position: relative;
+    z-index: 1;
+    margin: 0.625rem 0;
+}
+
+.nav--collapsed .nav-menu.active > a {
     font-size: 1.25rem;
+    font-weight: 450;
     justify-content: center;
+    text-align: center;
+    letter-spacing: -0.01em;
+}
+
+/* Close button for mobile menu - hidden by default */
+.mobile-menu-close {
+    display: none;
+}
+
+.nav--collapsed .nav-menu.active .mobile-menu-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: max(2rem, env(safe-area-inset-bottom, 0px) + 1.5rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 44px;
+    background: rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.nav--collapsed .nav-menu.active .mobile-menu-close:hover,
+.nav--collapsed .nav-menu.active .mobile-menu-close:active {
+    background: rgba(0, 0, 0, 0.1);
+    transform: translateX(-50%) scale(1.05);
+}
+
+/* Chevron icon for close button */
+.nav--collapsed .nav-menu.active .mobile-menu-close::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border-left: 2px solid var(--text-primary);
+    border-bottom: 2px solid var(--text-primary);
+    transform: rotate(-45deg) translateY(-2px);
+    opacity: 0.7;
+}
+
+[data-theme="dark"] .nav--collapsed .nav-menu.active .mobile-menu-close {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .nav--collapsed .nav-menu.active .mobile-menu-close:hover,
+[data-theme="dark"] .nav--collapsed .nav-menu.active .mobile-menu-close:active {
+    background: rgba(255, 255, 255, 0.12);
 }
 
 /* Right: Utilities */

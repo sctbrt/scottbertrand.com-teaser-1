@@ -170,6 +170,15 @@ class MenuManager {
         // Set up hamburger toggle
         this.hamburger.addEventListener('click', () => this.toggleMenu());
 
+        // Set up close button
+        const closeBtn = this.navMenu.querySelector('.mobile-menu-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.closeMenu();
+            });
+        }
+
         // Close menu when clicking menu items (except dropdown toggle)
         this.navMenu.querySelectorAll('a').forEach(item => {
             item.addEventListener('click', () => this.closeMenu());
@@ -182,11 +191,20 @@ class MenuManager {
             }
         });
 
-        // Close menu when clicking outside
+        // Close menu when clicking outside menu content (including the frosted background)
         document.addEventListener('click', (e) => {
-            if (this.navMenu.classList.contains('active') &&
-                !this.navMenu.contains(e.target) &&
-                !this.hamburger.contains(e.target)) {
+            if (!this.navMenu.classList.contains('active')) return;
+
+            // Don't close if clicking the hamburger
+            if (this.hamburger.contains(e.target)) return;
+
+            // Check if click is on an actual menu item (link or dropdown)
+            const isMenuItem = e.target.closest('.nav-menu a') ||
+                               e.target.closest('.nav-dropdown-toggle') ||
+                               e.target.closest('.nav-dropdown-menu');
+
+            // If clicking on the nav-menu background (not a menu item), close it
+            if (!isMenuItem) {
                 this.closeMenu();
             }
         });
