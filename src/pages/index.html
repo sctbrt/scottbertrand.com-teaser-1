@@ -521,6 +521,49 @@
                 text-align: center;
             }
         }
+
+        /* ===========================================
+           Hero Glass Container - Match How It Works width
+           =========================================== */
+        .hero-storefront .container {
+            max-width: 1200px;
+            padding: 0 1.5rem;
+        }
+
+        .hero-storefront .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Responsive glass panels */
+        .glass--hero {
+            width: 100%;
+            transition: padding var(--glass-transition-slow, 420ms) ease;
+        }
+
+        /* Mobile adjustments for glass panels */
+        @media (max-width: 768px) {
+            .hero-storefront .container {
+                padding: 0 1rem;
+            }
+
+            .glass--hero {
+                padding: 2rem 1.5rem;
+                border-radius: 16px;
+            }
+
+            .glass--panel {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glass--hero {
+                padding: 1.5rem 1rem;
+                border-radius: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -593,25 +636,27 @@
         <!-- Hero Section -->
         <section class="hero hero-storefront">
             <div class="container">
-                <!-- Primary: Identity -->
-                <!-- V1.5 Conversion Hero -->
-                <h1 class="tagline">Brand & Web Systems for Greater&nbsp;Sudbury & Northern&nbsp;Ontario</h1>
+                <div class="glass glass--hero hero-content">
+                    <!-- Primary: Identity -->
+                    <!-- V1.5 Conversion Hero -->
+                    <h1 class="tagline">Brand & Web Systems for Greater&nbsp;Sudbury & Northern&nbsp;Ontario</h1>
 
-                <p class="subtitle">
-                    Clear, structured brand and web work that creates clarity and drives results. Based in Sudbury, available remotely across Canada.
-                </p>
+                    <p class="subtitle">
+                        Clear, structured brand and web work that creates clarity and drives results. Based in Sudbury, available remotely across Canada.
+                    </p>
 
-                <!-- Primary + Secondary CTAs -->
-                <div class="cta-group">
-                    <a href="/request.html?service=website-audit" class="btn btn-primary">Start with a Website Review</a>
-                    <a href="/request.html?service=brand-audit" class="btn btn-secondary">Start with a Brand Review</a>
+                    <!-- Primary + Secondary CTAs -->
+                    <div class="cta-group">
+                        <a href="/request.html?service=website-audit" class="btn btn-primary">Start with a Website Review</a>
+                        <a href="/request.html?service=brand-audit" class="btn btn-secondary">Start with a Brand Review</a>
+                    </div>
+                    <p class="cta-microcopy">Clear, practical feedback on what's working, what's not, and what to fix first.</p>
+
+                    <!-- Local Trust Signal -->
+                    <p class="local-trust">
+                        Based in Greater Sudbury, serving Northern Ontario businesses
+                    </p>
                 </div>
-                <p class="cta-microcopy">Clear, practical feedback on what's working, what's not, and what to fix first.</p>
-
-                <!-- Local Trust Signal -->
-                <p class="local-trust">
-                    Based in Greater Sudbury, serving Northern Ontario businesses
-                </p>
             </div>
         </section>
 
