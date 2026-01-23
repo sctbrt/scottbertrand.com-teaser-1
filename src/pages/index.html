@@ -122,25 +122,39 @@
     <link rel="stylesheet" href="/src/styles/styles.css">
     <link rel="stylesheet" href="/src/styles/glass.css">
     <style>
-        /* V1.2.0 Storefront-specific styles */
+        /* V1.5.2 Storefront-specific styles with fluid typography */
+
+        /* ===========================================
+           Fluid Typography Scale
+           Uses clamp() for smooth scaling between breakpoints
+           Mobile (375px) → Desktop (1200px)
+           =========================================== */
 
         /* Hero refinement */
         .hero-storefront {
             min-height: 65dvh;
         }
 
+        /* H1 - Hero Tagline: Most prominent, clear hierarchy leader
+           Mobile: 1.625rem (26px) → Desktop: 2.25rem (36px) */
         .hero-storefront .tagline {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: clamp(1.625rem, 1.25rem + 1.5vw, 2.25rem);
+            font-weight: 500;
+            line-height: 1.2;
+            margin-bottom: 1.25rem;
             text-align: center;
             max-width: 900px;
             margin-left: auto;
             margin-right: auto;
+            letter-spacing: -0.02em;
         }
 
+        /* Subtitle - Supporting hero text
+           Mobile: 1rem (16px) → Desktop: 1.25rem (20px) */
         .hero-storefront .subtitle {
-            font-size: 1.125rem;
+            font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
             color: var(--text-secondary);
+            line-height: 1.6;
             margin-bottom: 2rem;
             max-width: 680px;
             margin-left: auto;
@@ -150,7 +164,7 @@
 
         .hero-storefront .authority-statement {
             font-family: Georgia, 'Times New Roman', serif;
-            font-size: 1rem;
+            font-size: clamp(0.9375rem, 0.875rem + 0.25vw, 1.0625rem);
             line-height: 1.7;
             color: var(--text-secondary);
             opacity: 0.85;
@@ -159,13 +173,14 @@
             text-align: center;
         }
 
-        /* CTA Microcopy */
+        /* CTA Microcopy - Small helper text
+           Mobile: 0.8125rem (13px) → Desktop: 0.875rem (14px) */
         .cta-microcopy {
-            font-size: 0.875rem;
+            font-size: clamp(0.8125rem, 0.75rem + 0.2vw, 0.875rem);
             color: var(--text-secondary);
             text-align: center;
             margin-top: 1rem;
-            opacity: 0.75;
+            opacity: 0.7;
             max-width: 400px;
             margin-left: auto;
             margin-right: auto;
@@ -173,11 +188,11 @@
 
         /* V1.5 Local Trust Signal */
         .local-trust {
-            font-size: 0.875rem;
+            font-size: clamp(0.8125rem, 0.75rem + 0.2vw, 0.875rem);
             color: var(--text-secondary);
             text-align: center;
             margin-top: 1.5rem;
-            opacity: 0.75;
+            opacity: 0.6;
         }
 
         /* CTA buttons */
@@ -226,29 +241,34 @@
 
         /* Section styling */
         .section {
-            padding: 6rem 2rem;
+            padding: clamp(3.5rem, 3rem + 2vw, 6rem) 2rem;
             border-top: 1px solid rgba(128, 128, 128, 0.1);
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: clamp(2.5rem, 2rem + 1.5vw, 4rem);
         }
 
+        /* H2 - Section Titles: Secondary level, clearly smaller than H1
+           Mobile: 1.25rem (20px) → Desktop: 1.5rem (24px) */
         .section-title {
-            font-size: 1.375rem;
+            font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
             font-weight: 500;
             letter-spacing: -0.01em;
             margin-bottom: 0.75rem;
         }
 
+        /* Section Subtitle - Supporting section text
+           Mobile: 0.9375rem (15px) → Desktop: 1.0625rem (17px) */
         .section-subtitle {
             font-family: Georgia, 'Times New Roman', serif;
-            font-size: 1.0625rem;
+            font-size: clamp(0.9375rem, 0.875rem + 0.25vw, 1.0625rem);
             color: var(--text-secondary);
             opacity: 0.85;
             max-width: 600px;
             margin: 0 auto;
+            line-height: 1.6;
         }
 
         /* Process steps */
@@ -279,38 +299,44 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 48px;
-            height: 48px;
+            width: clamp(40px, 36px + 1vw, 48px);
+            height: clamp(40px, 36px + 1vw, 48px);
             border-radius: 50%;
             background: rgba(128, 128, 128, 0.05);
             border: 1px solid rgba(128, 128, 128, 0.1);
             font-weight: 500;
-            margin-bottom: 1.25rem;
-            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            font-size: clamp(0.9375rem, 0.875rem + 0.2vw, 1.125rem);
             flex-shrink: 0;
         }
 
+        /* H3 - Step/Card Titles: Third level
+           Mobile: 0.9375rem (15px) → Desktop: 1.0625rem (17px) */
         .step-title {
             font-weight: 500;
-            margin-bottom: 0.75rem;
-            font-size: 1.0625rem;
+            margin-bottom: 0.5rem;
+            font-size: clamp(0.9375rem, 0.875rem + 0.25vw, 1.0625rem);
             line-height: 1.3;
         }
 
+        /* Small body text
+           Mobile: 0.8125rem (13px) → Desktop: 0.875rem (14px) */
         .step-description {
-            font-size: 0.875rem;
+            font-size: clamp(0.8125rem, 0.75rem + 0.2vw, 0.875rem);
             color: var(--text-secondary);
             line-height: 1.5;
             max-width: 200px;
+            opacity: 0.85;
         }
 
         /* Service catalogue */
         .service-tier {
-            margin-bottom: 4rem;
+            margin-bottom: clamp(2.5rem, 2rem + 1.5vw, 4rem);
         }
 
+        /* Category labels - small caps style */
         .category-label {
-            font-size: 0.8125rem;
+            font-size: clamp(0.6875rem, 0.65rem + 0.15vw, 0.8125rem);
             text-transform: uppercase;
             letter-spacing: 0.08em;
             color: var(--text-secondary);
@@ -329,7 +355,7 @@
             background: rgba(128, 128, 128, 0.02);
             border: 1px solid rgba(128, 128, 128, 0.1);
             border-radius: 8px;
-            padding: 2rem;
+            padding: clamp(1.5rem, 1.25rem + 0.5vw, 2rem);
             transition: all 0.2s ease;
         }
 
@@ -346,26 +372,30 @@
             gap: 1rem;
         }
 
+        /* H3 - Service Names
+           Mobile: 1.0625rem (17px) → Desktop: 1.25rem (20px) */
         .service-name {
-            font-size: 1.25rem;
+            font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
             font-weight: 500;
             letter-spacing: -0.01em;
         }
 
         .service-price {
+            font-size: clamp(0.9375rem, 0.875rem + 0.2vw, 1rem);
             font-weight: 500;
             white-space: nowrap;
         }
 
+        /* Body text for descriptions */
         .service-description {
-            font-size: 0.9375rem;
+            font-size: clamp(0.875rem, 0.825rem + 0.2vw, 0.9375rem);
             color: var(--text-secondary);
             margin-bottom: 1rem;
             line-height: 1.6;
         }
 
         .service-meta {
-            font-size: 0.875rem;
+            font-size: clamp(0.8125rem, 0.75rem + 0.15vw, 0.875rem);
             color: var(--text-secondary);
             opacity: 0.75;
             margin-bottom: 1.5rem;
@@ -445,23 +475,17 @@
             opacity: 1;
         }
 
-        /* Mobile responsive */
+        /* Mobile responsive - layout adjustments only
+           Typography is handled by clamp() functions above */
         @media (max-width: 640px) {
             .hero-storefront {
                 min-height: auto;
-                padding: 100px 2rem 60px;
-            }
-
-            .hero-storefront .tagline {
-                font-size: 1.25rem;
-            }
-
-            .hero-storefront .subtitle {
-                font-size: 1rem;
+                padding: 100px 1.5rem 60px;
             }
 
             .section {
-                padding: 4rem 1.5rem;
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
             }
 
             .service-header {
