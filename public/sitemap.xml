@@ -66,6 +66,22 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- Landing Pages -->
+  <url>
+    <loc>https://scottbertrand.com/website-snapshot.html</loc>
+    <lastmod>2026-01-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Local SEO Pages -->
+  <url>
+    <loc>https://scottbertrand.com/services/website-audit-sudbury.html</loc>
+    <lastmod>2026-01-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Content Pages -->
   <url>
     <loc>https://scottbertrand.com/what-is-a-brand-web-system.html</loc>
