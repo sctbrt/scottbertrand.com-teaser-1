@@ -4,24 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO -->
-    <link rel="canonical" href="https://scottbertrand.com/about.html">
+    <link rel="canonical" href="https://scottbertrand.com/website-snapshot.html">
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
     <meta name="color-scheme" content="light dark">
-    <title>About — Scott Bertrand | Brand & Web Consultant in Sudbury, Ontario</title>
-    <meta name="description" content="Scott Bertrand is a Canadian brand and web systems consultant based in Sudbury, Ontario, helping small businesses clarify their brand and build websites that generate leads.">
+    <title>Website Snapshot Review — $195 CAD | Scott Bertrand</title>
+    <meta name="description" content="A focused, 30-minute live review of your website's most visible issues. Clear priorities, not a sales pitch. Based in Sudbury, serving Northern Ontario.">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="About — Scott Bertrand | Brand & Web Consultant in Sudbury, Ontario">
-    <meta property="og:description" content="Scott Bertrand is a Canadian brand and web systems consultant based in Sudbury, Ontario, helping small businesses clarify their brand and build websites that generate leads.">
+    <meta property="og:title" content="Website Snapshot Review — $195 CAD | Scott Bertrand">
+    <meta property="og:description" content="A focused, 30-minute live review of your website's most visible issues. Clear priorities, not a sales pitch.">
     <meta property="og:image" content="https://scottbertrand.com/assets/og-image.png">
-    <meta property="og:url" content="https://scottbertrand.com/about.html">
+    <meta property="og:url" content="https://scottbertrand.com/website-snapshot.html">
     <meta property="og:type" content="website">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="About — Scott Bertrand | Brand & Web Consultant in Sudbury, Ontario">
-    <meta name="twitter:description" content="Scott Bertrand is a Canadian brand and web systems consultant based in Sudbury, Ontario, helping small businesses clarify their brand and build websites that generate leads.">
+    <meta name="twitter:title" content="Website Snapshot Review — $195 CAD | Scott Bertrand">
+    <meta name="twitter:description" content="A focused, 30-minute live review of your website's most visible issues. Clear priorities, not a sales pitch.">
     <meta name="twitter:image" content="https://scottbertrand.com/assets/og-image.png">
 
     <!-- Cloudflare Web Analytics (production only) -->
@@ -40,82 +40,107 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="/src/styles/styles.css">
-    <link rel="stylesheet" href="/src/styles/glass.css">
     <style>
-        .section {
-            padding: 6rem 2rem;
+        .landing-hero {
+            padding: 5rem 2rem 4rem;
+            text-align: center;
         }
-        .section h1 {
-            font-size: 1.75rem;
-            margin-bottom: 2rem;
-        }
-        .section h2 {
-            font-size: 1.25rem;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        .section p {
-            max-width: 680px;
-            line-height: 1.7;
-            margin-bottom: 1.25rem;
-            color: var(--text-secondary);
-        }
-        .section p:first-of-type {
-            color: var(--text-primary);
-        }
-        .section ul {
-            max-width: 680px;
-            margin: 1rem 0 1.5rem 1.5rem;
-            line-height: 1.8;
-        }
-        .section li {
+        .landing-hero h1 {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            font-weight: 500;
+            letter-spacing: -0.02em;
             margin-bottom: 0.5rem;
         }
-        .btn {
+        .landing-price {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+        .landing-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .landing-content {
+            padding: 0 2rem 4rem;
+        }
+        .landing-content .container {
+            max-width: 640px;
+        }
+
+        .landing-section {
+            margin-bottom: 3rem;
+        }
+        .landing-section h2 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        .landing-section p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        .landing-section ul {
+            margin: 0 0 1rem 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        .landing-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .landing-meta {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .landing-cta {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(128, 128, 128, 0.15);
+        }
+        .landing-cta .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.875rem 2rem;
+            padding: 1rem 2.5rem;
             border-radius: 6px;
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.9375rem;
+            font-size: 1rem;
             letter-spacing: -0.01em;
             transition: all 0.2s ease;
             border: 1px solid transparent;
         }
-        .btn-primary {
+        .landing-cta .btn-primary {
             background: var(--text-primary);
             color: var(--bg-primary);
             border-color: var(--text-primary);
         }
-        .btn-primary:hover {
+        .landing-cta .btn-primary:hover {
             opacity: 0.85;
         }
+        .landing-cta-note {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            opacity: 0.7;
+        }
 
-        /* Handwritten signature */
-        .about-signature {
-            margin-top: 4rem;
+        .trust-signal {
             text-align: center;
-        }
-        .signature-img {
-            width: 60px;
-            height: auto;
-            opacity: 0.4;
-        }
-        .signature-img--light {
-            display: block;
-            margin: 0 auto;
-        }
-        .signature-img--dark {
-            display: none;
-        }
-        [data-theme="dark"] .signature-img--light {
-            display: none;
-        }
-        [data-theme="dark"] .signature-img--dark {
-            display: block;
-            margin: 0 auto;
+            padding: 2rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            opacity: 0.6;
         }
     </style>
 </head>
@@ -124,7 +149,7 @@
     <div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
 
     <!-- Navigation Header -->
-        <header class="site-header">
+    <header class="site-header">
         <div class="nav-container">
             <a href="https://scottbertrand.com/" class="site-brand">
                 <img src="assets/sb-monogram-light.png" alt="SB" class="brand-monogram brand-monogram--light" width="100" height="100">
@@ -187,59 +212,53 @@
 
     <!-- Main Content -->
     <main>
-        <!-- About Section -->
-        <section id="about" class="section">
+        <!-- Hero -->
+        <section class="landing-hero">
             <div class="container">
-                <h1>About</h1>
+                <h1>Website Snapshot Review</h1>
+                <p class="landing-price">$195 CAD</p>
+                <p class="landing-subtitle">A focused, 30-minute live review of your website's most visible issues. You'll walk away with clear priorities, not a sales pitch.</p>
+            </div>
+        </section>
 
-                <!-- LLM-EO Authority Statement -->
-                <p><strong>I'm Scott Bertrand, a brand and web systems consultant based in Greater Sudbury, Ontario.</strong> I help businesses bring structure to areas that are almost working—but not quite.</p>
+        <!-- Content -->
+        <section class="landing-content">
+            <div class="container">
+                <div class="landing-section">
+                    <h2>What You Get</h2>
+                    <ul>
+                        <li>Homepage clarity & structure assessment</li>
+                        <li>Core messaging effectiveness review</li>
+                        <li>Immediate UX or conversion blockers identified</li>
+                        <li>Clear priorities for what to fix first</li>
+                    </ul>
+                    <p class="landing-meta">30-minute live call · No PDF or written report</p>
+                </div>
 
-                <p>I work with service-based businesses, independent founders, and local organizations across Northern Ontario. Most of my clients come to me at a crossroads: their current brand or website worked well enough to get them here, but it's no longer keeping up with where they're headed.</p>
+                <div class="landing-section">
+                    <h2>Who This Is For</h2>
+                    <p>Business owners who know their website isn't working, but don't know what to fix first. You've invested in a site, but it's not generating the leads or conversions you expected.</p>
+                    <p>This is a low-commitment way to get clarity before investing in larger work.</p>
+                </div>
 
-                <h2>How I Think</h2>
-                <p>I help small businesses clarify their brand, fix underperforming websites, and build simple digital systems that actually generate leads.</p>
-
-                <p>My work is about structure. That means auditing what's already in place, identifying what's working and what isn't, and replacing scattered, ad-hoc efforts with clear systems. I don't build elaborate marketing funnels or chase trends. I focus on clarity, consistency, and conversion: the foundation of any site or brand that needs to work without constant attention.</p>
-
-                <h2>How I Work</h2>
-                <p>I offer structured services with fixed scope and clear pricing. No hourly billing, no ambiguous retainers. You know what you're getting, what it costs, and what the outcome will be before we start.</p>
-
-                <p>Every engagement begins with a review: either a Website Snapshot or Brand Clarity Session. This gives us both a clear picture of what's going on and what to do about it. From there, we decide together if deeper work makes sense.</p>
-
-                <h2>Background & Perspective</h2>
-                <p>I've spent most of my career inside complex systems: corporate operations, project management, process design. What I've seen, again and again, is how small structural decisions cascade into big problems (or big wins) over time.</p>
-
-                <p>I don't see brands or websites as creative expressions. I see them as systems. And like any system, they need architecture. They need intention. They need a point of view.</p>
-
-                <p>That perspective shapes everything I do. I'm not interested in what looks good. I'm interested in what works.</p>
-
-                <h2>Who This Is For</h2>
-                <p>I work best with clients who:</p>
-                <ul>
-                    <li>Are running a business that already works and want to build on it</li>
-                    <li>Prefer direct, honest feedback over polite flattery</li>
-                    <li>Value clear systems over vague strategy decks</li>
-                    <li>Want a partner who thinks critically, not one who just executes tasks</li>
-                </ul>
-
-                <p>I work best with clients who value clarity, momentum, and shared responsibility. That's why most engagements start with a review.</p>
-
-                <h2>Based in Sudbury, Ontario</h2>
-                <p>I live and work in Sudbury, in the heart of Northern Ontario. I serve clients across the region and across Canada, mostly remotely, with a strong preference for businesses that are genuinely rooted somewhere.</p>
-
-                <h2>Where to Start</h2>
-                <p>If your website isn't converting or your brand feels scattered, start with a quick review. You'll walk away with a clear understanding of what's wrong and a concrete set of priorities to address it, whether we continue working together or not.</p>
-
-                <p style="margin-top: 2rem;"><a href="/#website-snapshot" class="btn btn-primary">Start with a Website Snapshot</a></p>
-
-                <!-- Handwritten signature -->
-                <div class="about-signature">
-                    <img src="assets/sb-signature-grey.png" alt="" class="signature-img signature-img--light" width="120" height="60">
-                    <img src="assets/sb-signature-dark.png" alt="" class="signature-img signature-img--dark" width="120" height="60">
+                <div class="landing-section">
+                    <h2>How It Works</h2>
+                    <p>Book a time that works for you. No prep required on your end. During the call, I'll walk through your site live, identify the most visible issues, and outline what to prioritize.</p>
+                    <p>You'll leave with a clear understanding of what's broken and what to do about it, whether we continue working together or not.</p>
                 </div>
             </div>
         </section>
+
+        <!-- CTA -->
+        <section class="landing-cta">
+            <div class="container">
+                <a href="/request.html?service=website-snapshot" class="btn btn-primary">Book a Website Snapshot</a>
+                <p class="landing-cta-note">No prep required. I'll respond within 24-48 hours.</p>
+            </div>
+        </section>
+
+        <!-- Trust Signal -->
+        <p class="trust-signal">Based in Greater Sudbury, serving Northern Ontario businesses</p>
     </main>
 
     <!-- Scripts -->
