@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   }
 
   // Get visitor info from request
-  const { page, referrer } = req.body || {};
+  const { page, referrer, site } = req.body || {};
 
   // Get visitor IP (Vercel provides this in headers)
   const ip = req.headers['x-forwarded-for']?.split(',')[0] ||
@@ -42,6 +42,16 @@ export default async function handler(req, res) {
       }
     }
 
+    // Determine site name for notification
+    const siteNames = {
+      'scottbertrand.com': 'scottbertrand.com',
+      'www.scottbertrand.com': 'scottbertrand.com',
+      'notes.scottbertrand.com': 'Field Notes',
+      'goods.scottbertrand.com': 'Still Goods'
+    };
+    const siteName = siteNames[site] || site || 'scottbertrand.com';
+    const siteUrl = site || 'scottbertrand.com';
+
     // Build notification message
     let message = `📍 ${page || 'Homepage'}`;
     if (referrer) message += `\nFrom: ${referrer}`;
@@ -57,8 +67,8 @@ export default async function handler(req, res) {
         token: PUSHOVER_TOKEN,
         user: PUSHOVER_USER,
         message: message,
-        title: 'Visitor on scottbertrand.com',
-        url: `https://scottbertrand.com${page || '/'}`,
+        title: `Visitor on ${siteName}`,
+        url: `https://${siteUrl}${page || '/'}`,
         url_title: 'View Page',
         priority: -1, // Low priority (silent, no sound)
       }),
