@@ -114,11 +114,28 @@
             height: 32px;
             width: auto;
         }
+
+        .brand-img--light {
+            display: block;
+        }
+        .brand-img--dark {
+            display: none;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .brand-img--light {
+                display: none;
+            }
+            .brand-img--dark {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
     <a href="/" class="brand">
-        <img src="/assets/sb-monogram-light.png" alt="Scott Bertrand" width="32" height="32">
+        <img src="/assets/sb-monogram-light.png" alt="Scott Bertrand" width="32" height="32" class="brand-img--light">
+        <img src="/assets/sb-monogram-dark.png" alt="Scott Bertrand" width="32" height="32" class="brand-img--dark">
     </a>
 
     <div class="container">
