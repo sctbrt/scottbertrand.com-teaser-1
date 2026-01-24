@@ -107,6 +107,8 @@ export default defineConfig({
         // SEO / LLM-EO content pages
         whatIsBrandWebSystem: resolve(__dirname, 'src/pages/what-is-a-brand-web-system.html'),
         sudburyWebsiteLeads: resolve(__dirname, 'src/pages/sudbury-small-business-website-leads.html'),
+        // Landing pages
+        websiteSnapshot: resolve(__dirname, 'src/pages/website-snapshot.html'),
       },
     },
   },
