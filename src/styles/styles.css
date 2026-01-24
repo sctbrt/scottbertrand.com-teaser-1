@@ -1,5 +1,6 @@
 /* ===================================
-   Scott Bertrand - v1.1.2
+   Scott Bertrand - v2.0.0
+   Architect Feedback Integration
    =================================== */
 
 /* Google Fonts - Source Serif 4 */
@@ -19,6 +20,39 @@
     --success-bg: #f0fdf4;
     --success-border: #86efac;
     --success-text: #166534;
+
+    /* Accent Colors - Warm Amber (Primary) */
+    --accent: #D97706;
+    --accent-hover: #B45309;       /* Deep Terracotta for less pop contexts */
+    --accent-muted: rgba(217, 119, 6, 0.12);
+    --accent-subtle: rgba(217, 119, 6, 0.06);
+
+    /* Focus Ring */
+    --focus-ring: rgba(217, 119, 6, 0.5);
+    --focus-ring-offset: 2px;
+
+    /* Layout tokens */
+    --container-max: 1120px;
+    --container-narrow: 680px;
+    --container-wide: 1200px;
+    --gutter: 24px;
+
+    /* Spacing scale */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-12: 48px;
+    --space-16: 64px;
+    --space-24: 96px;
+
+    /* Border radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
 
     /* Motion tokens */
     --t-fast: 120ms;
@@ -40,6 +74,15 @@
     --success-bg: #0d1f0d;
     --success-border: #1e3a1e;
     --success-text: #86efac;
+
+    /* Accent Colors - slightly brighter for dark mode visibility */
+    --accent: #F59E0B;
+    --accent-hover: #D97706;
+    --accent-muted: rgba(245, 158, 11, 0.15);
+    --accent-subtle: rgba(245, 158, 11, 0.08);
+
+    /* Focus Ring */
+    --focus-ring: rgba(245, 158, 11, 0.5);
 }
 
 /* ===================================
@@ -241,9 +284,9 @@ body.modal-active {
 }
 
 .site-brand:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.35);
-    outline-offset: 3px;
-    border-radius: 4px;
+    outline: 2px solid var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+    border-radius: var(--radius-sm);
 }
 
 .brand-monogram {
@@ -338,9 +381,9 @@ body.modal-active {
 
 .nav-menu a:focus-visible,
 .nav-menu button:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.35);
-    outline-offset: 3px;
-    border-radius: 4px;
+    outline: 2px solid var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+    border-radius: var(--radius-sm);
     opacity: 1;
 }
 
@@ -648,7 +691,7 @@ body.modal-active {
     font-weight: 500;
     margin-bottom: 14px;
     letter-spacing: -0.01em;
-    color: var(--text-primary);
+    color: var(--accent);  /* Accent color for section headers */
 }
 
 .section p {
@@ -1190,13 +1233,15 @@ body.modal-active {
     width: 40px;
     height: 40px;
     flex-shrink: 0;
-    background: rgba(128, 128, 128, 0.05);
-    border: 1px solid rgba(128, 128, 128, 0.1);
+    background: var(--accent-subtle);
+    border: 1px solid var(--accent);
     border-radius: 50%;
     font-size: 1rem;
     font-weight: 500;
-    color: var(--text-primary);
+    color: var(--accent);
     margin-bottom: 1rem;
+    /* Restrained inner glow */
+    box-shadow: inset 0 0 0 1px var(--accent-muted);
 }
 
 .step-content {
@@ -1348,7 +1393,14 @@ body.modal-active {
 }
 
 .btn-secondary:hover {
-    border-color: var(--border-hover);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* Button focus states with accent ring */
+.btn:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
 }
 
 .btn-small {
@@ -1948,6 +2000,66 @@ body.modal-active {
 .dropdown-descriptor--coming-soon {
     font-style: italic;
     opacity: 0.7;
+}
+
+/* ===========================================
+   Accent System Utilities
+   =========================================== */
+
+/* Accent text - use sparingly on section headers */
+.accent-text {
+    color: var(--accent);
+}
+
+/* Accent link underline */
+.accent-link {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-muted);
+    text-underline-offset: 3px;
+    transition: text-decoration-color var(--t-fast) var(--ease-out);
+}
+
+.accent-link:hover {
+    text-decoration-color: var(--accent);
+}
+
+/* Accent marker rule (thin section divider) */
+.accent-rule {
+    width: 48px;
+    height: 2px;
+    background: var(--accent);
+    border: none;
+    margin: var(--space-4) 0;
+}
+
+.accent-rule--center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Global focus ring for all interactive elements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+}
+
+/* Remove default outline when using focus-visible */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Form input focus with accent */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-muted);
 }
 
 /* ===========================================
