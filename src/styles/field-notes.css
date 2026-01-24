@@ -1,7 +1,7 @@
 /* Field Notes Editorial Typography System */
 
 .field-notes-archive {
-    --fn-serif: Georgia, 'Times New Roman', serif;
+    --fn-serif: 'Source Serif 4', Georgia, serif;
     --fn-text: var(--text-primary);
     --fn-text-secondary: var(--text-secondary);
     --fn-spacing: 2rem;
@@ -282,7 +282,7 @@
    =========================== */
 
 .field-note-entry {
-    --fn-serif: Georgia, 'Times New Roman', serif;
+    --fn-serif: 'Source Serif 4', Georgia, serif;
     --fn-text: var(--text-primary);
     --fn-text-secondary: var(--text-secondary);
     padding: 120px 2rem 120px;
