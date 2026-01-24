@@ -8,7 +8,7 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 // ===================================
@@ -34,6 +34,7 @@ model User {
   activityLogs  ActivityLog[]
   createdLeads  Lead[]        @relation("LeadCreator")
   assignedTasks Task[]        @relation("TaskAssignee")
+  comments      Comment[]
 
   @@map("users")
 }
@@ -174,6 +175,7 @@ model Project {
   invoices         Invoice[]
   files            FileAsset[]
   milestones       Milestone[]
+  comments         Comment[]
 
   @@map("projects")
 }
@@ -285,7 +287,8 @@ model Milestone {
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
 
-  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  project  Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  comments Comment[]
 
   @@map("milestones")
 }
@@ -356,6 +359,7 @@ model FileAsset {
 
   project  Project?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
   invoices Invoice[]
+  comments Comment[]
 
   @@map("file_assets")
 }
@@ -364,6 +368,33 @@ enum FileAccessLevel {
   PUBLIC
   PRIVATE
   CLIENT_VISIBLE
+}
+
+// ===================================
+// COMMENT MODEL (Client Feedback)
+// ===================================
+
+model Comment {
+  id          String   @id @default(cuid())
+  projectId   String
+  milestoneId String?
+  fileId      String?
+  authorId    String
+  content     String   @db.Text
+  isInternal  Boolean  @default(false) // Admin-only notes, hidden from client
+  isRead      Boolean  @default(false) // Has admin seen client comment?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  milestone Milestone? @relation(fields: [milestoneId], references: [id], onDelete: SetNull)
+  file      FileAsset? @relation(fields: [fileId], references: [id], onDelete: SetNull)
+  author    User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([milestoneId])
+  @@index([authorId])
+  @@map("comments")
 }
 
 // ===================================
