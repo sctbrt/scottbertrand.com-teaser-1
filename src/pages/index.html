@@ -110,26 +110,39 @@
             opacity: 0.35;
         }
 
-        /* Hero tree ring animation */
-        .tree-ring-hero {
+        /* Intro overlay */
+        .intro {
             position: fixed;
-            top: 50vh;
-            left: 50vw;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+        .intro.is-complete {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .intro__ring {
             width: 320px;
             height: 320px;
             background: url('../assets/tree-ring-logo.png') no-repeat center;
             background-size: contain;
-            transform: translate(-50%, -50%);
-            opacity: 0.25;
-            pointer-events: none;
-            z-index: 99;
-            will-change: transform, opacity, top, left, width, height;
+            opacity: 0.3;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .tree-ring-hero.is-docked {
+        .intro.is-animating .intro__ring {
+            width: 28px;
+            height: 28px;
             opacity: 0;
         }
         @media (prefers-reduced-motion: reduce) {
-            .tree-ring-hero {
+            .intro {
                 display: none;
             }
             .header__logo::before {
@@ -566,7 +579,9 @@
     </style>
 </head>
 <body>
-    <div class="tree-ring-hero" aria-hidden="true"></div>
+    <div class="intro" aria-hidden="true">
+        <div class="intro__ring"></div>
+    </div>
     <div class="page">
         <header class="header">
             <div class="header__inner">
@@ -683,72 +698,68 @@
             });
         });
 
-        // Tree ring scroll animation
+        // Intro animation (one-way)
         (function() {
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-            const ring = document.querySelector('.tree-ring-hero');
-            const logo = document.querySelector('.header__logo');
-            if (!ring || !logo) return;
-
-            const startSize = 320;
-            const endSize = 28;
-            const scrollDistance = 300; // pixels to complete animation
-
-            function updateRing() {
-                const scrollY = window.scrollY;
-                const progress = Math.min(scrollY / scrollDistance, 1);
-
-                // Eased progress for smoother feel
-                const eased = 1 - Math.pow(1 - progress, 3);
-
-                if (progress >= 1) {
-                    ring.classList.add('is-docked');
-                    logo.classList.add('show-mark');
-                    return;
-                }
-
-                ring.classList.remove('is-docked');
-                logo.classList.remove('show-mark');
-
-                // Calculate current size
-                const currentSize = startSize - (startSize - endSize) * eased;
-
-                // Get logo position for target
-                const logoRect = logo.getBoundingClientRect();
-                const logoMarkX = logoRect.left + 14; // center of 28px mark
-                const logoMarkY = logoRect.top + logoRect.height / 2;
-
-                // Interpolate position from center to logo
-                const startX = window.innerWidth / 2;
-                const startY = window.innerHeight * 0.45;
-                const currentX = startX + (logoMarkX - startX) * eased;
-                const currentY = startY + (logoMarkY - startY) * eased;
-
-                // Interpolate opacity (0.25 to 0.35)
-                const currentOpacity = 0.25 + (0.35 - 0.25) * eased;
-
-                ring.style.width = currentSize + 'px';
-                ring.style.height = currentSize + 'px';
-                ring.style.left = currentX + 'px';
-                ring.style.top = currentY + 'px';
-                ring.style.opacity = currentOpacity;
-                ring.style.transform = 'translate(-50%, -50%)';
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector('.header__logo')?.classList.add('show-mark');
+                return;
             }
 
-            let ticking = false;
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    requestAnimationFrame(() => {
-                        updateRing();
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            });
+            const intro = document.querySelector('.intro');
+            const logo = document.querySelector('.header__logo');
+            if (!intro || !logo) return;
 
-            // Initial state
-            updateRing();
+            let triggered = false;
+
+            function handleScroll() {
+                if (triggered) return;
+
+                // Any scroll triggers the animation
+                if (window.scrollY > 5) {
+                    triggered = true;
+                    intro.classList.add('is-animating');
+
+                    // After ring shrinks, fade out overlay and show header mark
+                    setTimeout(() => {
+                        intro.classList.add('is-complete');
+                        logo.classList.add('show-mark');
+                    }, 600);
+
+                    // Remove intro from DOM after animation
+                    setTimeout(() => {
+                        intro.remove();
+                    }, 1100);
+
+                    // Remove scroll listener
+                    window.removeEventListener('scroll', handleScroll);
+                }
+            }
+
+            window.addEventListener('scroll', handleScroll);
+
+            // Also trigger on wheel/touch for immediate response
+            function handleWheel(e) {
+                if (triggered) return;
+                if (e.deltaY > 0 || e.type === 'touchstart') {
+                    triggered = true;
+                    intro.classList.add('is-animating');
+
+                    setTimeout(() => {
+                        intro.classList.add('is-complete');
+                        logo.classList.add('show-mark');
+                    }, 600);
+
+                    setTimeout(() => {
+                        intro.remove();
+                    }, 1100);
+
+                    window.removeEventListener('wheel', handleWheel);
+                    window.removeEventListener('touchstart', handleWheel);
+                }
+            }
+
+            window.addEventListener('wheel', handleWheel, { passive: true });
+            window.addEventListener('touchstart', handleWheel, { passive: true });
         })();
     </script>
 </body>
