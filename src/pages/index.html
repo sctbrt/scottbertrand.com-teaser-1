@@ -332,6 +332,12 @@
             transition: color 0.2s;
         }
         .venture__link:hover { color: var(--venture-color); }
+        .venture__link--soon {
+            color: var(--text-subtle);
+            font-weight: 400;
+            cursor: default;
+        }
+        .venture__link--soon:hover { color: var(--text-subtle); }
         .venture--notes { --venture-color: var(--color-notes); }
         .venture--goods { --venture-color: var(--color-goods); }
 
@@ -484,14 +490,14 @@
                         <h3 class="venture__name">Field Notes</h3>
                         <p class="venture__type">Writing</p>
                         <p class="venture__description">Thoughts on design, building, and working independently.</p>
-                        <a href="#" class="venture__link">Read notes &rarr;</a>
+                        <span class="venture__link venture__link--soon">Coming soon</span>
                     </article>
                     <article class="venture venture--goods">
                         <p class="venture__number">03</p>
                         <h3 class="venture__name">Still Goods</h3>
                         <p class="venture__type">Products</p>
                         <p class="venture__description">Curated goods and original products. Quality items that last.</p>
-                        <a href="#" class="venture__link">Browse goods &rarr;</a>
+                        <span class="venture__link venture__link--soon">Coming soon</span>
                     </article>
                 </div>
             </section>
