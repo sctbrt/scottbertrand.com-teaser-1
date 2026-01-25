@@ -12,12 +12,11 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         about: resolve(__dirname, 'about.html'),
-        approach: resolve(__dirname, 'approach.html'),
-        focus: resolve(__dirname, 'focus.html'),
         contact: resolve(__dirname, 'contact.html'),
+        caseStudies: resolve(__dirname, 'case-studies.html'),
         fieldNotes: resolve(__dirname, 'field-notes.html'),
         fieldNote: resolve(__dirname, 'field-note.html'),
-        // V1.2.0 pages
+        // V1.5 pages
         howItWorks: resolve(__dirname, 'how-it-works.html'),
         request: resolve(__dirname, 'request.html'),
         // Service detail pages

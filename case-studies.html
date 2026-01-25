@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO -->
+    <link rel="canonical" href="https://scottbertrand.com/case-studies.html">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+    <meta name="color-scheme" content="light dark">
+    <title>Case Studies — Brand & Web Systems for Greater Sudbury | Scott Bertrand</title>
+    <meta name="description" content="Case studies showcasing brand and web systems work for Greater Sudbury and Northern Ontario businesses. Field Notes, Still Goods, and more.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Case Studies — Brand & Web Systems for Greater Sudbury | Scott Bertrand">
+    <meta property="og:description" content="Case studies showcasing brand and web systems work for Greater Sudbury and Northern Ontario businesses.">
+    <meta property="og:image" content="assets/og-image.png">
+    <meta property="og:type" content="website">
+
+    <!-- Cloudflare Web Analytics -->
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "YOUR_CLOUDFLARE_TOKEN_HERE"}'></script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/sb-monogram-light.png">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .case-studies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .case-study-card {
+            background: rgba(128, 128, 128, 0.02);
+            border: 1px solid rgba(128, 128, 128, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .case-study-card:hover {
+            border-color: rgba(128, 128, 128, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .case-study-card--disabled {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .case-study-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .case-study-content {
+            padding: 1.5rem;
+        }
+
+        .case-study-content h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .case-study-content p {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            margin-bottom: 1rem;
+        }
+
+        .case-study-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.25rem 0.5rem;
+            background: rgba(128, 128, 128, 0.1);
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+
+        .case-study-tag--coming-soon {
+            background: rgba(128, 128, 128, 0.05);
+        }
+
+        .page-header {
+            padding: 120px 2rem 60px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-intro {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 640px) {
+            .page-header {
+                padding: 100px 1.5rem 40px;
+            }
+
+            .case-studies-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="site-header">
+        <div class="nav-container">
+            <a href="https://scottbertrand.com/" class="site-brand">
+                <span class="brand-text">SB | SCOTT BERTRAND</span>
+            </a>
+
+            <nav class="nav-menu" id="navMenu">
+                <a href="https://scottbertrand.com/services.html">Services</a>
+                <a href="https://scottbertrand.com/how-it-works.html">How It Works</a>
+                <div class="nav-dropdown">
+                    <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+                        Case Studies
+                        <span class="dropdown-arrow">▾</span>
+                    </button>
+                    <div class="nav-dropdown-menu" aria-label="Case Studies submenu" aria-hidden="true">
+                        <a href="https://notes.scottbertrand.com/" class="nav-dropdown-item">
+                            <div class="dropdown-item-header">
+                                <img src="assets/field-notes-menu-dark.png" alt="Field Notes" class="dropdown-brand-img" width="599" height="110">
+                            </div>
+                            <span class="dropdown-descriptor">Working archive · essays · systems</span>
+                        </a>
+                        <a href="https://goods.scottbertrand.com/" class="nav-dropdown-item">
+                            <div class="dropdown-item-header">
+                                <img src="assets/still-goods-menu-dark.png" alt="Still Goods" class="dropdown-brand-img" width="1333" height="283">
+                            </div>
+                            <span class="dropdown-descriptor">Seasonal objects · limited issues</span>
+                        </a>
+                        <a href="https://maxstewart.life/" class="nav-dropdown-item nav-dropdown-item--disabled">
+                            <div class="dropdown-item-header">
+                                <img src="assets/maxstewart-dark.png" alt="Max Stewart" class="dropdown-brand-img" width="2100" height="434">
+                            </div>
+                            <span class="dropdown-descriptor dropdown-descriptor--coming-soon">Coming Soon</span>
+                        </a>
+                    </div>
+                </div>
+                <a href="https://scottbertrand.com/about.html">About</a>
+                <a href="https://scottbertrand.com/contact.html">Contact</a>
+            </nav>
+
+            <div class="nav-utilities">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon">◐</span>
+                </button>
+
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>Case Studies</h1>
+                <p class="page-intro">
+                    Selected brand and web systems work. Each project represents a complete system—from positioning to execution.
+                </p>
+            </div>
+        </section>
+
+        <!-- Case Studies Grid -->
+        <section class="section">
+            <div class="container">
+                <div class="case-studies-grid">
+                    <!-- Field Notes -->
+                    <a href="https://notes.scottbertrand.com/" class="case-study-card">
+                        <img src="assets/field-notes-preview.png" alt="Field Notes preview" class="case-study-image" loading="lazy">
+                        <div class="case-study-content">
+                            <h3>Field Notes</h3>
+                            <p>Working archive of essays, systems thinking, and design notes. A content platform built on Notion and deployed with serverless functions.</p>
+                            <span class="case-study-tag">Brand + Web System</span>
+                        </div>
+                    </a>
+
+                    <!-- Still Goods -->
+                    <a href="https://goods.scottbertrand.com/" class="case-study-card">
+                        <img src="assets/still-goods-preview.png" alt="Still Goods preview" class="case-study-image" loading="lazy">
+                        <div class="case-study-content">
+                            <h3>Still Goods</h3>
+                            <p>Seasonal objects and limited issues. A curated product brand with minimal, conversion-focused presentation.</p>
+                            <span class="case-study-tag">Brand + E-commerce</span>
+                        </div>
+                    </a>
+
+                    <!-- Max Stewart -->
+                    <div class="case-study-card case-study-card--disabled">
+                        <img src="assets/maxstewart-preview.png" alt="Max Stewart preview" class="case-study-image" loading="lazy">
+                        <div class="case-study-content">
+                            <h3>Max Stewart</h3>
+                            <p>Personal brand and portfolio for a Northern Ontario creative. Full brand system and website foundation.</p>
+                            <span class="case-study-tag case-study-tag--coming-soon">Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="section service-cta-section">
+            <div class="container">
+                <div class="service-cta-content">
+                    <h2>Ready to build your system?</h2>
+                    <p>Start with an audit to identify what's working and what needs attention.</p>
+                    <div class="cta-group">
+                        <a href="/request.html" class="btn btn-primary">Request an Audit</a>
+                        <a href="/" class="btn btn-secondary">View Services</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script type="module" src="theme.js"></script>
+    <script type="module" src="dropdown.js"></script>
+</body>
+</html>

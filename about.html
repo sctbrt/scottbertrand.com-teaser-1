@@ -8,12 +8,12 @@
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
     <meta name="color-scheme" content="light dark">
-    <title>About — Scott Bertrand</title>
-    <meta name="description" content="I design systems—brand, operations, and digital—that reduce friction and make work feel lighter.">
+    <title>About — Brand & Web Systems for Greater Sudbury | Scott Bertrand</title>
+    <meta name="description" content="I build brand and web systems for Greater Sudbury and Northern Ontario businesses. Clear, structured work that reduces friction and drives results.">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="About — Scott Bertrand">
-    <meta property="og:description" content="I design systems—brand, operations, and digital—that reduce friction and make work feel lighter.">
+    <meta property="og:title" content="About — Brand & Web Systems for Greater Sudbury | Scott Bertrand">
+    <meta property="og:description" content="I build brand and web systems for Greater Sudbury and Northern Ontario businesses. Clear, structured work that reduces friction and drives results.">
     <meta property="og:image" content="assets/og-image.png">
     <meta property="og:type" content="website">
 
@@ -37,10 +37,34 @@
             <nav class="nav-menu" id="navMenu">
                 <a href="https://scottbertrand.com/services.html">Services</a>
                 <a href="https://scottbertrand.com/how-it-works.html">How It Works</a>
+                <div class="nav-dropdown">
+                    <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+                        Case Studies
+                        <span class="dropdown-arrow">▾</span>
+                    </button>
+                    <div class="nav-dropdown-menu" aria-label="Case Studies submenu" aria-hidden="true">
+                        <a href="https://notes.scottbertrand.com/" class="nav-dropdown-item">
+                            <div class="dropdown-item-header">
+                                <img src="assets/field-notes-menu-dark.png" alt="Field Notes" class="dropdown-brand-img" width="599" height="110">
+                            </div>
+                            <span class="dropdown-descriptor">Working archive · essays · systems</span>
+                        </a>
+                        <a href="https://goods.scottbertrand.com/" class="nav-dropdown-item">
+                            <div class="dropdown-item-header">
+                                <img src="assets/still-goods-menu-dark.png" alt="Still Goods" class="dropdown-brand-img" width="1333" height="283">
+                            </div>
+                            <span class="dropdown-descriptor">Seasonal objects · limited issues</span>
+                        </a>
+                        <a href="https://maxstewart.life/" class="nav-dropdown-item nav-dropdown-item--disabled">
+                            <div class="dropdown-item-header">
+                                <img src="assets/maxstewart-dark.png" alt="Max Stewart" class="dropdown-brand-img" width="2100" height="434">
+                            </div>
+                            <span class="dropdown-descriptor dropdown-descriptor--coming-soon">Coming Soon</span>
+                        </a>
+                    </div>
+                </div>
                 <a href="https://scottbertrand.com/about.html">About</a>
                 <a href="https://scottbertrand.com/contact.html">Contact</a>
-                <a href="https://notes.scottbertrand.com/">Field Notes</a>
-                <a href="https://goods.scottbertrand.com/">Still Goods</a>
             </nav>
 
             <div class="nav-utilities">
@@ -63,14 +87,19 @@
         <section id="about" class="section">
             <div class="container">
                 <h2>About</h2>
-                <p>I design systems—brand, operations, and digital—that reduce friction and make work feel lighter.</p>
+                <p><strong>I build brand and web systems for Greater Sudbury and Northern Ontario businesses.</strong></p>
+                <p>Clear, structured work that reduces friction and drives results. Based in Greater Sudbury, available remotely across Canada.</p>
                 <p>I'm drawn to the moment where things are almost working, but not quite: the handoffs, the unclear standards, the unowned details. That's where structure becomes leverage.</p>
+                <p>Most of my clients are service-based businesses, trades, and local organizations who need clarity—not complexity. Whether it's an audit to identify what's not working, a brand system that finally feels like you, or a website foundation that actually converts, I help you move forward with confidence.</p>
+                <div style="margin-top: 2rem;">
+                    <a href="https://scottbertrand.com/request.html" class="btn btn-primary">Request an Audit</a>
+                </div>
             </div>
         </section>
     </main>
 
     <!-- Scripts -->
     <script type="module" src="theme.js"></script>
-    <script type="module" src="modal.js"></script>
+    <script type="module" src="dropdown.js"></script>
 </body>
 </html>

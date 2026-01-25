@@ -4,6 +4,33 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": null,
+  "redirects": [
+    {
+      "source": "/approach.html",
+      "destination": "/about.html",
+      "permanent": true
+    },
+    {
+      "source": "/approach",
+      "destination": "/about.html",
+      "permanent": true
+    },
+    {
+      "source": "/focus.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/focus",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/services",
+      "destination": "/",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
