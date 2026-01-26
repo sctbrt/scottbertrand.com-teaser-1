@@ -63,6 +63,19 @@ export async function POST(request: NextRequest) {
     // Check for spam
     const isSpam = checkForSpam(formData)
 
+    // Validate service against ServiceTemplate if provided
+    let validatedService: string | null = null
+    if (service) {
+      const serviceTemplate = await prisma.serviceTemplate.findUnique({
+        where: { slug: service },
+        select: { slug: true },
+      })
+      if (serviceTemplate) {
+        validatedService = serviceTemplate.slug
+      }
+      // If no matching template, service stays null but raw value is in formData
+    }
+
     // Create lead record
     const lead = await prisma.lead.create({
       data: {
@@ -71,12 +84,12 @@ export async function POST(request: NextRequest) {
         companyName: companyName || null,
         website: website || null,
         phone: phone || null,
-        service: service || null,
+        service: validatedService,
         message: message || null,
         source: 'formspree',
         status: 'NEW',
         isSpam,
-        formData: formData, // Store raw form data
+        formData: formData, // Store raw form data (includes original service value)
       },
     })
 
@@ -188,7 +201,7 @@ async function sendNotification({
         user: process.env.PUSHOVER_USER_KEY,
         message,
         title: 'New Lead Submitted',
-        url: `https://dashboard.scottbertrand.com/leads/${lead.id}`,
+        url: `https://dashboard.bertrandbrands.com/leads/${lead.id}`,
         url_title: 'View Lead',
         priority: 0,
       }),

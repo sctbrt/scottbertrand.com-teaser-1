@@ -1,0 +1,285 @@
+'use server'
+
+// Server Actions for Lead Management
+import { prisma } from '@/lib/prisma'
+import { auth } from '@/lib/auth'
+import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
+import type { LeadStatus } from '@prisma/client'
+
+export type LeadActionState = {
+  error?: string
+  success?: boolean
+} | null
+
+export async function updateLeadStatus(
+  leadId: string,
+  prevState: LeadActionState,
+  formData: FormData
+): Promise<LeadActionState> {
+  const session = await auth()
+  if (!session?.user || session.user.role !== 'INTERNAL_ADMIN') {
+    return { error: 'Unauthorized' }
+  }
+
+  const status = formData.get('status') as LeadStatus
+
+  if (!status) {
+    return { error: 'Status is required' }
+  }
+
+  try {
+    await prisma.lead.update({
+      where: { id: leadId },
+      data: { status: status as LeadStatus },
+    })
+
+    // Log activity
+    await prisma.activityLog.create({
+      data: {
+        userId: session.user.id,
+        action: 'UPDATE_STATUS',
+        entityType: 'Lead',
+        entityId: leadId,
+        details: { status },
+      },
+    })
+
+    revalidatePath(`/dashboard/leads/${leadId}`)
+    revalidatePath('/dashboard/leads')
+
+    return { success: true }
+  } catch (error) {
+    console.error('Error updating lead status:', error)
+    return { error: 'Failed to update lead status' }
+  }
+}
+
+export async function markAsSpam(
+  leadId: string,
+  prevState: LeadActionState,
+  formData: FormData
+): Promise<LeadActionState> {
+  const session = await auth()
+  if (!session?.user || session.user.role !== 'INTERNAL_ADMIN') {
+    return { error: 'Unauthorized' }
+  }
+
+  try {
+    await prisma.lead.update({
+      where: { id: leadId },
+      data: {
+        isSpam: true,
+        status: 'DISQUALIFIED',
+      },
+    })
+
+    // Log activity
+    await prisma.activityLog.create({
+      data: {
+        userId: session.user.id,
+        action: 'MARK_SPAM',
+        entityType: 'Lead',
+        entityId: leadId,
+      },
+    })
+
+    revalidatePath(`/dashboard/leads/${leadId}`)
+    revalidatePath('/dashboard/leads')
+
+    return { success: true }
+  } catch (error) {
+    console.error('Error marking lead as spam:', error)
+    return { error: 'Failed to mark lead as spam' }
+  }
+}
+
+export async function deleteLead(
+  leadId: string,
+  prevState: LeadActionState,
+  formData: FormData
+): Promise<LeadActionState> {
+  const session = await auth()
+  if (!session?.user || session.user.role !== 'INTERNAL_ADMIN') {
+    return { error: 'Unauthorized' }
+  }
+
+  try {
+    const lead = await prisma.lead.findUnique({
+      where: { id: leadId },
+    })
+
+    if (!lead) {
+      return { error: 'Lead not found' }
+    }
+
+    // Prevent deletion of converted leads
+    if (lead.status === 'CONVERTED' || lead.convertedToClientId) {
+      return { error: 'Cannot delete converted leads' }
+    }
+
+    await prisma.lead.delete({
+      where: { id: leadId },
+    })
+
+    // Log activity
+    await prisma.activityLog.create({
+      data: {
+        userId: session.user.id,
+        action: 'DELETE',
+        entityType: 'Lead',
+        entityId: leadId,
+      },
+    })
+
+    revalidatePath('/dashboard/leads')
+    redirect('/dashboard/leads')
+  } catch (error) {
+    console.error('Error deleting lead:', error)
+    return { error: 'Failed to delete lead' }
+  }
+}
+
+export async function convertToClient(
+  leadId: string,
+  prevState: LeadActionState,
+  formData: FormData
+): Promise<LeadActionState> {
+  const session = await auth()
+  if (!session?.user || session.user.role !== 'INTERNAL_ADMIN') {
+    return { error: 'Unauthorized' }
+  }
+
+  const contactName = formData.get('contactName') as string
+  const companyName = formData.get('companyName') as string | null
+  const createProject = formData.get('createProject') === 'true'
+  const projectName = formData.get('projectName') as string
+  const templateId = formData.get('templateId') as string | null
+
+  if (!contactName) {
+    return { error: 'Contact name is required' }
+  }
+
+  try {
+    const lead = await prisma.lead.findUnique({
+      where: { id: leadId },
+    })
+
+    if (!lead) {
+      return { error: 'Lead not found' }
+    }
+
+    if (lead.status === 'CONVERTED' || lead.convertedToClientId) {
+      return { error: 'Lead is already converted' }
+    }
+
+    // Check if user with this email already exists
+    let user = await prisma.user.findUnique({
+      where: { email: lead.email.toLowerCase() },
+    })
+
+    if (user) {
+      // Check if they already have a client profile
+      const existingClient = await prisma.client.findUnique({
+        where: { userId: user.id },
+      })
+
+      if (existingClient) {
+        return { error: 'A client with this email already exists' }
+      }
+    } else {
+      // Create new user
+      user = await prisma.user.create({
+        data: {
+          email: lead.email.toLowerCase(),
+          name: contactName,
+          role: 'CLIENT',
+        },
+      })
+    }
+
+    // Create client
+    const client = await prisma.client.create({
+      data: {
+        userId: user.id,
+        contactName,
+        contactEmail: lead.email.toLowerCase(),
+        companyName: companyName || null,
+        phone: lead.phone || null,
+        website: lead.website || null,
+      },
+    })
+
+    // Update lead
+    await prisma.lead.update({
+      where: { id: leadId },
+      data: {
+        status: 'CONVERTED',
+        convertedToClientId: client.id,
+      },
+    })
+
+    // Create initial project if requested
+    let projectId = null
+    if (createProject && projectName) {
+      // Get default checklist from template if selected
+      let defaultTasks: { title: string; description?: string }[] = []
+      if (templateId) {
+        const template = await prisma.serviceTemplate.findUnique({
+          where: { id: templateId },
+        })
+        if (template?.checklistItems) {
+          defaultTasks = template.checklistItems as typeof defaultTasks
+        }
+      }
+
+      const project = await prisma.project.create({
+        data: {
+          name: projectName,
+          clientId: client.id,
+          serviceTemplateId: templateId || null,
+          status: 'DRAFT',
+        },
+      })
+
+      projectId = project.id
+
+      // Create default tasks
+      if (defaultTasks.length > 0) {
+        await prisma.task.createMany({
+          data: defaultTasks.map((task, index) => ({
+            projectId: project.id,
+            title: task.title,
+            description: task.description || null,
+            sortOrder: index,
+            isClientVisible: true,
+          })),
+        })
+      }
+    }
+
+    // Log activity
+    await prisma.activityLog.create({
+      data: {
+        userId: session.user.id,
+        action: 'CONVERT',
+        entityType: 'Lead',
+        entityId: leadId,
+        details: {
+          clientId: client.id,
+          projectId,
+        },
+      },
+    })
+
+    revalidatePath(`/dashboard/leads/${leadId}`)
+    revalidatePath('/dashboard/leads')
+    revalidatePath('/dashboard/clients')
+    revalidatePath('/dashboard')
+
+    redirect(`/dashboard/clients/${client.id}`)
+  } catch (error) {
+    console.error('Error converting lead to client:', error)
+    return { error: 'Failed to convert lead to client' }
+  }
+}

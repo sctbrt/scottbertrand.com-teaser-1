@@ -1,5 +1,5 @@
 // Root Layout with Global Metadata
-// SEO: Canonical domain = https://scottbertrand.com
+// SEO: Canonical domain = https://bertrandbrands.com
 // NO AMP support - intentionally omitted
 
 import type { Metadata } from 'next'
@@ -7,12 +7,12 @@ import './globals.css'
 
 // Global metadata base - canonical domain (CRITICAL)
 export const metadata: Metadata = {
-  metadataBase: new URL('https://scottbertrand.com'),
+  metadataBase: new URL('https://bertrandbrands.com'),
 
   // Default title template
   title: {
-    default: 'Scott Bertrand — Brand & Web Systems',
-    template: '%s | Scott Bertrand',
+    default: 'Bertrand Brands — Brand & Web Systems',
+    template: '%s | Bertrand Brands',
   },
 
   description: 'Clear, structured brand and web work for businesses that need clarity, not chaos. Based in Greater Sudbury, serving Northern Ontario & Canada remotely.',
@@ -21,13 +21,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_CA',
-    siteName: 'Scott Bertrand',
+    siteName: 'Bertrand Brands',
     images: [
       {
         url: '/assets/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Scott Bertrand — Brand & Web Systems',
+        alt: 'Bertrand Brands — Brand & Web Systems',
       },
     ],
   },

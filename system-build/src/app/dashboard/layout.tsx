@@ -1,4 +1,4 @@
-// Dashboard Layout - Internal Operations (dashboard.scottbertrand.com)
+// Dashboard Layout - Internal Operations (dashboard.bertrandbrands.com)
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { DashboardNav } from './components/dashboard-nav'

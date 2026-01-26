@@ -44,7 +44,7 @@ export default async function LoginPage({
             </div>
           )}
 
-          <LoginForm callbackUrl={params.callbackUrl} />
+          <LoginForm callbackUrl={params.callbackUrl} isDev={process.env.NODE_ENV === 'development'} />
         </div>
 
         <p className="text-center text-xs text-gray-400 dark:text-gray-500 mt-6">

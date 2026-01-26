@@ -1,0 +1,230 @@
+'use client'
+
+// Project Form Component for Create/Edit
+import { useActionState } from 'react'
+import { createProject, updateProject } from '@/lib/actions/projects'
+
+interface ProjectFormProps {
+  project?: {
+    id: string
+    name: string
+    description: string | null
+    status: string
+    clientId: string
+    serviceTemplateId: string | null
+    startDate: Date | null
+    targetEndDate: Date | null
+    previewUrl: string | null
+  }
+  clients: {
+    id: string
+    companyName: string | null
+    contactName: string
+  }[]
+  templates: {
+    id: string
+    name: string
+    slug: string
+  }[]
+  compact?: boolean
+}
+
+export function ProjectForm({ project, clients, templates, compact }: ProjectFormProps) {
+  const action = project ? updateProject.bind(null, project.id) : createProject
+  const [state, formAction, isPending] = useActionState(action, null)
+
+  const statuses = [
+    'DRAFT',
+    'PENDING_APPROVAL',
+    'IN_PROGRESS',
+    'ON_HOLD',
+    'COMPLETED',
+    'CANCELLED',
+  ]
+
+  return (
+    <form action={formAction} className="space-y-4">
+      <div>
+        <label
+          htmlFor="name"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
+          Project Name *
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          defaultValue={project?.name || ''}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="clientId"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
+          Client *
+        </label>
+        <select
+          id="clientId"
+          name="clientId"
+          required
+          defaultValue={project?.clientId || ''}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+        >
+          <option value="">Select a client</option>
+          {clients.map((client) => (
+            <option key={client.id} value={client.id}>
+              {client.companyName || client.contactName}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label
+          htmlFor="serviceTemplateId"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
+          Service Template
+        </label>
+        <select
+          id="serviceTemplateId"
+          name="serviceTemplateId"
+          defaultValue={project?.serviceTemplateId || ''}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+        >
+          <option value="">Custom Project</option>
+          {templates.map((template) => (
+            <option key={template.id} value={template.id}>
+              {template.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {project && (
+        <div>
+          <label
+            htmlFor="status"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          >
+            Status
+          </label>
+          <select
+            id="status"
+            name="status"
+            defaultValue={project.status}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+          >
+            {statuses.map((status) => (
+              <option key={status} value={status}>
+                {status.replace('_', ' ')}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {!compact && (
+        <div>
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          >
+            Description
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            rows={4}
+            defaultValue={project?.description || ''}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 resize-none"
+          />
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label
+            htmlFor="startDate"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          >
+            Start Date
+          </label>
+          <input
+            type="date"
+            id="startDate"
+            name="startDate"
+            defaultValue={project?.startDate ? formatDateInput(project.startDate) : ''}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="targetEndDate"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          >
+            Target End Date
+          </label>
+          <input
+            type="date"
+            id="targetEndDate"
+            name="targetEndDate"
+            defaultValue={project?.targetEndDate ? formatDateInput(project.targetEndDate) : ''}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label
+          htmlFor="previewUrl"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
+          Preview URL
+        </label>
+        <input
+          type="url"
+          id="previewUrl"
+          name="previewUrl"
+          placeholder="https://preview.vercel.app/..."
+          defaultValue={project?.previewUrl || ''}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+        />
+        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+          Visible to client in their portal
+        </p>
+      </div>
+
+      {state?.error && (
+        <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+          <p className="text-sm text-red-600 dark:text-red-400">{state.error}</p>
+        </div>
+      )}
+
+      {state?.success && (
+        <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+          <p className="text-sm text-green-600 dark:text-green-400">
+            {project ? 'Project updated successfully' : 'Project created successfully'}
+          </p>
+        </div>
+      )}
+
+      <button
+        type="submit"
+        disabled={isPending}
+        className="w-full px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {isPending ? 'Saving...' : project ? 'Update Project' : 'Create Project'}
+      </button>
+    </form>
+  )
+}
+
+function formatDateInput(date: Date): string {
+  return date.toISOString().split('T')[0]
+}

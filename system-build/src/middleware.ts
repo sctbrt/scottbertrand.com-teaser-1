@@ -1,4 +1,4 @@
-// SCOTTBERTRAND.COM — Host-Based Routing Middleware
+// BERTRANDBRANDS.COM — Host-Based Routing Middleware
 // Routes requests based on subdomain to appropriate sections
 
 import { NextResponse } from 'next/server'
@@ -7,11 +7,11 @@ import type { NextRequest } from 'next/server'
 // Domain configuration
 const DOMAINS: Record<string, string[]> = {
   // Production domains
-  PUBLIC: ['scottbertrand.com', 'www.scottbertrand.com'],
-  NOTES: ['notes.scottbertrand.com'],
-  GOODS: ['goods.scottbertrand.com'],
-  DASHBOARD: ['dashboard.scottbertrand.com'],
-  PORTAL: ['clients.scottbertrand.com'],
+  PUBLIC: ['bertrandbrands.com', 'www.bertrandbrands.com'],
+  NOTES: ['notes.bertrandbrands.com'],
+  GOODS: ['goods.bertrandbrands.com'],
+  DASHBOARD: ['dashboard.bertrandbrands.com'],
+  PORTAL: ['clients.bertrandbrands.com'],
 
   // Development patterns
   DEV_PUBLIC: ['localhost', '127.0.0.1'],

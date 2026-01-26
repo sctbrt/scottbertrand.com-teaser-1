@@ -21,7 +21,7 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
           {/* Logo / Brand */}
           <div className="flex items-center gap-4">
             <span className="text-lg font-medium text-gray-900 dark:text-gray-100">
-              Dashboard
+              Bertrand Brands
             </span>
             <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-xs font-medium text-gray-600 dark:text-gray-300 rounded">
               Internal

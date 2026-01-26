@@ -1,4 +1,4 @@
-// Client Portal Layout (clients.scottbertrand.com)
+// Client Portal Layout (clients.bertrandbrands.com)
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'

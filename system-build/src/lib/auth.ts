@@ -1,4 +1,4 @@
-// SCOTTBERTRAND.COM — Auth.js Configuration
+// BERTRANDBRANDS.COM — Auth.js Configuration
 // Magic-link authentication with Resend email provider
 
 import NextAuth from 'next-auth'
@@ -30,7 +30,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
   providers: [
     Resend({
-      from: 'Scott Bertrand <noreply@scottbertrand.com>',
+      from: 'Bertrand Brands <hello@bertrandbrands.com>',
       // Custom magic link email
       sendVerificationRequest: async ({ identifier, url, provider }) => {
         const { Resend: ResendClient } = await import('resend')
@@ -39,7 +39,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const result = await resend.emails.send({
           from: provider.from!,
           to: identifier,
-          subject: 'Sign in to Scott Bertrand',
+          subject: 'Sign in to Bertrand Brands',
           html: magicLinkEmailHtml(url),
           text: magicLinkEmailText(url),
         })
@@ -123,7 +123,7 @@ function magicLinkEmailHtml(url: string): string {
     <tr>
       <td style="padding: 40px;">
         <h1 style="font-size: 20px; font-weight: 500; color: #111111; margin: 0 0 24px 0;">
-          Sign in to Scott Bertrand
+          Sign in to Bertrand Brands
         </h1>
         <p style="font-size: 15px; color: #404040; line-height: 1.6; margin: 0 0 24px 0;">
           Click the button below to sign in. This link expires in 15 minutes.
@@ -136,7 +136,7 @@ function magicLinkEmailHtml(url: string): string {
         </p>
         <hr style="border: none; border-top: 1px solid #e5e5e5; margin: 32px 0 24px 0;">
         <p style="font-size: 12px; color: #8a8a8a; margin: 0;">
-          Scott Bertrand — Brand & Web Systems
+          Bertrand Brands — Brand & Web Systems
         </p>
       </td>
     </tr>
@@ -148,7 +148,7 @@ function magicLinkEmailHtml(url: string): string {
 
 function magicLinkEmailText(url: string): string {
   return `
-Sign in to Scott Bertrand
+Sign in to Bertrand Brands
 
 Click the link below to sign in. This link expires in 15 minutes.
 
@@ -157,6 +157,6 @@ ${url}
 If you didn't request this email, you can safely ignore it.
 
 ---
-Scott Bertrand — Brand & Web Systems
+Bertrand Brands — Brand & Web Systems
 `
 }
