@@ -44,14 +44,14 @@ export async function POST(request: NextRequest) {
     const formData = body._formspree_submission || body
 
     // Extract common fields (adjust based on your form structure)
-    // Also accept single-letter aliases (e, n, s, m) for Zapier compatibility
-    const email = formData.email || formData.Email || formData.e || formData._replyto || ''
-    const name = formData.name || formData.Name || formData.n || formData['full-name'] || ''
-    const companyName = formData.company || formData.Company || formData.c || formData['company-name'] || ''
-    const website = formData.website || formData.Website || formData.w || formData.url || ''
-    const phone = formData.phone || formData.Phone || formData.p || formData.tel || ''
-    const service = formData.service || formData.Service || formData.s || formData['service-type'] || ''
-    const message = formData.message || formData.Message || formData.m || formData.details || ''
+    // Also accept short aliases for Zapier compatibility (truncated field names)
+    const email = formData.email || formData.Email || formData.em || formData.e || formData._replyto || ''
+    const name = formData.name || formData.Name || formData.na || formData.n || formData['full-name'] || ''
+    const companyName = formData.company || formData.Company || formData.co || formData.c || formData['company-name'] || ''
+    const website = formData.website || formData.Website || formData.we || formData.w || formData.url || ''
+    const phone = formData.phone || formData.Phone || formData.ph || formData.p || formData.tel || ''
+    const service = formData.service || formData.Service || formData.se || formData.s || formData['service-type'] || ''
+    const message = formData.message || formData.Message || formData.me || formData.m || formData.details || ''
 
     // Validate required email
     if (!email || !isValidEmail(email)) {
