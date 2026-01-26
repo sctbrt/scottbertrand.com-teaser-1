@@ -72,6 +72,13 @@ export async function POST(request: NextRequest) {
                headersList.get('x-real-ip') ||
                'unknown'
 
+    // Get geo info from Vercel headers (free, no external API needed)
+    const geo = {
+      city: headersList.get('x-vercel-ip-city') || '',
+      region: headersList.get('x-vercel-ip-country-region') || '',
+      country: headersList.get('x-vercel-ip-country') || '',
+    }
+
     // Rate limiting check (using Upstash Redis)
     if (!(await checkRateLimit(ip))) {
       return NextResponse.json(
@@ -221,7 +228,7 @@ export async function POST(request: NextRequest) {
     if (!isSpam && process.env.PUSHOVER_USER_KEY && process.env.PUSHOVER_API_TOKEN) {
       await sendNotification({
         lead,
-        ip,
+        geo,
       })
     }
 
@@ -284,26 +291,17 @@ function checkForSpam(data: Record<string, unknown>): boolean {
 // Send notification via Pushover
 async function sendNotification({
   lead,
-  ip,
+  geo,
 }: {
   lead: { id: string; email: string; name: string | null; service: string | null }
-  ip: string
+  geo: { city: string; region: string; country: string }
 }) {
   try {
-    // Get location from IP
+    // Build location string from Vercel geo headers
     let location = ''
-    if (ip && ip !== 'unknown' && ip !== '::1' && ip !== '127.0.0.1') {
-      try {
-        const geoRes = await fetch(`http://ip-api.com/json/${ip}?fields=city,regionCode,country`)
-        if (geoRes.ok) {
-          const geo = await geoRes.json()
-          if (geo.city) {
-            location = `${geo.city}${geo.regionCode ? `, ${geo.regionCode}` : ''}${geo.country ? `, ${geo.country}` : ''}`
-          }
-        }
-      } catch {
-        // Silent fail
-      }
+    if (geo.city || geo.region || geo.country) {
+      const parts = [geo.city, geo.region, geo.country].filter(Boolean)
+      location = parts.join(', ')
     }
 
     let message = `New lead: ${lead.name || lead.email}`
