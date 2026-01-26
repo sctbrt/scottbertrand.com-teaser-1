@@ -140,6 +140,11 @@ async function handleDashboardRouting(request: NextRequest, pathname: string) {
     return NextResponse.next()
   }
 
+  // If path already starts with /dashboard, don't double-rewrite
+  if (pathname.startsWith('/dashboard')) {
+    return NextResponse.next()
+  }
+
   // Check for session token (Auth.js cookie)
   const sessionToken = request.cookies.get('authjs.session-token')?.value ||
                        request.cookies.get('__Secure-authjs.session-token')?.value
@@ -161,6 +166,11 @@ async function handleDashboardRouting(request: NextRequest, pathname: string) {
 async function handlePortalRouting(request: NextRequest, pathname: string) {
   // Allow auth routes without authentication (don't rewrite - use root-level auth pages)
   if (AUTH_PATHS.some(path => pathname.startsWith(path))) {
+    return NextResponse.next()
+  }
+
+  // If path already starts with /portal, don't double-rewrite
+  if (pathname.startsWith('/portal')) {
     return NextResponse.next()
   }
 
