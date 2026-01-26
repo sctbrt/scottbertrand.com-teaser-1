@@ -5,12 +5,37 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { headers } from 'next/headers'
 
-// Rate limiting store (in production, use Redis)
-const rateLimitStore = new Map<string, { count: number; resetAt: number }>()
-
 // Rate limit config
-const RATE_LIMIT_WINDOW = 60 * 1000 // 1 minute
+const RATE_LIMIT_WINDOW = 60 // 60 seconds
 const RATE_LIMIT_MAX_REQUESTS = 10 // Max 10 requests per minute per IP
+
+// Upstash Redis REST API helpers
+const UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL
+const UPSTASH_REDIS_REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN
+
+async function redisCommand(command: string[]): Promise<unknown> {
+  if (!UPSTASH_REDIS_REST_URL || !UPSTASH_REDIS_REST_TOKEN) {
+    console.warn('[Rate Limit] Upstash Redis not configured, skipping rate limit')
+    return null
+  }
+
+  const response = await fetch(`${UPSTASH_REDIS_REST_URL}`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${UPSTASH_REDIS_REST_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(command),
+  })
+
+  if (!response.ok) {
+    console.error('[Rate Limit] Redis error:', await response.text())
+    return null
+  }
+
+  const data = await response.json()
+  return data.result
+}
 
 // Spam detection patterns
 // Spam detection patterns
@@ -47,8 +72,8 @@ export async function POST(request: NextRequest) {
                headersList.get('x-real-ip') ||
                'unknown'
 
-    // Rate limiting check
-    if (!checkRateLimit(ip)) {
+    // Rate limiting check (using Upstash Redis)
+    if (!(await checkRateLimit(ip))) {
       return NextResponse.json(
         { error: 'Too many requests. Please try again later.' },
         { status: 429 }
@@ -214,22 +239,31 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Rate limiting helper
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now()
-  const record = rateLimitStore.get(ip)
-
-  if (!record || now > record.resetAt) {
-    rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW })
+// Rate limiting helper using Upstash Redis
+async function checkRateLimit(ip: string): Promise<boolean> {
+  // If Redis not configured, allow request (fail open)
+  if (!UPSTASH_REDIS_REST_URL || !UPSTASH_REDIS_REST_TOKEN) {
     return true
   }
 
-  if (record.count >= RATE_LIMIT_MAX_REQUESTS) {
-    return false
-  }
+  const key = `rate_limit:formspree:${ip}`
 
-  record.count++
-  return true
+  try {
+    // INCR the key and get current count
+    const count = await redisCommand(['INCR', key]) as number
+
+    // If this is the first request, set expiry
+    if (count === 1) {
+      await redisCommand(['EXPIRE', key, String(RATE_LIMIT_WINDOW)])
+    }
+
+    // Check if over limit
+    return count <= RATE_LIMIT_MAX_REQUESTS
+  } catch (error) {
+    console.error('[Rate Limit] Error checking rate limit:', error)
+    // Fail open - allow request if Redis fails
+    return true
+  }
 }
 
 // Email validation

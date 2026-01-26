@@ -18,11 +18,13 @@ export default async function handler(req, res) {
 
   try {
     // Fetch entries from Notion database using REST API directly
+    // Use NOTION_API_VERSION env var or default to latest stable version
+    const notionVersion = process.env.NOTION_API_VERSION || '2022-06-28';
     const response = await fetch(`https://api.notion.com/v1/databases/${DATABASE_ID}/query`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${NOTION_API_KEY}`,
-        'Notion-Version': '2022-06-28',
+        'Notion-Version': notionVersion,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

@@ -15,11 +15,14 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Use NOTION_API_VERSION env var or default to latest stable version
+    const notionVersion = process.env.NOTION_API_VERSION || '2022-06-28';
+
     // Fetch page metadata
     const pageResponse = await fetch(`https://api.notion.com/v1/pages/${id}`, {
       headers: {
         'Authorization': `Bearer ${NOTION_API_KEY}`,
-        'Notion-Version': '2022-06-28',
+        'Notion-Version': notionVersion,
       },
     });
 
@@ -34,7 +37,7 @@ export default async function handler(req, res) {
     const blocksResponse = await fetch(`https://api.notion.com/v1/blocks/${id}/children?page_size=100`, {
       headers: {
         'Authorization': `Bearer ${NOTION_API_KEY}`,
-        'Notion-Version': '2022-06-28',
+        'Notion-Version': notionVersion,
       },
     });
 
