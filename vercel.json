@@ -4,18 +4,6 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": null,
-  "redirects": [
-    {
-      "source": "/",
-      "destination": "https://bertrandbrands.com",
-      "permanent": false
-    },
-    {
-      "source": "/:path*",
-      "destination": "https://bertrandbrands.com/:path*",
-      "permanent": false
-    }
-  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
