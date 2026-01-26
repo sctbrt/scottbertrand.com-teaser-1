@@ -58,14 +58,55 @@ export async function POST(request: NextRequest) {
     // Parse request body
     const body = await request.json()
 
-    // Verify Formspree webhook (check for required fields)
-    // Formspree sends data in a specific format
-    const formData = body._formspree_submission || body
+    // Debug logging to understand Formspree payload
+    console.log('[Intake] Received webhook payload:', JSON.stringify(body, null, 2))
+
+    // Formspree webhook format can vary:
+    // 1. Direct submission: { email, name, ... }
+    // 2. Wrapped: { _formspree_submission: { email, name, ... } }
+    // 3. Nested data: { data: { email, name, ... } }
+    // 4. Test webhook: { test: true, ... }
+    let formData = body
+
+    // Handle Formspree wrapped format
+    if (body._formspree_submission) {
+      formData = body._formspree_submission
+    } else if (body.data && typeof body.data === 'object') {
+      formData = body.data
+    }
+
+    // Handle Formspree test webhooks - they may not have real form data
+    // Accept test submissions with a test email for validation
+    const isTestWebhook = body.test === true || body._test === true
+    if (isTestWebhook) {
+      console.log('[Intake] Received Formspree test webhook')
+      // For test webhooks, create a test lead to verify integration
+      const testLead = await prisma.lead.create({
+        data: {
+          email: 'formspree-test@bertrandbrands.com',
+          name: 'Formspree Test',
+          source: 'formspree',
+          status: 'NEW',
+          isSpam: false,
+          formData: { test: true, receivedAt: new Date().toISOString() },
+        },
+      })
+      return NextResponse.json({
+        success: true,
+        id: testLead.id,
+        test: true,
+        message: 'Test webhook received successfully',
+      })
+    }
 
     // Extract and sanitize common fields
-    // Also accept short aliases for Zapier compatibility (truncated field names)
+    // Handle various field naming conventions from Formspree
     const email = sanitizeString(
-      formData.email || formData.Email || formData.em || formData.e || formData._replyto,
+      formData.email || formData.Email || formData.EMAIL ||
+      formData.em || formData.e ||
+      formData._replyto || formData['_replyto'] ||
+      formData.contact_email || formData['contact-email'] ||
+      formData.user_email || formData['user-email'],
       FIELD_LIMITS.email
     ).toLowerCase()
     const name = sanitizeString(
