@@ -28,10 +28,37 @@ export async function updateLeadStatus(
     return { error: 'Status is required' }
   }
 
+  // Get current lead to check previous status
+  const currentLead = await prisma.leads.findUnique({
+    where: { id: leadId },
+    select: { status: true, contactedAt: true, qualifiedAt: true },
+  })
+
+  if (!currentLead) {
+    return { error: 'Lead not found' }
+  }
+
+  // Build update data with smart timestamp tracking
+  const updateData: {
+    status: LeadStatus
+    contactedAt?: Date
+    qualifiedAt?: Date
+  } = { status: status as LeadStatus }
+
+  // Auto-set contactedAt when transitioning to CONTACTED for the first time
+  if (status === 'CONTACTED' && !currentLead.contactedAt) {
+    updateData.contactedAt = new Date()
+  }
+
+  // Auto-set qualifiedAt when transitioning to QUALIFIED for the first time
+  if (status === 'QUALIFIED' && !currentLead.qualifiedAt) {
+    updateData.qualifiedAt = new Date()
+  }
+
   try {
     await prisma.leads.update({
       where: { id: leadId },
-      data: { status: status as LeadStatus },
+      data: updateData,
     })
 
     // Log activity
@@ -41,7 +68,7 @@ export async function updateLeadStatus(
         action: 'UPDATE_STATUS',
         entityType: 'Lead',
         entityId: leadId,
-        details: { status },
+        details: { status, previousStatus: currentLead.status },
       },
     })
 
@@ -52,6 +79,41 @@ export async function updateLeadStatus(
   } catch (error) {
     console.error('Error updating lead status:', error)
     return { error: 'Failed to update lead status' }
+  }
+}
+
+export async function updateLeadNotes(
+  leadId: string,
+  notes: string
+): Promise<LeadActionState> {
+  const session = await auth()
+  if (!session?.user || session.user.role !== 'INTERNAL_ADMIN') {
+    return { error: 'Unauthorized' }
+  }
+
+  try {
+    await prisma.leads.update({
+      where: { id: leadId },
+      data: { internalNotes: notes || null },
+    })
+
+    // Log activity
+    await prisma.activity_logs.create({
+      data: {
+        userId: session.user.id,
+        action: 'UPDATE_NOTES',
+        entityType: 'Lead',
+        entityId: leadId,
+      },
+    })
+
+    revalidatePath(`/dashboard/leads/${leadId}`)
+    revalidatePath('/dashboard/leads')
+
+    return { success: true }
+  } catch (error) {
+    console.error('Error updating lead notes:', error)
+    return { error: 'Failed to update notes' }
   }
 }
 

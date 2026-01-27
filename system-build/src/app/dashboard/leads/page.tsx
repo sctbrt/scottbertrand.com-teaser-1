@@ -22,7 +22,15 @@ export default async function LeadsPage({
       orderBy: { createdAt: 'desc' },
       skip: (page - 1) * perPage,
       take: perPage,
-      include: {
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        service: true,
+        status: true,
+        source: true,
+        createdAt: true,
+        internalNotes: true,
         service_templates: {
           select: { name: true },
         },

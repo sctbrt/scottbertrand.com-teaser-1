@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { LeadActions } from './lead-actions'
 import { ConvertToClientForm } from './convert-form'
+import { LeadNotes } from './lead-notes'
 
 interface LeadDetailPageProps {
   params: Promise<{ id: string }>
@@ -217,6 +218,49 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
 
         {/* Right Column - Actions & Convert */}
         <div className="space-y-6">
+          {/* Timeline */}
+          <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+            <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+              Timeline
+            </h2>
+            <div className="relative">
+              {/* Timeline line */}
+              <div className="absolute left-2 top-2 bottom-2 w-0.5 bg-gray-200 dark:bg-gray-700" />
+
+              <div className="space-y-4">
+                {/* Created */}
+                <TimelineItem
+                  label="Created"
+                  date={lead.createdAt}
+                  isComplete={true}
+                  isFirst={true}
+                />
+
+                {/* Contacted */}
+                <TimelineItem
+                  label="Contacted"
+                  date={lead.contactedAt}
+                  isComplete={!!lead.contactedAt || ['CONTACTED', 'QUALIFIED', 'CONVERTED'].includes(lead.status)}
+                />
+
+                {/* Qualified */}
+                <TimelineItem
+                  label="Qualified"
+                  date={lead.qualifiedAt}
+                  isComplete={!!lead.qualifiedAt || ['QUALIFIED', 'CONVERTED'].includes(lead.status)}
+                />
+
+                {/* Converted */}
+                <TimelineItem
+                  label="Converted"
+                  date={lead.status === 'CONVERTED' ? lead.updatedAt : null}
+                  isComplete={lead.status === 'CONVERTED'}
+                  isLast={true}
+                />
+              </div>
+            </div>
+          </div>
+
           {/* Meta Information */}
           <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
             <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
@@ -257,6 +301,9 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
               )}
             </div>
           </div>
+
+          {/* Internal Notes */}
+          <LeadNotes leadId={lead.id} initialNotes={lead.internalNotes} />
 
           {/* Convert to Client (if not already converted) */}
           {lead.status !== 'CONVERTED' && !lead.clients && (
@@ -342,4 +389,67 @@ function formatDate(date: Date) {
     hour: 'numeric',
     minute: '2-digit',
   }).format(date)
+}
+
+function TimelineItem({
+  label,
+  date,
+  isComplete,
+  isFirst = false,
+  isLast = false,
+}: {
+  label: string
+  date: Date | null
+  isComplete: boolean
+  isFirst?: boolean
+  isLast?: boolean
+}) {
+  return (
+    <div className="relative flex items-start gap-3 pl-6">
+      {/* Dot */}
+      <div
+        className={`absolute left-0 w-4 h-4 rounded-full border-2 ${
+          isComplete
+            ? 'bg-green-500 border-green-500'
+            : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600'
+        } ${isFirst ? 'mt-0' : ''} ${isLast ? '' : ''}`}
+      />
+
+      {/* Content */}
+      <div className="flex-1 min-w-0">
+        <p
+          className={`text-sm font-medium ${
+            isComplete ? 'text-gray-900 dark:text-gray-100' : 'text-gray-400 dark:text-gray-500'
+          }`}
+        >
+          {label}
+        </p>
+        {date && (
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            {new Intl.DateTimeFormat('en-CA', {
+              month: 'short',
+              day: 'numeric',
+              hour: 'numeric',
+              minute: '2-digit',
+            }).format(date)}
+          </p>
+        )}
+      </div>
+
+      {/* Checkmark */}
+      {isComplete && (
+        <svg
+          className="w-4 h-4 text-green-500 flex-shrink-0"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fillRule="evenodd"
+            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+            clipRule="evenodd"
+          />
+        </svg>
+      )}
+    </div>
+  )
 }

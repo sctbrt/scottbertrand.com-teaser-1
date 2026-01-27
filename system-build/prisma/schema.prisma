@@ -134,6 +134,9 @@ model leads {
   status              LeadStatus         @default(NEW)
   isSpam              Boolean            @default(false)
   formData            Json?
+  internalNotes       String?
+  contactedAt         DateTime?
+  qualifiedAt         DateTime?
   convertedToClientId String?
   createdAt           DateTime           @default(now())
   updatedAt           DateTime           @updatedAt
