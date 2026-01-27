@@ -33,9 +33,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       from: 'Bertrand Brands <hello@bertrandbrands.com>',
       // Custom magic link email
       sendVerificationRequest: async ({ identifier, url, provider }) => {
+        console.log('[Auth] sendVerificationRequest called for:', identifier)
+        console.log('[Auth] Magic link URL:', url)
+
         const { Resend: ResendClient } = await import('resend')
         const resend = new ResendClient(process.env.RESEND_API_KEY)
 
+        console.log('[Auth] Sending email via Resend...')
         const result = await resend.emails.send({
           from: provider.from!,
           to: identifier,
@@ -44,9 +48,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           text: magicLinkEmailText(url),
         })
 
+        console.log('[Auth] Resend result:', JSON.stringify(result))
+
         if (result.error) {
+          console.error('[Auth] Resend error:', result.error)
           throw new Error(`Failed to send verification email: ${result.error.message}`)
         }
+
+        console.log('[Auth] Email sent successfully, ID:', result.data?.id)
       },
     }),
   ],

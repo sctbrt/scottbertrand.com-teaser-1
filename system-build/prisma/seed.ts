@@ -102,37 +102,43 @@ const serviceTemplates = [
 ]
 
 async function main() {
-  // Create admin user
-  const adminEmail = 'hello@bertrandbrands.com'
+  // Create admin users
+  const adminEmails = [
+    'hello@bertrandbrands.com',
+    'bertrandbrands@outlook.com',
+    'sctbrt01@gmail.com',
+  ]
 
-  const existingUser = await prisma.users.findUnique({
-    where: { email: adminEmail },
-  })
+  for (const adminEmail of adminEmails) {
+    const existingUser = await prisma.users.findUnique({
+      where: { email: adminEmail },
+    })
 
-  if (existingUser) {
-    // Update to admin if not already
-    if (existingUser.role !== 'INTERNAL_ADMIN') {
-      await prisma.users.update({
-        where: { email: adminEmail },
+    if (existingUser) {
+      // Update to admin if not already
+      if (existingUser.role !== 'INTERNAL_ADMIN') {
+        await prisma.users.update({
+          where: { email: adminEmail },
+          data: {
+            role: 'INTERNAL_ADMIN',
+            name: 'Scott Bertrand',
+          },
+        })
+        console.log(`Updated ${adminEmail} to INTERNAL_ADMIN role`)
+      } else {
+        console.log(`Admin user ${adminEmail} already exists`)
+      }
+    } else {
+      await prisma.users.create({
         data: {
-          role: 'INTERNAL_ADMIN',
+          email: adminEmail,
           name: 'Scott Bertrand',
+          role: 'INTERNAL_ADMIN',
+          emailVerified: new Date(),
         },
       })
-      console.log(`Updated ${adminEmail} to INTERNAL_ADMIN role`)
-    } else {
-      console.log(`Admin user ${adminEmail} already exists`)
+      console.log(`Created admin user: ${adminEmail}`)
     }
-  } else {
-    await prisma.users.create({
-      data: {
-        email: adminEmail,
-        name: 'Scott Bertrand',
-        role: 'INTERNAL_ADMIN',
-        emailVerified: new Date(),
-      },
-    })
-    console.log(`Created admin user: ${adminEmail}`)
   }
 
   // Upsert service templates

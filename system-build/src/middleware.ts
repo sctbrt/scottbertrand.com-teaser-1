@@ -13,10 +13,10 @@ import type { NextRequest } from 'next/server'
 
 // Domain configuration - only domains handled by this Next.js app
 const DOMAINS: Record<string, string[]> = {
-  // Production domains
+  // Production domains (both scottbertrand.com and bertrandbrands.com)
   PUBLIC: ['bertrandbrands.com', 'www.bertrandbrands.com'],
-  DASHBOARD: ['dashboard.bertrandbrands.com'],
-  PORTAL: ['clients.bertrandbrands.com'],
+  DASHBOARD: ['dashboard.bertrandbrands.com', 'dashboard.scottbertrand.com'],
+  PORTAL: ['clients.bertrandbrands.com', 'clients.scottbertrand.com'],
 
   // Test/Staging domains (test.bertrandbrands.com)
   TEST_PUBLIC: ['test.bertrandbrands.com'],
