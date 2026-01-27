@@ -104,20 +104,20 @@ export async function deleteLead(
     return { error: 'Unauthorized' }
   }
 
+  const lead = await prisma.leads.findUnique({
+    where: { id: leadId },
+  })
+
+  if (!lead) {
+    return { error: 'Lead not found' }
+  }
+
+  // Prevent deletion of converted leads
+  if (lead.status === 'CONVERTED' || lead.convertedToClientId) {
+    return { error: 'Cannot delete converted leads' }
+  }
+
   try {
-    const lead = await prisma.leads.findUnique({
-      where: { id: leadId },
-    })
-
-    if (!lead) {
-      return { error: 'Lead not found' }
-    }
-
-    // Prevent deletion of converted leads
-    if (lead.status === 'CONVERTED' || lead.convertedToClientId) {
-      return { error: 'Cannot delete converted leads' }
-    }
-
     await prisma.leads.delete({
       where: { id: leadId },
     })
@@ -131,13 +131,13 @@ export async function deleteLead(
         entityId: leadId,
       },
     })
-
-    revalidatePath('/dashboard/leads')
-    redirect('/dashboard/leads')
   } catch (error) {
     console.error('Error deleting lead:', error)
     return { error: 'Failed to delete lead' }
   }
+
+  revalidatePath('/dashboard/leads')
+  redirect('/dashboard/leads')
 }
 
 export async function convertToClient(
