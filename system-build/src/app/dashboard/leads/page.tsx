@@ -2,6 +2,7 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import type { LeadStatus } from '@prisma/client'
+import { RefreshButton } from './refresh-button'
 
 export default async function LeadsPage({
   searchParams,
@@ -55,6 +56,7 @@ export default async function LeadsPage({
             Manage intake submissions and lead conversion
           </p>
         </div>
+        <RefreshButton />
       </div>
 
       {/* Status Filters */}

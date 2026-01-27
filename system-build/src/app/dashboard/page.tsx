@@ -1,6 +1,7 @@
 // Dashboard Overview Page - V3 Glass Aesthetic
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
+import { RefreshButton } from './leads/refresh-button'
 
 export default async function DashboardPage() {
   // Fetch counts for overview
@@ -39,13 +40,16 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-medium text-[var(--text)] tracking-tight">
-          Dashboard
-        </h1>
-        <p className="text-sm text-[var(--text-muted)] mt-1">
-          Overview of leads, clients, projects, and invoices
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-medium text-[var(--text)] tracking-tight">
+            Dashboard
+          </h1>
+          <p className="text-sm text-[var(--text-muted)] mt-1">
+            Overview of leads, clients, projects, and invoices
+          </p>
+        </div>
+        <RefreshButton />
       </div>
 
       {/* Stats Grid */}
