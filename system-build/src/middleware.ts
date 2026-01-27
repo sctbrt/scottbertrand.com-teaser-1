@@ -36,8 +36,9 @@ const DOMAINS: Record<string, string[]> = {
 // Public paths that don't require auth (login pages, etc.)
 const AUTH_PATHS = ['/login', '/auth', '/api/auth']
 
-// API routes that should be publicly accessible (webhooks, etc.)
-const PUBLIC_API_PATHS = ['/api/intake', '/api/webhooks', '/api/temp-login', '/api/debug-resend', '/api/debug-auth', '/api/debug-leads']
+// API routes that should be publicly accessible (webhooks, intake forms)
+// NOTE: Only add routes here that genuinely need to be unauthenticated (e.g., external webhooks)
+const PUBLIC_API_PATHS = ['/api/intake', '/api/webhooks']
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl

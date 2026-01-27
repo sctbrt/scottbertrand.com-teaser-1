@@ -170,13 +170,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       from: 'Bertrand Brands <hello@bertrandbrands.com>',
       // Custom magic link email
       sendVerificationRequest: async ({ identifier, url, provider }) => {
-        console.log('[Auth] sendVerificationRequest called for:', identifier)
-        console.log('[Auth] Magic link URL:', url)
-
         const { Resend: ResendClient } = await import('resend')
         const resend = new ResendClient(process.env.RESEND_API_KEY)
 
-        console.log('[Auth] Sending email via Resend...')
         const result = await resend.emails.send({
           from: provider.from!,
           to: identifier,
@@ -185,14 +181,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           text: magicLinkEmailText(url),
         })
 
-        console.log('[Auth] Resend result:', JSON.stringify(result))
-
         if (result.error) {
-          console.error('[Auth] Resend error:', result.error)
+          console.error('[Auth] Failed to send magic link:', result.error.message)
           throw new Error(`Failed to send verification email: ${result.error.message}`)
         }
-
-        console.log('[Auth] Email sent successfully, ID:', result.data?.id)
       },
     }),
   ],
@@ -261,22 +253,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
 
-  // Security settings per spec
+  // Security settings
   trustHost: true,
-  debug: true, // Temporarily enabled for debugging
-
-  // Add logger for debugging
-  logger: {
-    error(code, ...message) {
-      console.error('[Auth Error]', code, ...message)
-    },
-    warn(code, ...message) {
-      console.warn('[Auth Warn]', code, ...message)
-    },
-    debug(code, ...message) {
-      console.log('[Auth Debug]', code, ...message)
-    },
-  },
+  debug: process.env.NODE_ENV === 'development',
 })
 
 // Magic link email templates
