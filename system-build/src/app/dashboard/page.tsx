@@ -3,6 +3,39 @@ import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import { RefreshButton } from './leads/refresh-button'
 
+function getGreeting() {
+  const hour = new Date().toLocaleString('en-US', {
+    timeZone: 'America/Toronto',
+    hour: 'numeric',
+    hour12: false,
+  })
+  const h = parseInt(hour)
+  if (h >= 5 && h < 12) return 'Good morning'
+  if (h >= 12 && h < 17) return 'Good afternoon'
+  if (h >= 17 && h < 21) return 'Good evening'
+  return 'Working late'
+}
+
+function getSubGreeting() {
+  const day = new Date().toLocaleString('en-US', {
+    timeZone: 'America/Toronto',
+    weekday: 'long',
+  })
+  const hour = parseInt(
+    new Date().toLocaleString('en-US', {
+      timeZone: 'America/Toronto',
+      hour: 'numeric',
+      hour12: false,
+    })
+  )
+
+  if (day === 'Friday' && hour >= 16) return "Almost weekend. Let's finish strong."
+  if (day === 'Monday' && hour < 12) return 'Fresh week, fresh opportunities.'
+  if (day === 'Saturday' || day === 'Sunday') return 'Catching up on a weekend?'
+  if (hour >= 21 || hour < 5) return 'Burning the midnight oil.'
+  return "Here's what's happening."
+}
+
 export default async function DashboardPage() {
   // Fetch counts for overview
   const [leadCount, clientCount, projectCount, invoiceCount] = await Promise.all([
@@ -38,15 +71,35 @@ export default async function DashboardPage() {
     },
   })
 
+  const greeting = getGreeting()
+  const subGreeting = getSubGreeting()
+
   return (
     <div className="space-y-8">
+      {/* Welcome Hero */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 via-transparent to-orange-500/5 border border-amber-500/20 p-8">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-amber-500/10 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-orange-500/10 to-transparent rounded-full blur-2xl translate-y-1/2 -translate-x-1/4" />
+        <div className="relative">
+          <p className="text-sm font-medium text-amber-600 dark:text-amber-400 tracking-wider uppercase mb-2">
+            {greeting}
+          </p>
+          <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100 tracking-tight">
+            Welcome back, <span className="bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent">Scott</span>
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-2 text-lg">
+            {subGreeting}
+          </p>
+        </div>
+      </div>
+
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-medium text-[var(--text)] tracking-tight">
-            Dashboard
-          </h1>
+          <h2 className="text-xl font-medium text-[var(--text)] tracking-tight">
+            Overview
+          </h2>
           <p className="text-sm text-[var(--text-muted)] mt-1">
-            Overview of leads, clients, projects, and invoices
+            Leads, clients, projects, and invoices
           </p>
         </div>
         <RefreshButton />
