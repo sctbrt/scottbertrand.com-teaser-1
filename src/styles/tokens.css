@@ -1,57 +1,58 @@
 /* ============================================================
    Design Tokens — scottbertrand.com
-   v1.0.0
+   v1.0.1
    ------------------------------------------------------------
    Normalized, semantic token system for architectural design.
    Single source of truth for colors, spacing, typography, and effects.
+   Dark mode only — no light mode toggle.
    ============================================================ */
 
 /* ------------------------------------------------------------
-   1. Color Palette — Light Mode (Default)
+   1. Color Palette — Dark Mode (Enforced)
    ------------------------------------------------------------ */
 
 :root {
   /* === Surface Colors === */
-  --bg: #F7F6F3;                    /* Primary background - warm off-white */
-  --surface: #FFFFFF;               /* Elevated surfaces - cards, dropdowns */
-  --surface-2: #EFEFEA;             /* Secondary surface - section alternates */
+  --bg: #1C1C1E;
+  --surface: #2C2C2E;
+  --surface-2: #232325;
 
   /* === Text Colors === */
-  --text: #111111;                  /* Primary text - near black */
-  --text-muted: #5c5c5c;            /* Secondary text - WCAG AA compliant */
+  --text: #F7F6F3;
+  --text-muted: #a0a0a0;
 
   /* === Border Colors === */
-  --border: rgba(0, 0, 0, 0.08);    /* Default border */
-  --border-subtle: rgba(0, 0, 0, 0.05);
-  --border-hover: rgba(0, 0, 0, 0.15);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-hover: rgba(255, 255, 255, 0.15);
 
-  /* === Accent Colors === */
-  --accent: #D97706;                /* Primary accent - Warm Amber */
-  --accent-hover: #B45309;          /* Accent hover - Deep Terracotta */
-  --accent-muted: rgba(217, 119, 6, 0.12);
-  --accent-subtle: rgba(217, 119, 6, 0.06);
+  /* === Accent Colors (optimized for dark) === */
+  --accent: #F59E0B;
+  --accent-hover: #D97706;
+  --accent-muted: rgba(245, 158, 11, 0.15);
+  --accent-subtle: rgba(245, 158, 11, 0.08);
 
   /* === Feedback Colors === */
-  --success-bg: #f0fdf4;
-  --success-border: #86efac;
-  --success-text: #166534;
-  --error-bg: rgba(220, 38, 38, 0.08);
-  --error-border: rgba(220, 38, 38, 0.25);
-  --error-text: #dc2626;
+  --success-bg: #0d1f0d;
+  --success-border: #1e3a1e;
+  --success-text: #86efac;
+  --error-bg: rgba(239, 68, 68, 0.12);
+  --error-border: rgba(239, 68, 68, 0.25);
+  --error-text: #f87171;
 
   /* Note: Glass system variables are defined in glass.css */
 
   /* === Focus Ring === */
-  --focus-ring: rgba(217, 119, 6, 0.5);
+  --focus-ring: rgba(245, 158, 11, 0.5);
   --focus-ring-offset: 2px;
 
-  /* === Shadows (Restrained) === */
+  /* === Shadows (dark mode optimized) === */
   --shadow-sm:
-    0 1px 2px rgba(0, 0, 0, 0.04),
-    0 2px 4px rgba(0, 0, 0, 0.04);
+    0 1px 2px rgba(0, 0, 0, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.1);
   --shadow-md:
-    0 2px 4px rgba(0, 0, 0, 0.04),
-    0 4px 12px rgba(0, 0, 0, 0.06);
+    0 2px 4px rgba(0, 0, 0, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.15);
 
   /* === Border Radius === */
   --radius-sm: 4px;
@@ -128,54 +129,7 @@
 }
 
 /* ------------------------------------------------------------
-   2. Dark Mode Overrides
-   ------------------------------------------------------------ */
-
-[data-theme="dark"] {
-  /* === Surface Colors === */
-  --bg: #1C1C1E;
-  --surface: #2C2C2E;
-  --surface-2: #232325;
-
-  /* === Text Colors === */
-  --text: #F7F6F3;
-  --text-muted: #a0a0a0;
-
-  /* === Border Colors === */
-  --border: rgba(255, 255, 255, 0.08);
-  --border-subtle: rgba(255, 255, 255, 0.05);
-  --border-hover: rgba(255, 255, 255, 0.15);
-
-  /* === Accent Colors (slightly brighter for dark mode) === */
-  --accent: #F59E0B;
-  --accent-hover: #D97706;
-  --accent-muted: rgba(245, 158, 11, 0.15);
-  --accent-subtle: rgba(245, 158, 11, 0.08);
-
-  /* === Feedback Colors === */
-  --success-bg: #0d1f0d;
-  --success-border: #1e3a1e;
-  --success-text: #86efac;
-  --error-bg: rgba(239, 68, 68, 0.12);
-  --error-border: rgba(239, 68, 68, 0.25);
-  --error-text: #f87171;
-
-  /* Note: Glass system variables are defined in glass.css */
-
-  /* === Focus Ring === */
-  --focus-ring: rgba(245, 158, 11, 0.5);
-
-  /* === Shadows === */
-  --shadow-sm:
-    0 1px 2px rgba(0, 0, 0, 0.15),
-    0 2px 4px rgba(0, 0, 0, 0.1);
-  --shadow-md:
-    0 2px 4px rgba(0, 0, 0, 0.15),
-    0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* ------------------------------------------------------------
-   3. Layout Utilities
+   2. Layout Utilities
    ------------------------------------------------------------ */
 
 .container {
@@ -254,7 +208,7 @@
 }
 
 /* ------------------------------------------------------------
-   4. Typography Utilities
+   3. Typography Utilities
    ------------------------------------------------------------ */
 
 /* Prose container - max line length */
@@ -332,7 +286,7 @@
 }
 
 /* ------------------------------------------------------------
-   5. Accent Utilities (Conservative Application)
+   4. Accent Utilities (Conservative Application)
    ------------------------------------------------------------ */
 
 /* Accent text - for section headers (H2) */
@@ -374,7 +328,7 @@
 }
 
 /* ------------------------------------------------------------
-   6. Button System
+   5. Button System
    ------------------------------------------------------------ */
 
 .btn {
@@ -450,7 +404,7 @@
 }
 
 /* ------------------------------------------------------------
-   7. Focus States (Accessibility)
+   6. Focus States (Accessibility)
    ------------------------------------------------------------ */
 
 /* Global focus ring for interactive elements */
@@ -481,7 +435,7 @@ a:focus-visible {
 }
 
 /* ------------------------------------------------------------
-   8. Reduced Motion
+   7. Reduced Motion
    ------------------------------------------------------------ */
 
 @media (prefers-reduced-motion: reduce) {
