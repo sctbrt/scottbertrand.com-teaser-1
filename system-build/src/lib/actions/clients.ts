@@ -212,23 +212,23 @@ export async function deleteClient(clientId: string): Promise<ClientActionState>
     return { error: 'Unauthorized' }
   }
 
+  const client = await prisma.clients.findUnique({
+    where: { id: clientId },
+    include: {
+      _count: { select: { projects: true, invoices: true } },
+    },
+  })
+
+  if (!client) {
+    return { error: 'Client not found' }
+  }
+
+  // Prevent deletion if client has projects or invoices
+  if (client._count.projects > 0 || client._count.invoices > 0) {
+    return { error: 'Cannot delete client with existing projects or invoices' }
+  }
+
   try {
-    const client = await prisma.clients.findUnique({
-      where: { id: clientId },
-      include: {
-        _count: { select: { projects: true, invoices: true } },
-      },
-    })
-
-    if (!client) {
-      return { error: 'Client not found' }
-    }
-
-    // Prevent deletion if client has projects or invoices
-    if (client._count.projects > 0 || client._count.invoices > 0) {
-      return { error: 'Cannot delete client with existing projects or invoices' }
-    }
-
     // Delete client (cascades to user due to relation)
     await prisma.clients.delete({
       where: { id: clientId },
@@ -248,11 +248,11 @@ export async function deleteClient(clientId: string): Promise<ClientActionState>
         entityId: clientId,
       },
     })
-
-    revalidatePath('/dashboard/clients')
-    redirect('/dashboard/clients')
   } catch (error) {
-    console.error('Error deleting clients:', error)
+    console.error('Error deleting client:', error)
     return { error: 'Failed to delete client' }
   }
+
+  revalidatePath('/dashboard/clients')
+  redirect('/dashboard/clients')
 }

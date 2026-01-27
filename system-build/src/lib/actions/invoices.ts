@@ -390,20 +390,20 @@ export async function deleteInvoice(
     return { error: 'Unauthorized' }
   }
 
+  const invoice = await prisma.invoices.findUnique({
+    where: { id: invoiceId },
+  })
+
+  if (!invoice) {
+    return { error: 'Invoice not found' }
+  }
+
+  // Only allow deleting draft or cancelled invoices
+  if (!['DRAFT', 'CANCELLED'].includes(invoice.status)) {
+    return { error: 'Only draft or cancelled invoices can be deleted' }
+  }
+
   try {
-    const invoice = await prisma.invoices.findUnique({
-      where: { id: invoiceId },
-    })
-
-    if (!invoice) {
-      return { error: 'Invoice not found' }
-    }
-
-    // Only allow deleting draft or cancelled invoices
-    if (!['DRAFT', 'CANCELLED'].includes(invoice.status)) {
-      return { error: 'Only draft or cancelled invoices can be deleted' }
-    }
-
     await prisma.invoices.delete({
       where: { id: invoiceId },
     })
@@ -417,11 +417,11 @@ export async function deleteInvoice(
         entityId: invoiceId,
       },
     })
-
-    revalidatePath('/dashboard/invoices')
-    redirect('/dashboard/invoices')
   } catch (error) {
     console.error('Error deleting invoice:', error)
     return { error: 'Failed to delete invoice' }
   }
+
+  revalidatePath('/dashboard/invoices')
+  redirect('/dashboard/invoices')
 }

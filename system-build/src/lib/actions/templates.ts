@@ -216,23 +216,23 @@ export async function deleteTemplate(templateId: string): Promise<TemplateAction
     return { error: 'Unauthorized' }
   }
 
+  const template = await prisma.service_templates.findUnique({
+    where: { id: templateId },
+    include: {
+      _count: { select: { projects: true, leads: true } },
+    },
+  })
+
+  if (!template) {
+    return { error: 'Template not found' }
+  }
+
+  // Prevent deletion if template is in use
+  if (template._count.projects > 0 || template._count.leads > 0) {
+    return { error: 'Cannot delete template with existing projects or leads. Deactivate instead.' }
+  }
+
   try {
-    const template = await prisma.service_templates.findUnique({
-      where: { id: templateId },
-      include: {
-        _count: { select: { projects: true, leads: true } },
-      },
-    })
-
-    if (!template) {
-      return { error: 'Template not found' }
-    }
-
-    // Prevent deletion if template is in use
-    if (template._count.projects > 0 || template._count.leads > 0) {
-      return { error: 'Cannot delete template with existing projects or leads. Deactivate instead.' }
-    }
-
     await prisma.service_templates.delete({
       where: { id: templateId },
     })
@@ -246,11 +246,11 @@ export async function deleteTemplate(templateId: string): Promise<TemplateAction
         entityId: templateId,
       },
     })
-
-    revalidatePath('/dashboard/templates')
-    redirect('/dashboard/templates')
   } catch (error) {
     console.error('Error deleting template:', error)
     return { error: 'Failed to delete template' }
   }
+
+  revalidatePath('/dashboard/templates')
+  redirect('/dashboard/templates')
 }

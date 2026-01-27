@@ -184,25 +184,25 @@ export async function deleteProject(projectId: string): Promise<ProjectActionSta
     return { error: 'Unauthorized' }
   }
 
+  const project = await prisma.projects.findUnique({
+    where: { id: projectId },
+    include: {
+      _count: { select: { invoices: true } },
+    },
+  })
+
+  if (!project) {
+    return { error: 'Project not found' }
+  }
+
+  // Prevent deletion if project has invoices
+  if (project._count.invoices > 0) {
+    return { error: 'Cannot delete project with existing invoices' }
+  }
+
+  const clientId = project.clientId
+
   try {
-    const project = await prisma.projects.findUnique({
-      where: { id: projectId },
-      include: {
-        _count: { select: { invoices: true } },
-      },
-    })
-
-    if (!project) {
-      return { error: 'Project not found' }
-    }
-
-    // Prevent deletion if project has invoices
-    if (project._count.invoices > 0) {
-      return { error: 'Cannot delete project with existing invoices' }
-    }
-
-    const clientId = project.clientId
-
     // Delete project (cascades to tasks, milestones, files, comments)
     await prisma.projects.delete({
       where: { id: projectId },
@@ -217,12 +217,12 @@ export async function deleteProject(projectId: string): Promise<ProjectActionSta
         entityId: projectId,
       },
     })
-
-    revalidatePath('/dashboard/projects')
-    revalidatePath(`/dashboard/clients/${clientId}`)
-    redirect('/dashboard/projects')
   } catch (error) {
     console.error('Error deleting project:', error)
     return { error: 'Failed to delete project' }
   }
+
+  revalidatePath('/dashboard/projects')
+  revalidatePath(`/dashboard/clients/${clientId}`)
+  redirect('/dashboard/projects')
 }
