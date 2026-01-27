@@ -2,6 +2,7 @@
 
 // Dashboard Header Component - V3 Glass Aesthetic
 import { signOut } from 'next-auth/react'
+import Image from 'next/image'
 import type { Role } from '@prisma/client'
 
 interface DashboardHeaderProps {
@@ -19,7 +20,15 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo / Brand */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+            <Image
+              src="/bertrand-brands-logomark.png"
+              alt=""
+              width={24}
+              height={24}
+              className="h-6 w-6 brightness-0 invert"
+              priority
+            />
             <span className="text-lg font-medium tracking-tight text-[var(--text)]">
               BERTRAND BRANDS
             </span>
