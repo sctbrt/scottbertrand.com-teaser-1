@@ -3,6 +3,7 @@
 // Convert Lead to Client Form
 import { useActionState } from 'react'
 import { convertToClient } from '@/lib/actions/leads'
+import { Spinner } from '@/components/ui/spinner'
 
 interface ConvertToClientFormProps {
   lead: {
@@ -124,8 +125,9 @@ export function ConvertToClientForm({ lead, templates }: ConvertToClientFormProp
       <button
         type="submit"
         disabled={isPending}
-        className="w-full px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
+        {isPending && <Spinner size="sm" />}
         {isPending ? 'Converting...' : 'Convert to Client'}
       </button>
     </form>

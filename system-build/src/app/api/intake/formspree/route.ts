@@ -102,9 +102,6 @@ export async function POST(request: NextRequest) {
     // Parse request body
     const body = await request.json()
 
-    // Debug logging to understand Formspree payload
-    console.log('[Intake] Received webhook payload:', JSON.stringify(body, null, 2))
-
     // Formspree webhook format:
     // { form: "formId", submission: { email, name, _date, _subject, ... } }
     // The actual form fields are in body.submission
@@ -113,7 +110,6 @@ export async function POST(request: NextRequest) {
     // Handle Formspree's actual webhook format (submission wrapper)
     if (body.submission && typeof body.submission === 'object') {
       formData = body.submission
-      console.log('[Intake] Extracted submission data:', JSON.stringify(formData, null, 2))
     } else if (body._formspree_submission) {
       formData = body._formspree_submission
     } else if (body.data && typeof body.data === 'object') {
@@ -124,7 +120,6 @@ export async function POST(request: NextRequest) {
     // Accept test submissions with a test email for validation
     const isTestWebhook = body.test === true || body._test === true
     if (isTestWebhook) {
-      console.log('[Intake] Received Formspree test webhook')
       // For test webhooks, create a test lead to verify integration
       const testLead = await prisma.leads.create({
         data: {

@@ -4,6 +4,7 @@
 import { useState, useTransition } from 'react'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
+import { Spinner } from '@/components/ui/spinner'
 
 interface LoginFormProps {
   callbackUrl?: string
@@ -94,8 +95,9 @@ export function LoginForm({ callbackUrl, isDev }: LoginFormProps) {
       <button
         type="submit"
         disabled={isPending || !email}
-        className="w-full py-3 px-4 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 dark:focus:ring-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="w-full py-3 px-4 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 dark:focus:ring-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
       >
+        {isPending && <Spinner size="sm" />}
         {isPending ? 'Sending...' : 'Send Sign-In Link'}
       </button>
 

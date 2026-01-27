@@ -3,8 +3,8 @@
    Architect Feedback Integration
    =================================== */
 
-/* Google Fonts - Source Serif 4 */
-@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap');
+/* Note: Google Fonts (Fraunces, Inter, Source Serif 4) are loaded via
+   <link> tags in HTML for optimal performance. Do not use @import here. */
 
 /* CSS Variables for Theming */
 :root {
@@ -60,6 +60,11 @@
     --t-slow: 260ms;
     --ease-standard: cubic-bezier(0.2, 0, 0, 1);
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+    /* Opacity scale - used for interactive states and visual hierarchy */
+    --opacity-low: 0.5;
+    --opacity-medium: 0.7;
+    --opacity-high: 0.9;
 }
 
 [data-theme="dark"] {
@@ -214,6 +219,8 @@ body.modal-active {
         inset 0 1px 1px rgba(255, 255, 255, 0.8),
         inset 0 -1px 1px rgba(0, 0, 0, 0.05);
     position: relative;
+    /* Smooth transition for menu open/close state */
+    transition: background 0.15s ease-out;
 }
 
 .nav-container::before {
@@ -397,20 +404,35 @@ body.modal-active {
     bottom: -6px;
     left: 0;
     right: 0;
-    /* Increased height and opacity for better visibility */
     height: 2px;
     background: var(--accent);
-    opacity: var(--opacity-low);
+    /* Increased opacity for better visibility of active state */
+    opacity: var(--opacity-medium);
 }
 
 /* Collapsed nav state (hamburger-on-overflow) — v1.3.0 */
 
 /* CRITICAL: Remove backdrop-filter when menu is open to fix position:fixed containing block issue.
    backdrop-filter creates a new containing block, causing fixed children to position relative to
-   the nav-container (64px) instead of viewport, which clips the "Services" link off-screen. */
+   the nav-container (64px) instead of viewport, which clips the "Services" link off-screen.
+
+   We use a pseudo-element overlay to fade out the glass effect smoothly rather than
+   abruptly removing backdrop-filter, which would cause a visual flash. */
 .nav--collapsed.nav--menu-open {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+    /* Use solid fallback background to prevent content showing through */
+    background: var(--bg);
+    transition: background 0.15s ease-out;
+}
+
+/* Light mode: match nav-container background */
+.nav--collapsed.nav--menu-open {
+    background: rgba(250, 250, 250, 0.95);
+}
+
+[data-theme="dark"] .nav--collapsed.nav--menu-open {
+    background: rgba(20, 20, 20, 0.95);
 }
 
 .nav--collapsed .nav-menu {
@@ -474,7 +496,8 @@ body.modal-active {
     max-height: min(80dvh, 620px);
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-    padding: 2.5rem 2rem;
+    /* Align horizontal padding with desktop nav (24px) */
+    padding: var(--space-12) var(--space-6);
     gap: 0.25rem;
     border-radius: var(--glass-radius-lg, 20px);
     background: var(--bg-primary);

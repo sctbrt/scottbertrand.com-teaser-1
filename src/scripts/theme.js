@@ -89,12 +89,22 @@ class ThemeManager {
      * Start interval to check time and update theme when in system mode
      */
     startTimeBasedUpdates() {
-        // Check every minute for time changes
-        setInterval(() => {
-            if (this.currentMode === 'system') {
+        // Only start interval if in system mode
+        if (this.currentMode === 'system') {
+            this.timeUpdateInterval = setInterval(() => {
                 this.applyTheme();
-            }
-        }, 60000); // 60 seconds
+            }, 60000); // 60 seconds
+        }
+    }
+
+    /**
+     * Clear time-based update interval (called when switching away from system mode)
+     */
+    clearTimeBasedUpdates() {
+        if (this.timeUpdateInterval) {
+            clearInterval(this.timeUpdateInterval);
+            this.timeUpdateInterval = null;
+        }
     }
 
     cycleMode() {
@@ -102,7 +112,15 @@ class ThemeManager {
         const modes = ['system', 'light', 'dark'];
         const currentIndex = modes.indexOf(this.currentMode);
         const nextIndex = (currentIndex + 1) % modes.length;
+        const previousMode = this.currentMode;
         this.currentMode = modes[nextIndex];
+
+        // Manage time-based update interval
+        if (previousMode === 'system' && this.currentMode !== 'system') {
+            this.clearTimeBasedUpdates();
+        } else if (previousMode !== 'system' && this.currentMode === 'system') {
+            this.startTimeBasedUpdates();
+        }
 
         // Save and apply
         localStorage.setItem('sb-theme', this.currentMode);
@@ -222,10 +240,10 @@ class MenuManager {
                 totalWidth += item.offsetWidth;
             });
 
-            // Add gaps between items (nav-menu has gap: 32px in CSS)
-            const gap = 32;
+            // Get gap from computed style (avoids hardcoded value mismatch with CSS)
+            const computedGap = parseFloat(getComputedStyle(this.navMenu).gap) || 24;
             if (topLevelItems.length > 1) {
-                totalWidth += gap * (topLevelItems.length - 1);
+                totalWidth += computedGap * (topLevelItems.length - 1);
             }
 
             naturalNavWidth = totalWidth;
@@ -272,10 +290,20 @@ class MenuManager {
             }
         };
 
-        // Observe container size changes
-        const resizeObserver = new ResizeObserver(() => {
-            requestAnimationFrame(checkOverflow);
-        });
+        // Debounce function to prevent excessive recalculations during resize
+        let resizeTimeout = null;
+        const debouncedCheckOverflow = () => {
+            if (resizeTimeout) {
+                cancelAnimationFrame(resizeTimeout);
+            }
+            resizeTimeout = requestAnimationFrame(() => {
+                checkOverflow();
+                resizeTimeout = null;
+            });
+        };
+
+        // Observe container size changes with debouncing
+        const resizeObserver = new ResizeObserver(debouncedCheckOverflow);
         resizeObserver.observe(this.navContainer);
 
         // Initial check after fonts load
