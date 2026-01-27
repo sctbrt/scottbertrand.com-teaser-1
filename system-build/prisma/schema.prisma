@@ -52,6 +52,7 @@ model clients {
   phone        String?
   website      String?
   notes        String?
+  isArchived   Boolean    @default(false)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   users        users      @relation(fields: [userId], references: [id], onDelete: Cascade)

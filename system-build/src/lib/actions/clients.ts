@@ -261,3 +261,133 @@ export async function deleteClient(clientId: string): Promise<ClientActionState>
   revalidatePath('/dashboard/clients')
   redirect('/dashboard/clients')
 }
+
+export async function archiveMultipleClients(
+  clientIds: string[]
+): Promise<ClientActionState> {
+  const session = await auth()
+  if (!session?.user || session.user.role !== 'INTERNAL_ADMIN') {
+    return { error: 'Unauthorized' }
+  }
+
+  if (!clientIds || clientIds.length === 0) {
+    return { error: 'No clients selected' }
+  }
+
+  try {
+    await prisma.clients.updateMany({
+      where: { id: { in: clientIds } },
+      data: { isArchived: true },
+    })
+
+    // Log activity
+    await prisma.activity_logs.create({
+      data: {
+        userId: session.user.id,
+        action: 'BULK_ARCHIVE',
+        entityType: 'Client',
+        entityId: 'multiple',
+        details: { count: clientIds.length, clientIds },
+      },
+    })
+  } catch (error) {
+    console.error('Error archiving clients:', error)
+    return { error: 'Failed to archive clients' }
+  }
+
+  revalidatePath('/dashboard/clients')
+  return { success: true }
+}
+
+export async function unarchiveClient(clientId: string): Promise<ClientActionState> {
+  const session = await auth()
+  if (!session?.user || session.user.role !== 'INTERNAL_ADMIN') {
+    return { error: 'Unauthorized' }
+  }
+
+  try {
+    await prisma.clients.update({
+      where: { id: clientId },
+      data: { isArchived: false },
+    })
+
+    await prisma.activity_logs.create({
+      data: {
+        userId: session.user.id,
+        action: 'UNARCHIVE',
+        entityType: 'Client',
+        entityId: clientId,
+      },
+    })
+  } catch (error) {
+    console.error('Error unarchiving client:', error)
+    return { error: 'Failed to unarchive client' }
+  }
+
+  revalidatePath('/dashboard/clients')
+  revalidatePath(`/dashboard/clients/${clientId}`)
+  return { success: true }
+}
+
+export async function deleteMultipleClients(
+  clientIds: string[]
+): Promise<ClientActionState> {
+  const session = await auth()
+  if (!session?.user || session.user.role !== 'INTERNAL_ADMIN') {
+    return { error: 'Unauthorized' }
+  }
+
+  if (!clientIds || clientIds.length === 0) {
+    return { error: 'No clients selected' }
+  }
+
+  // Check for clients with projects or invoices
+  const clients = await prisma.clients.findMany({
+    where: { id: { in: clientIds } },
+    include: {
+      _count: { select: { projects: true, invoices: true } },
+    },
+  })
+
+  const clientsWithData = clients.filter(
+    (c) => c._count.projects > 0 || c._count.invoices > 0
+  )
+
+  if (clientsWithData.length > 0) {
+    return {
+      error: `Cannot delete ${clientsWithData.length} client(s) with existing projects or invoices. Archive them instead.`,
+    }
+  }
+
+  try {
+    // Get user IDs for deletion
+    const userIds = clients.map((c) => c.userId)
+
+    // Delete clients
+    await prisma.clients.deleteMany({
+      where: { id: { in: clientIds } },
+    })
+
+    // Delete associated users
+    await prisma.users.deleteMany({
+      where: { id: { in: userIds } },
+    })
+
+    // Log activity
+    await prisma.activity_logs.create({
+      data: {
+        userId: session.user.id,
+        action: 'BULK_DELETE',
+        entityType: 'Client',
+        entityId: 'multiple',
+        details: { count: clientIds.length, clientIds },
+      },
+    })
+  } catch (error) {
+    console.error('Error deleting clients:', error)
+    return { error: 'Failed to delete clients' }
+  }
+
+  revalidatePath('/dashboard/clients')
+  return { success: true }
+}
