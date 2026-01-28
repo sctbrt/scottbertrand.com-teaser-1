@@ -1052,7 +1052,7 @@
                 <span class="footer__divider">|</span>
                 <span class="footer__name">Scott Bertrand</span>
             </div>
-            <p class="footer__text">&copy; <script>document.write(new Date().getFullYear())</script> &middot; Sudbury, Canada &middot; <a href="mailto:hello@scottbertrand.com">hello@scottbertrand.com</a></p>
+            <p class="footer__text">&copy; <span id="currentYear"></span> &middot; Sudbury, Canada &middot; <a href="mailto:hello@scottbertrand.com">hello@scottbertrand.com</a></p>
         </footer>
     </div>
 
@@ -1134,8 +1134,12 @@
 
             // Organic drift using layered sine waves - living, wandering lights
             let lastFrameTime = performance.now();
+            let animationFrameId = null;
+            let isAnimating = false;
 
             function animateLights(currentTime) {
+                if (!isAnimating) return;
+
                 const elapsed = currentTime / 1000;
                 const deltaTime = (currentTime - lastFrameTime) / 16.67; // Normalize to ~60fps
                 lastFrameTime = currentTime;
@@ -1166,9 +1170,40 @@
                     headerGlass.style.setProperty('--yellow-pos', currentYellowPos + '%');
                     headerGlass.style.setProperty('--blue-pos', currentBluePos + '%');
                 }
-                requestAnimationFrame(animateLights);
+                animationFrameId = requestAnimationFrame(animateLights);
             }
-            requestAnimationFrame(animateLights);
+
+            function startAnimation() {
+                if (!isAnimating) {
+                    isAnimating = true;
+                    lastFrameTime = performance.now();
+                    animationFrameId = requestAnimationFrame(animateLights);
+                }
+            }
+
+            function stopAnimation() {
+                isAnimating = false;
+                if (animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                }
+            }
+
+            // Start animation
+            startAnimation();
+
+            // Pause animation when page is hidden to save resources
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    stopAnimation();
+                } else {
+                    startAnimation();
+                }
+            });
+
+            // Set current year in footer (replaces document.write)
+            const yearEl = document.getElementById('currentYear');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
 
             // Hide on scroll down, show on scroll up
             let lastScrollY = window.scrollY;
