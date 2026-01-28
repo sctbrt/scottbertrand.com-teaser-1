@@ -6,24 +6,34 @@
   "framework": null,
   "redirects": [
     {
-      "source": "/services/website-audit.html",
-      "destination": "/services/strategic-website-review.html",
+      "source": "/services/:path*",
+      "destination": "https://bertrandbrands.com/#services",
       "permanent": true
     },
     {
-      "source": "/services/brand-audit.html",
-      "destination": "/services/strategic-brand-review.html",
+      "source": "/how-it-works",
+      "destination": "https://bertrandbrands.com/#process",
       "permanent": true
     },
     {
-      "source": "/services/website-audit-sudbury.html",
-      "destination": "/sudbury-brand-website-clarity.html",
+      "source": "/request",
+      "destination": "https://bertrandbrands.com/#contact",
       "permanent": true
     },
     {
-      "source": "/services/full-brand-website-reset.html",
-      "destination": "/services/brand-website-reset.html",
+      "source": "/sudbury-brand-website-clarity",
+      "destination": "https://bertrandbrands.com/sudbury-brand-website-clarity",
       "permanent": true
+    },
+    {
+      "source": "/sudbury-small-business-website-leads",
+      "destination": "https://bertrandbrands.com/sudbury-small-business-website-leads",
+      "permanent": true
+    },
+    {
+      "source": "/sitemapX",
+      "destination": "/pages/sitemapX.html",
+      "permanent": false
     }
   ],
   "rewrites": [
