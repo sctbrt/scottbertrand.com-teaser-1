@@ -22,7 +22,10 @@ export default async function LeadsPage({
     ? { status: status as LeadStatus }
     : { status: { not: 'ARCHIVED' as LeadStatus } }
 
-  const [leads, totalCount] = await Promise.all([
+  // Count for "All" filter always excludes archived (regardless of current view)
+  const allWhereClause = { status: { not: 'ARCHIVED' as LeadStatus } }
+
+  const [leads, totalCount, allCount] = await Promise.all([
     getLeads({
       where: whereClause,
       orderBy: { createdAt: 'desc' },
@@ -30,6 +33,7 @@ export default async function LeadsPage({
       take: perPage,
     }),
     countLeads(whereClause),
+    countLeads(allWhereClause),
   ])
 
   const totalPages = Math.ceil(totalCount / perPage)
@@ -59,7 +63,7 @@ export default async function LeadsPage({
       {/* Status Filters */}
       <div className="flex gap-2 flex-wrap items-center">
         <FilterChip
-          label={`All (${totalCount})`}
+          label={`All (${allCount})`}
           href="/dashboard/leads"
           active={!status}
         />
