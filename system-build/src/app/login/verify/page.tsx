@@ -1,4 +1,6 @@
 // Verify Email Page - Shown after magic link is sent
+import Image from 'next/image'
+
 export default async function VerifyPage({
   searchParams,
 }: {
@@ -8,8 +10,37 @@ export default async function VerifyPage({
   const email = params.email || 'your email'
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f7f6f3] dark:bg-[#1c1c1e] px-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen flex flex-col bg-[#f7f6f3] dark:bg-[#1c1c1e] px-4">
+      {/* Header with Logo */}
+      <header className="w-full py-6 px-4 sm:px-6">
+        <div className="flex items-center gap-3">
+          <Image
+            src="/bertrand-brands-logomark.png"
+            alt=""
+            width={32}
+            height={32}
+            className="w-8 h-8"
+          />
+          <Image
+            src="/bertrand-brands-wordmark-light.png"
+            alt="Bertrand Brands"
+            width={140}
+            height={20}
+            className="h-5 w-auto hidden dark:block"
+          />
+          <Image
+            src="/bertrand-brands-wordmark-dark.png"
+            alt="Bertrand Brands"
+            width={140}
+            height={20}
+            className="h-5 w-auto dark:hidden"
+          />
+        </div>
+      </header>
+
+      {/* Centered Content */}
+      <div className="flex-1 flex items-center justify-center">
+        <div className="w-full max-w-md">
         <div className="bg-white dark:bg-[#2c2c2e] rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8 text-center">
           <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg
@@ -52,9 +83,10 @@ export default async function VerifyPage({
           </a>
         </div>
 
-        <p className="text-center text-xs text-gray-400 dark:text-gray-500 mt-6">
-          Scott Bertrand — Brand & Web Systems
-        </p>
+          <p className="text-center text-xs text-gray-400 dark:text-gray-500 mt-6">
+            Scott Bertrand — Brand & Web Systems
+          </p>
+        </div>
       </div>
     </div>
   )
