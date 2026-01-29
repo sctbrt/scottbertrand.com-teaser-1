@@ -2,8 +2,11 @@
 
 // Dashboard Header Component - V3 Glass Aesthetic
 import { signOut } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 import Image from 'next/image'
 import type { Role } from '@prisma/client'
+import { navItems } from './dashboard-nav'
 
 interface DashboardHeaderProps {
   user: {
@@ -15,26 +18,40 @@ interface DashboardHeaderProps {
 }
 
 export function DashboardHeader({ user }: DashboardHeaderProps) {
+  const pathname = usePathname()
+
+  // Find current section from navItems
+  const currentSection = navItems.find(item =>
+    pathname === item.href ||
+    (item.href !== '/dashboard' && pathname.startsWith(item.href))
+  )?.name || 'Overview'
+
   return (
     <header className="glass glass--header sticky top-0 z-40">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo / Brand */}
           <div className="flex items-center gap-3">
-            <Image
-              src="/bertrand-brands-logomark.png"
-              alt=""
-              width={24}
-              height={24}
-              className="h-6 w-6 brightness-0 invert"
-              priority
-            />
-            <span className="text-lg font-medium tracking-tight text-[var(--text)]">
-              BERTRAND BRANDS
+            <Link href="/dashboard" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+              <Image
+                src="/bertrand-brands-logomark.png"
+                alt=""
+                width={24}
+                height={24}
+                className="h-6 w-6 brightness-0 invert"
+                priority
+              />
+              <span className="text-lg font-medium tracking-tight text-[var(--text)]">
+                BERTRAND BRANDS
+              </span>
+            </Link>
+            <span className="text-[var(--text-muted)]">|</span>
+            <span className="text-base font-medium tracking-tight text-amber-600 dark:text-amber-400">
+              Customer Relationship Management
             </span>
             <span className="text-[var(--text-muted)]">|</span>
-            <span className="text-lg font-medium tracking-tight text-amber-600 dark:text-amber-400">
-              CRM
+            <span className="text-base font-medium tracking-tight text-[var(--text)]">
+              {currentSection}
             </span>
           </div>
 

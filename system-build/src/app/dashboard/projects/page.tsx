@@ -226,12 +226,12 @@ function FilterChip({
 
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
-    DRAFT: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300',
-    PENDING_APPROVAL: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300',
-    IN_PROGRESS: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-    ON_HOLD: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300',
-    COMPLETED: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-    CANCELLED: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
+    DRAFT: 'bg-zinc-500/20 text-zinc-400 border border-zinc-500/30',
+    PENDING_APPROVAL: 'bg-amber-500/20 text-amber-400 border border-amber-500/30',
+    IN_PROGRESS: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
+    ON_HOLD: 'bg-orange-500/20 text-orange-400 border border-orange-500/30',
+    COMPLETED: 'bg-sky-500/20 text-sky-400 border border-sky-500/30',
+    CANCELLED: 'bg-rose-500/20 text-rose-400 border border-rose-500/30',
   }
   return colors[status] || colors.DRAFT
 }

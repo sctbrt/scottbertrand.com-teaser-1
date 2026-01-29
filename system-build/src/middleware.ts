@@ -71,6 +71,10 @@ const AUTH_PATHS = ['/login', '/auth', '/api/auth']
 // NOTE: Only add routes here that genuinely need to be unauthenticated (e.g., external webhooks)
 const PUBLIC_API_PATHS = ['/api/intake', '/api/webhooks']
 
+// Delivery Room paths - these have their own auth check in the layout
+// and should not be rewritten by subdomain routing
+const DELIVERY_ROOM_PATHS = ['/p/']
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const hostname = request.headers.get('host') || ''
@@ -151,6 +155,12 @@ export async function middleware(request: NextRequest) {
   // Create response with site context header
   const response = NextResponse.next()
   response.headers.set('x-site-type', siteType)
+
+  // Delivery Room routes (/p/[publicId]) - handled directly without rewriting
+  // These have their own auth check in the page layout
+  if (DELIVERY_ROOM_PATHS.some(path => pathname.startsWith(path))) {
+    return NextResponse.next()
+  }
 
   // Handle dashboard routing
   if (siteType === 'dashboard') {

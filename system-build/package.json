@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "stripe:listen": "stripe listen --forward-to localhost:3000/api/webhooks/stripe",
+    "stripe:trigger": "stripe trigger checkout.session.completed",
+    "seed:payments": "npx tsx prisma/seed-dev-payments.ts"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"
@@ -20,10 +23,13 @@
     "dotenv": "^17.2.3",
     "next": "16.1.4",
     "next-auth": "^5.0.0-beta.30",
+    "pdf-lib": "^1.17.1",
     "prisma": "^6.19.2",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "resend": "^6.8.0",
+    "sharp": "^0.34.5",
+    "stripe": "^17.5.0",
     "uuid": "^13.0.0"
   },
   "devDependencies": {

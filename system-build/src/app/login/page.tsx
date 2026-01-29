@@ -26,27 +26,20 @@ export default async function LoginPage({
     <div className="min-h-screen flex flex-col bg-[#f7f6f3] dark:bg-[#1c1c1e] px-4">
       {/* Header with Logo */}
       <header className="w-full py-6 px-4 sm:px-6">
-        <div className="flex items-center gap-3">
-          <Image
-            src="/bertrand-brands-logomark.png"
-            alt=""
-            width={32}
-            height={32}
-            className="w-8 h-8"
-          />
+        <div className="flex items-center">
           <Image
             src="/bertrand-brands-wordmark-light.png"
             alt="Bertrand Brands"
             width={140}
-            height={20}
-            className="h-5 w-auto hidden dark:block"
+            height={50}
+            className="h-10 w-auto hidden dark:block"
           />
           <Image
             src="/bertrand-brands-wordmark-dark.png"
             alt="Bertrand Brands"
             width={140}
-            height={20}
-            className="h-5 w-auto dark:hidden"
+            height={50}
+            className="h-10 w-auto dark:hidden"
           />
         </div>
       </header>

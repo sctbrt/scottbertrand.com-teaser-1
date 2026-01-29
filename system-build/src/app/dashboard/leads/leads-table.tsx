@@ -319,12 +319,12 @@ export function LeadsTable({ leads }: LeadsTableProps) {
 
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
-    NEW: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-    CONTACTED: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300',
-    QUALIFIED: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-    CONVERTED: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
-    DISQUALIFIED: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
-    ARCHIVED: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300',
+    NEW: 'bg-amber-500/20 text-amber-400 border border-amber-500/30',
+    CONTACTED: 'bg-sky-500/20 text-sky-400 border border-sky-500/30',
+    QUALIFIED: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
+    CONVERTED: 'bg-violet-500/20 text-violet-400 border border-violet-500/30',
+    DISQUALIFIED: 'bg-rose-500/20 text-rose-400 border border-rose-500/30',
+    ARCHIVED: 'bg-zinc-500/20 text-zinc-400 border border-zinc-500/30',
   }
   return colors[status] || colors.NEW
 }

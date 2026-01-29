@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ProjectForm } from './project-form'
 import { TaskList } from './task-list'
 import { MilestoneList } from './milestone-list'
+import { PaymentSection } from './payment-section'
 
 interface ProjectDetailPageProps {
   params: Promise<{ id: string }>
@@ -76,6 +77,11 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             users: { select: { name: true, email: true, role: true } },
           },
         },
+        // Payment events for audit (last 5)
+        paymentEvents: {
+          orderBy: { processedAt: 'desc' },
+          take: 5,
+        },
       },
     }),
     prisma.clients.findMany({
@@ -127,6 +133,9 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
               </h1>
               <span className={`text-sm px-3 py-1 rounded-full ${getStatusColor(project.status)}`}>
                 {project.status.replace('_', ' ')}
+              </span>
+              <span className={`text-sm px-3 py-1 rounded-full ${getPaymentStatusColor(project.paymentStatus)}`}>
+                {project.paymentStatus === 'PAID' ? '✓ Paid' : project.paymentStatus === 'REFUNDED' ? 'Refunded' : 'Unpaid'}
               </span>
             </div>
             <p className="text-gray-500 dark:text-gray-400 mt-1">
@@ -278,6 +287,20 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
         {/* Right Column - Sidebar */}
         <div className="space-y-6">
+          {/* Payment Status */}
+          <PaymentSection
+            project={{
+              id: project.id,
+              publicId: project.publicId,
+              paymentStatus: project.paymentStatus,
+              paymentProvider: project.paymentProvider,
+              paymentRequired: project.paymentRequired,
+              paidAt: project.paidAt,
+              stripePaymentLinkId: project.stripePaymentLinkId,
+              stripePaymentLinkUrl: project.stripePaymentLinkUrl,
+            }}
+          />
+
           {/* Project Details */}
           <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
             <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
@@ -410,6 +433,15 @@ function getStatusColor(status: string) {
     CANCELLED: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
   }
   return colors[status] || colors.DRAFT
+}
+
+function getPaymentStatusColor(status: string) {
+  const colors: Record<string, string> = {
+    UNPAID: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300',
+    PAID: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
+    REFUNDED: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
+  }
+  return colors[status] || colors.UNPAID
 }
 
 function getInvoiceStatusColor(status: string) {

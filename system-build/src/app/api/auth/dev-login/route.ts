@@ -1,14 +1,14 @@
 // DEV ONLY: Bypass email verification for local testing
 // This route should NEVER be deployed to production
 
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { cookies } from 'next/headers'
 
 // Explicit flag to enable dev login - must be explicitly set to 'true'
 const DEV_LOGIN_ENABLED = process.env.DEV_LOGIN_ENABLED === 'true'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   // Multiple checks to prevent accidental production exposure
   const isProduction = process.env.NODE_ENV === 'production'
   const isVercel = !!process.env.VERCEL
@@ -24,16 +24,19 @@ export async function GET() {
     return NextResponse.json({ error: 'Not available' }, { status: 403 })
   }
 
-  const adminEmail = 'hello@bertrandbrands.com'
+  // Get email from query param, default to admin
+  const { searchParams } = new URL(request.url)
+  const email = searchParams.get('email') || 'hello@bertrandbrands.com'
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
 
   try {
-    // Find admin user
+    // Find user by email
     const user = await prisma.users.findUnique({
-      where: { email: adminEmail },
+      where: { email },
     })
 
     if (!user) {
-      return NextResponse.json({ error: 'Admin user not found. Run seed first.' }, { status: 404 })
+      return NextResponse.json({ error: `User not found: ${email}. Run seed first.` }, { status: 404 })
     }
 
     // Create a session directly
@@ -69,8 +72,8 @@ export async function GET() {
       },
     })
 
-    // Redirect to dashboard
-    return NextResponse.redirect(new URL('/dashboard', 'http://localhost:3000'))
+    // Redirect to callback URL
+    return NextResponse.redirect(new URL(callbackUrl, 'http://localhost:3000'))
   } catch (error) {
     console.error('Dev login error:', error)
     return NextResponse.json({ error: 'Failed to create session' }, { status: 500 })

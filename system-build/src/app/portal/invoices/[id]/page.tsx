@@ -38,7 +38,13 @@ export default async function PortalInvoiceDetailPage({ params }: InvoicePagePro
         select: { companyName: true, contactName: true, contactEmail: true },
       },
       projects: {
-        select: { id: true, name: true },
+        select: {
+          id: true,
+          name: true,
+          publicId: true,
+          stripePaymentLinkUrl: true,
+          paymentStatus: true,
+        },
       },
     },
   })
@@ -238,6 +244,35 @@ export default async function PortalInvoiceDetailPage({ params }: InvoicePagePro
             <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
               {invoice.notes}
             </p>
+          </div>
+        )}
+
+        {/* Pay Now CTA - Show if unpaid and project has payment link */}
+        {!['PAID', 'CANCELLED'].includes(invoice.status) &&
+          invoice.projects?.stripePaymentLinkUrl &&
+          invoice.projects?.paymentStatus !== 'PAID' && (
+          <div className="p-6 bg-amber-50 dark:bg-amber-900/20 border-t border-amber-200 dark:border-amber-800">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <p className="font-medium text-amber-700 dark:text-amber-300">
+                  Ready to pay?
+                </p>
+                <p className="text-sm text-amber-600 dark:text-amber-400">
+                  Pay securely with credit card via Stripe.
+                </p>
+              </div>
+              <a
+                href={invoice.projects.stripePaymentLinkUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700 transition-colors text-sm whitespace-nowrap"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
+                Pay Now — {formatCurrency(Number(invoice.total))}
+              </a>
+            </div>
           </div>
         )}
 

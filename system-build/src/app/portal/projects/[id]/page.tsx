@@ -80,7 +80,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
       {/* Project Description */}
       {project.description && (
-        <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+        <div className="glass glass--card p-6">
           <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
             Overview
           </h2>
@@ -91,7 +91,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       )}
 
       {/* Timeline */}
-      <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+      <div className="glass glass--card p-6">
         <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
           Timeline
         </h2>
@@ -142,7 +142,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
       {/* Milestones */}
       {project.milestones.length > 0 && (
-        <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+        <div className="glass glass--card p-6">
           <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
             Milestones
           </h2>
@@ -183,7 +183,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
       {/* Deliverables / Tasks */}
       {project.tasks.length > 0 && (
-        <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+        <div className="glass glass--card p-6">
           <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
             Deliverables Checklist
           </h2>
@@ -216,7 +216,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
       {/* Shared Files */}
       {project.file_assets.length > 0 && (
-        <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+        <div className="glass glass--card p-6">
           <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
             Shared Files
           </h2>
@@ -252,15 +252,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   )
 }
 
-// Helper functions
+// Helper functions - V3 Glass Aesthetic
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
-    DRAFT: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300',
-    PENDING_APPROVAL: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300',
-    IN_PROGRESS: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-    ON_HOLD: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300',
-    COMPLETED: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-    CANCELLED: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
+    DRAFT: 'bg-zinc-500/20 text-zinc-400 border border-zinc-500/30',
+    PENDING_APPROVAL: 'bg-amber-500/20 text-amber-400 border border-amber-500/30',
+    IN_PROGRESS: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
+    ON_HOLD: 'bg-orange-500/20 text-orange-400 border border-orange-500/30',
+    COMPLETED: 'bg-sky-500/20 text-sky-400 border border-sky-500/30',
+    CANCELLED: 'bg-rose-500/20 text-rose-400 border border-rose-500/30',
   }
   return colors[status] || colors.DRAFT
 }
@@ -271,22 +271,22 @@ function formatStatus(status: string) {
 
 function getMilestoneStatusBg(status: string) {
   const colors: Record<string, string> = {
-    PENDING: 'bg-gray-100 dark:bg-gray-700',
-    IN_PROGRESS: 'bg-blue-100 dark:bg-blue-900/30',
-    AWAITING_APPROVAL: 'bg-yellow-100 dark:bg-yellow-900/30',
-    APPROVED: 'bg-green-100 dark:bg-green-900/30',
-    COMPLETED: 'bg-green-100 dark:bg-green-900/30',
+    PENDING: 'bg-zinc-500/20',
+    IN_PROGRESS: 'bg-sky-500/20',
+    AWAITING_APPROVAL: 'bg-amber-500/20',
+    APPROVED: 'bg-emerald-500/20',
+    COMPLETED: 'bg-emerald-500/20',
   }
   return colors[status] || colors.PENDING
 }
 
 function getMilestoneStatusColor(status: string) {
   const colors: Record<string, string> = {
-    PENDING: 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300',
-    IN_PROGRESS: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-    AWAITING_APPROVAL: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300',
-    APPROVED: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-    COMPLETED: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
+    PENDING: 'bg-zinc-500/20 text-zinc-400 border border-zinc-500/30',
+    IN_PROGRESS: 'bg-sky-500/20 text-sky-400 border border-sky-500/30',
+    AWAITING_APPROVAL: 'bg-amber-500/20 text-amber-400 border border-amber-500/30',
+    APPROVED: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
+    COMPLETED: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
   }
   return colors[status] || colors.PENDING
 }
@@ -294,18 +294,18 @@ function getMilestoneStatusColor(status: string) {
 function getMilestoneIcon(status: string) {
   if (status === 'COMPLETED' || status === 'APPROVED') {
     return (
-      <svg className="w-4 h-4 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+      <svg className="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
       </svg>
     )
   }
   if (status === 'IN_PROGRESS') {
-    return <span className="w-2 h-2 bg-blue-500 rounded-full" />
+    return <span className="w-2 h-2 bg-sky-400 rounded-full" />
   }
   if (status === 'AWAITING_APPROVAL') {
-    return <span className="w-2 h-2 bg-yellow-500 rounded-full" />
+    return <span className="w-2 h-2 bg-amber-400 rounded-full" />
   }
-  return <span className="w-2 h-2 bg-gray-300 dark:bg-gray-500 rounded-full" />
+  return <span className="w-2 h-2 bg-zinc-500 rounded-full" />
 }
 
 function formatMilestoneStatus(status: string) {

@@ -3,6 +3,19 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 
+function getGreeting() {
+  const hour = new Date().toLocaleString('en-US', {
+    timeZone: 'America/Toronto',
+    hour: 'numeric',
+    hour12: false,
+  })
+  const h = parseInt(hour)
+  if (h >= 5 && h < 12) return 'Good morning'
+  if (h >= 12 && h < 17) return 'Good afternoon'
+  if (h >= 17 && h < 21) return 'Good evening'
+  return 'Hello'
+}
+
 export default async function PortalPage() {
   const session = await auth()
   if (!session?.user) return null
@@ -27,30 +40,49 @@ export default async function PortalPage() {
   })
 
   const projects = client?.projects || []
+  const clientName = client?.contactName?.split(' ')[0] || session.user.name?.split(' ')[0] || 'there'
+  const greeting = getGreeting()
 
   return (
     <div className="space-y-8">
+      {/* Welcome Hero */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 via-transparent to-orange-500/5 border border-amber-500/20 p-8">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-amber-500/10 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-orange-500/10 to-transparent rounded-full blur-2xl translate-y-1/2 -translate-x-1/4" />
+        <div className="relative">
+          <p className="text-sm font-medium text-amber-600 dark:text-amber-400 tracking-wider uppercase mb-2">
+            {greeting}
+          </p>
+          <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100 tracking-tight">
+            Welcome, <span className="bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent">{clientName}</span>
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-2 text-lg">
+            Track your projects and stay updated on progress.
+          </p>
+        </div>
+      </div>
+
       <div>
-        <h1 className="text-2xl font-medium text-[var(--text)] tracking-tight">
+        <h2 className="text-xl font-medium text-[var(--text)] tracking-tight">
           Your Projects
-        </h1>
+        </h2>
         <p className="text-sm text-[var(--text-muted)] mt-1">
           View project status, deliverables, and milestones
         </p>
       </div>
 
       {projects.length === 0 ? (
-        <div className="glass glass--card text-center py-12">
-          <div className="w-16 h-16 bg-[var(--surface-2)] rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-[var(--text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="glass glass--card text-center py-16">
+          <div className="w-20 h-20 bg-gradient-to-br from-amber-500/20 to-orange-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-amber-500/20">
+            <svg className="w-10 h-10 text-amber-500/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
             </svg>
           </div>
-          <h2 className="text-lg font-medium text-[var(--text)] mb-2">
+          <h2 className="text-xl font-medium text-[var(--text)] mb-3">
             No projects yet
           </h2>
-          <p className="text-sm text-[var(--text-muted)]">
-            Your projects will appear here once work begins.
+          <p className="text-sm text-[var(--text-muted)] max-w-sm mx-auto">
+            Your projects will appear here once work begins. We'll notify you when there's something to see.
           </p>
         </div>
       ) : (
@@ -59,7 +91,7 @@ export default async function PortalPage() {
             <Link
               key={project.id}
               href={`/portal/projects/${project.id}`}
-              className="block glass glass--card hover:border-[var(--accent)] transition-colors"
+              className="block glass glass--card hover:border-[var(--accent)] hover:scale-[1.01] transition-all group"
             >
               <div className="flex items-start justify-between">
                 <div>
@@ -96,8 +128,9 @@ export default async function PortalPage() {
                 </div>
               )}
 
-              <div className="mt-4 flex items-center text-sm text-[var(--accent)]">
-                <span>View details →</span>
+              <div className="mt-4 flex items-center text-sm text-[var(--text-muted)] group-hover:text-[var(--accent)] transition-colors">
+                <span>View details</span>
+                <span className="ml-1 inline-block transition-transform group-hover:translate-x-0.5">→</span>
               </div>
             </Link>
           ))}
@@ -109,12 +142,12 @@ export default async function PortalPage() {
 
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
-    DRAFT: 'bg-[var(--surface-2)] text-[var(--text-muted)]',
-    PENDING_APPROVAL: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
-    IN_PROGRESS: 'bg-[var(--accent-muted)] text-[var(--accent)]',
-    ON_HOLD: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300',
-    COMPLETED: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300',
-    CANCELLED: 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300',
+    DRAFT: 'bg-zinc-500/20 text-zinc-400 border border-zinc-500/30',
+    PENDING_APPROVAL: 'bg-amber-500/20 text-amber-400 border border-amber-500/30',
+    IN_PROGRESS: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
+    ON_HOLD: 'bg-orange-500/20 text-orange-400 border border-orange-500/30',
+    COMPLETED: 'bg-sky-500/20 text-sky-400 border border-sky-500/30',
+    CANCELLED: 'bg-rose-500/20 text-rose-400 border border-rose-500/30',
   }
   return colors[status] || colors.DRAFT
 }

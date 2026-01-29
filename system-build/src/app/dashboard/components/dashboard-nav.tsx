@@ -4,40 +4,53 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-const navItems = [
+export const navItems = [
   {
     name: 'Overview',
     href: '/dashboard',
     icon: HomeIcon,
+    countKey: null,
   },
   {
     name: 'Leads',
     href: '/dashboard/leads',
     icon: UsersIcon,
+    countKey: 'leads' as const,
   },
   {
     name: 'Clients',
     href: '/dashboard/clients',
     icon: BuildingIcon,
+    countKey: null,
   },
   {
     name: 'Projects',
     href: '/dashboard/projects',
     icon: FolderIcon,
+    countKey: null,
   },
   {
     name: 'Invoices',
     href: '/dashboard/invoices',
     icon: DocumentIcon,
+    countKey: 'invoices' as const,
   },
   {
     name: 'Templates',
     href: '/dashboard/templates',
     icon: TemplateIcon,
+    countKey: null,
   },
 ]
 
-export function DashboardNav() {
+interface DashboardNavProps {
+  counts?: {
+    leads?: number
+    invoices?: number
+  }
+}
+
+export function DashboardNav({ counts }: DashboardNavProps) {
   const pathname = usePathname()
 
   return (
@@ -52,14 +65,22 @@ export function DashboardNav() {
               <li key={item.name}>
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  className={`relative flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                     isActive
                       ? 'bg-[var(--accent-muted)] text-[var(--accent)]'
                       : 'text-[var(--text-muted)] hover:bg-[var(--accent-subtle)] hover:text-[var(--text)]'
                   }`}
                 >
+                  {isActive && (
+                    <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-[var(--accent)] rounded-r-full" />
+                  )}
                   <item.icon className="w-5 h-5" />
-                  {item.name}
+                  <span className="flex-1">{item.name}</span>
+                  {item.countKey && counts?.[item.countKey] ? (
+                    <span className="ml-auto px-2 py-0.5 text-xs font-medium rounded-full bg-amber-500/20 text-amber-400">
+                      {counts[item.countKey]}
+                    </span>
+                  ) : null}
                 </Link>
               </li>
             )
