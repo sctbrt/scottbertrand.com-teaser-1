@@ -99,7 +99,7 @@
             --color-goods: #8FA883;
         }
 
-        html { font-size: 16px; }
+        html { font-size: 16px; overflow-x: hidden; scroll-padding-top: 5rem; }
         body {
             font-family: var(--font-sans);
             background: var(--bg);
@@ -199,6 +199,8 @@
             gap: 1.5rem;
             position: relative;
             z-index: 1;
+            max-width: 90vw;
+            padding: 0 1rem;
         }
 
         /* Orbiting spotlights - searching the darkness */
@@ -251,9 +253,10 @@
         /* Logo */
         .intro__logo-wrap {
             position: relative;
-            width: 120px;
-            height: 75px;
+            width: clamp(80px, 15vw, 120px);
+            height: clamp(50px, 10vw, 75px);
             z-index: 2;
+            flex-shrink: 0;
         }
         .intro__logo {
             width: 100%;
@@ -272,6 +275,7 @@
             opacity: 0.4;
             animation: introDividerGrow 0.6s ease-out 1s forwards;
             z-index: 2;
+            flex-shrink: 0;
         }
         @keyframes introDividerGrow {
             to {
@@ -281,12 +285,10 @@
 
         /* Wordmark - fades in after divider */
         .intro__wordmark {
-            font-family: var(--font-sans);
-            font-size: clamp(1.25rem, 4vw, 2.5rem);
-            font-weight: 300;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--text);
+            height: clamp(24px, 5vw, 40px);
+            width: auto;
+            max-width: 50vw;
+            object-fit: contain;
             opacity: 0;
             transform: translateX(-10px);
             animation: introWordmarkIn 0.8s ease-out 1.4s forwards;
@@ -414,11 +416,9 @@
             opacity: 0.4;
         }
         .header__logo-text {
-            font-family: var(--font-sans);
-            font-size: 1rem;
-            font-weight: 400;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
+            height: 16px;
+            width: auto;
+            object-fit: contain;
         }
         .header__nav {
             display: flex;
@@ -470,9 +470,7 @@
                 flex-shrink: 0;
             }
             .header__logo-text {
-                font-size: 0.625rem;
-                letter-spacing: 0.08em;
-                white-space: nowrap;
+                height: 10px;
             }
             .header__logo-divider {
                 display: none;
@@ -963,12 +961,9 @@
             opacity: 0.4;
         }
         .footer__name {
-            font-family: var(--font-sans);
-            font-size: 0.75rem;
-            font-weight: 400;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--text-muted);
+            height: 14px;
+            width: auto;
+            object-fit: contain;
         }
         .footer__text {
             font-size: 0.75rem;
@@ -983,9 +978,9 @@
             color: var(--text);
         }
 
-        /* Skip link */
+        /* Skip link - must be above intro overlay for accessibility */
         .skip-link {
-            position: absolute;
+            position: fixed;
             top: -100%;
             left: 1rem;
             padding: 0.75rem 1rem;
@@ -994,7 +989,7 @@
             font-size: 0.875rem;
             font-weight: 500;
             border-radius: var(--radius-sm);
-            z-index: 300;
+            z-index: 10001;
             text-decoration: none;
         }
         .skip-link:focus {
@@ -1134,7 +1129,8 @@
             }
 
             // Function to begin the site after user interaction
-            function beginSite() {
+            // skipScroll: true if user clicked a link (let browser handle navigation)
+            function beginSite(skipScroll) {
                 if (!introComplete || hasBegun) return;
                 hasBegun = true;
 
@@ -1182,10 +1178,12 @@
                     if (flagship) flagship.classList.add('revealed');
                 }, 3200);
 
-                // Scroll to hero section
-                const heroSection = document.querySelector('.hero');
-                if (heroSection) {
-                    heroSection.scrollIntoView({ behavior: 'smooth' });
+                // Scroll to hero section (unless user clicked a link)
+                if (!skipScroll) {
+                    const heroSection = document.querySelector('.hero');
+                    if (heroSection) {
+                        heroSection.scrollIntoView({ behavior: 'smooth' });
+                    }
                 }
             }
 
@@ -1200,9 +1198,19 @@
                 introPrompt.classList.add('visible');
             }, 3000);
 
-            // Listen for tap/click anywhere
-            document.addEventListener('click', beginSite);
-            document.addEventListener('touchstart', beginSite, { passive: true });
+            // Listen for tap/click anywhere (removed after use in beginSite)
+            function handleBegin(e) {
+                // Check if user clicked a link - let browser handle navigation
+                const isLinkClick = e.target.closest('a[href]');
+                beginSite(isLinkClick);
+                // Remove listeners after first interaction
+                if (hasBegun) {
+                    document.removeEventListener('click', handleBegin);
+                    document.removeEventListener('touchstart', handleBegin);
+                }
+            }
+            document.addEventListener('click', handleBegin);
+            document.addEventListener('touchstart', handleBegin, { passive: true });
 
             // Reactive header lighting - responds to mouse + organic drift
             let mouseInfluenceRed = 0;
