@@ -99,7 +99,11 @@
             --color-goods: #8FA883;
         }
 
-        html { font-size: 16px; overflow-x: hidden; scroll-padding-top: 5rem; }
+        html { font-size: 16px; overflow-x: hidden; scroll-padding-top: 5rem; touch-action: pan-x pan-y; }
+        @supports (-webkit-touch-callout: none) {
+            /* iOS-specific zoom prevention */
+            html { -webkit-text-size-adjust: 100%; }
+        }
         body {
             font-family: var(--font-sans);
             background: var(--bg);
@@ -1233,6 +1237,11 @@
     </div>
 
     <script>
+        // Prevent zoom on iOS (gesturestart for pinch, touchend for double-tap)
+        document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
+
         // Cinematic intro sequence with staged reveals
         (function() {
             const intro = document.getElementById('intro');
