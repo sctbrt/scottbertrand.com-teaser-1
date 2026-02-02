@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Record</title>
+    <meta name="description" content="An independent editorial house dedicated to the curation of objects, ideas, and rituals for contemporary life.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #050505;
+            --bg-warm: #080706;
+            --text: #c8c4bc;
+            --text-bright: #ebe8e2;
+            --text-dim: rgba(200, 196, 188, 0.3);
+            --text-ghost: rgba(200, 196, 188, 0.12);
+            --cursor: rgba(200, 180, 140, 0.8);
+            --font: 'EB Garamond', Georgia, serif;
+        }
+
+        html {
+            font-size: 19px;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            min-height: 100dvh;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* =============================================
+           Structure: Scroll-driven chapters
+           ============================================= */
+
+        .chapter {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 2rem;
+            position: relative;
+        }
+
+        /* =============================================
+           Chapter 1: The Declaration
+           ============================================= */
+
+        .chapter--declaration {
+            padding-bottom: 15vh;
+        }
+
+        .declaration {
+            text-align: center;
+            max-width: 620px;
+        }
+
+        .declaration__line {
+            display: block;
+            font-size: clamp(1.6rem, 4.5vw, 2.5rem);
+            font-weight: 400;
+            line-height: 1.35;
+            letter-spacing: -0.015em;
+            color: var(--text-bright);
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .declaration__line.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .declaration__line--sub {
+            font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+            color: var(--text);
+            margin-top: 1em;
+            font-style: italic;
+            letter-spacing: 0;
+        }
+
+        /* Scroll indicator */
+        .scroll-hint {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .scroll-hint.visible {
+            opacity: 1;
+        }
+
+        .scroll-hint__line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, var(--text-ghost) 0%, transparent 100%);
+            animation: scrollPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 0.6; transform: scaleY(1.15); }
+        }
+
+        /* =============================================
+           Chapter 2: The Method (the heart)
+           Typewriter effect — text typed character by character
+           ============================================= */
+
+        .chapter--method {
+            background: var(--bg-warm);
+            position: relative;
+        }
+
+        /* Subtle vignette */
+        .chapter--method::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, var(--bg) 100%);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .method {
+            max-width: 560px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .method__phrase {
+            display: block;
+            font-size: clamp(1.0625rem, 2.3vw, 1.25rem);
+            line-height: 2.2;
+            letter-spacing: 0.01em;
+            color: var(--text-dim);
+            min-height: 1.5em;
+            position: relative;
+        }
+
+        .method__phrase--em {
+            font-style: italic;
+            padding-left: 1.5em;
+        }
+
+        /* Typewriter cursor */
+        .method__cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.1em;
+            background: var(--cursor);
+            margin-left: 2px;
+            vertical-align: text-bottom;
+            animation: blink 0.8s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .method__phrase.complete {
+            color: var(--text);
+        }
+
+        .method__phrase.complete.past {
+            color: var(--text-dim);
+        }
+
+        /* The horizontal rule that grows */
+        .method__rule {
+            width: 0;
+            height: 1px;
+            background: var(--text-ghost);
+            margin: 3rem auto 0;
+            transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .method__rule.visible {
+            width: 80px;
+        }
+
+        /* =============================================
+           The Void — Empty space before thesis
+           ============================================= */
+
+        .void {
+            min-height: 60vh;
+            background: var(--bg);
+            position: relative;
+        }
+
+        .void__fade {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to bottom, var(--bg-warm), var(--bg));
+            pointer-events: none;
+        }
+
+        /* =============================================
+           Chapter 3: The Negation (the breath)
+           ============================================= */
+
+        .chapter--negation {
+            min-height: 80vh;
+            background: var(--bg);
+        }
+
+        .negation {
+            text-align: center;
+            max-width: 520px;
+        }
+
+        .negation__line {
+            display: block;
+            font-size: clamp(1.125rem, 2.5vw, 1.3125rem);
+            line-height: 1.95;
+            color: var(--text);
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .negation__line.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .negation__line + .negation__line {
+            margin-top: 0.4em;
+        }
+
+        /* =============================================
+           Chapter 4: The Thesis (the landing)
+           Blur-to-sharp focus effect
+           ============================================= */
+
+        .chapter--thesis {
+            min-height: 100vh;
+            min-height: 100dvh;
+            background: var(--bg);
+        }
+
+        .thesis {
+            text-align: center;
+            max-width: 650px;
+        }
+
+        .thesis__line {
+            font-size: clamp(1.5rem, 4vw, 2.125rem);
+            font-weight: 400;
+            font-style: italic;
+            line-height: 1.45;
+            letter-spacing: 0.005em;
+            color: var(--text-bright);
+            opacity: 0;
+            filter: blur(8px);
+            transform: scale(0.96);
+            transition: opacity 2.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 2.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 2.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .thesis__line.visible {
+            opacity: 1;
+            filter: blur(0);
+            transform: scale(1);
+        }
+
+        /* Subtle glow behind thesis */
+        .thesis__glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 300px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(ellipse at center, rgba(180, 160, 120, 0.04) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 3s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .thesis__glow.visible {
+            opacity: 1;
+        }
+
+        .thesis {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* =============================================
+           Coda: Coming soon
+           ============================================= */
+
+        .coda {
+            position: fixed;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            opacity: 0;
+            transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+
+        .coda.visible {
+            opacity: 1;
+        }
+
+        .coda p {
+            font-size: 0.75rem;
+            font-style: italic;
+            letter-spacing: 0.06em;
+            text-transform: lowercase;
+            color: var(--text-ghost);
+        }
+
+        /* =============================================
+           Responsive
+           ============================================= */
+
+        @media (max-width: 640px) {
+            html {
+                font-size: 17px;
+            }
+
+            .chapter {
+                padding: 2.5rem 1.5rem;
+                justify-content: flex-start;
+                padding-top: 22vh;
+            }
+
+            .chapter--declaration {
+                padding-top: 28vh;
+            }
+
+            .chapter--thesis {
+                padding-top: 30vh;
+            }
+
+            .declaration__line,
+            .method__phrase,
+            .negation__line,
+            .thesis__line {
+                text-align: left;
+            }
+
+            .method__phrase--em {
+                padding-left: 0;
+            }
+
+            .method__rule {
+                margin-left: 0;
+                margin-right: auto;
+            }
+
+            .scroll-hint {
+                bottom: 2rem;
+            }
+
+            .void {
+                min-height: 40vh;
+            }
+        }
+
+        /* =============================================
+           Reduced Motion
+           ============================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+            .declaration__line,
+            .method__phrase,
+            .method__rule,
+            .negation__line,
+            .thesis__line,
+            .thesis__glow,
+            .scroll-hint,
+            .coda {
+                transition: none;
+                opacity: 1;
+                transform: none;
+                filter: none;
+            }
+
+            .method__rule {
+                width: 80px;
+            }
+
+            .scroll-hint__line,
+            .method__cursor {
+                animation: none;
+            }
+        }
+
+        /* =============================================
+           No-JS Fallback
+           ============================================= */
+
+        .no-js .declaration__line,
+        .no-js .method__phrase,
+        .no-js .negation__line,
+        .no-js .thesis__line,
+        .no-js .thesis__glow,
+        .no-js .coda {
+            opacity: 1;
+            transform: none;
+            filter: none;
+            color: var(--text);
+        }
+
+        .no-js .method__phrase {
+            color: var(--text);
+        }
+
+        .no-js .method__rule {
+            width: 80px;
+        }
+
+        .no-js .method__cursor {
+            display: none;
+        }
+
+        .no-js .scroll-hint {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Chapter 1: Declaration -->
+    <section class="chapter chapter--declaration" data-chapter="declaration">
+        <div class="declaration">
+            <span class="declaration__line" data-reveal="declaration">
+                This is an independent editorial house
+            </span>
+            <span class="declaration__line declaration__line--sub" data-reveal="declaration" data-delay="700">
+                dedicated to the curation of objects, ideas, and rituals for contemporary life.
+            </span>
+        </div>
+        <div class="scroll-hint" id="scrollHint">
+            <div class="scroll-hint__line"></div>
+        </div>
+    </section>
+
+    <!-- Chapter 2: Method -->
+    <section class="chapter chapter--method" data-chapter="method">
+        <div class="method">
+            <span class="method__phrase" data-typewriter>It operates through considered releases—</span>
+            <span class="method__phrase method__phrase--em" data-typewriter>issued deliberately,</span>
+            <span class="method__phrase method__phrase--em" data-typewriter>closed without extension,</span>
+            <span class="method__phrase method__phrase--em" data-typewriter>and preserved in full—</span>
+            <span class="method__phrase" data-typewriter>each shaped by the cultural moment in which it appears.</span>
+            <div class="method__rule" data-reveal="rule"></div>
+        </div>
+    </section>
+
+    <!-- The Void -->
+    <div class="void" data-chapter="void">
+        <div class="void__fade"></div>
+    </div>
+
+    <!-- Chapter 3: Negation -->
+    <section class="chapter chapter--negation" data-chapter="negation">
+        <div class="negation">
+            <span class="negation__line" data-reveal="negation">Nothing here is driven by trend, scale, or frequency.</span>
+            <span class="negation__line" data-reveal="negation">Inclusion is intentional; absence is structural.</span>
+        </div>
+    </section>
+
+    <!-- Chapter 4: Thesis -->
+    <section class="chapter chapter--thesis" data-chapter="thesis">
+        <div class="thesis__glow" id="thesisGlow"></div>
+        <div class="thesis">
+            <span class="thesis__line" data-reveal="thesis">The work is not to persuade, but to decide.</span>
+        </div>
+    </section>
+
+    <!-- Coda -->
+    <div class="coda" id="coda">
+        <p>coming soon</p>
+    </div>
+
+    <script>
+        (function() {
+            document.documentElement.classList.remove('no-js');
+
+            var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // =============================================
+            // Typewriter Engine
+            // =============================================
+            function typewrite(element, text, speed, callback) {
+                if (reducedMotion) {
+                    element.textContent = text;
+                    element.classList.add('complete');
+                    if (callback) callback();
+                    return;
+                }
+
+                var i = 0;
+                element.textContent = '';
+
+                // Add cursor
+                var cursor = document.createElement('span');
+                cursor.className = 'method__cursor';
+                element.appendChild(cursor);
+
+                function type() {
+                    if (i < text.length) {
+                        element.insertBefore(document.createTextNode(text.charAt(i)), cursor);
+                        i++;
+                        setTimeout(type, speed + Math.random() * 30); // Slight variation
+                    } else {
+                        // Remove cursor, mark complete
+                        cursor.remove();
+                        element.classList.add('complete');
+                        if (callback) callback();
+                    }
+                }
+
+                type();
+            }
+
+            // =============================================
+            // Chapter States
+            // =============================================
+            var chapterStates = {
+                declaration: false,
+                method: false,
+                negation: false,
+                thesis: false
+            };
+
+            // Declaration: Reveal on load
+            function revealDeclaration() {
+                var elements = document.querySelectorAll('[data-reveal="declaration"]');
+                elements.forEach(function(el, i) {
+                    var delay = parseInt(el.dataset.delay) || (i * 500);
+                    setTimeout(function() {
+                        el.classList.add('visible');
+                    }, reducedMotion ? 0 : 600 + delay);
+                });
+
+                // Show scroll hint
+                setTimeout(function() {
+                    document.getElementById('scrollHint').classList.add('visible');
+                }, reducedMotion ? 0 : 3000);
+
+                chapterStates.declaration = true;
+            }
+
+            // Method: Typewriter sequence
+            function revealMethod() {
+                if (chapterStates.method) return;
+                chapterStates.method = true;
+
+                // Hide scroll hint
+                document.getElementById('scrollHint').classList.remove('visible');
+
+                var phrases = Array.from(document.querySelectorAll('[data-typewriter]'));
+                var rule = document.querySelector('[data-reveal="rule"]');
+                var texts = phrases.map(function(p) { return p.textContent.trim(); });
+
+                // Clear all text first
+                phrases.forEach(function(p) { p.textContent = ''; });
+
+                var index = 0;
+
+                function typeNext() {
+                    if (index >= phrases.length) {
+                        // All done, show rule
+                        setTimeout(function() {
+                            rule.classList.add('visible');
+                        }, reducedMotion ? 0 : 800);
+                        return;
+                    }
+
+                    var phrase = phrases[index];
+                    var text = texts[index];
+
+                    // Dim previous phrase
+                    if (index > 0) {
+                        phrases[index - 1].classList.add('past');
+                    }
+
+                    typewrite(phrase, text, 35, function() {
+                        index++;
+                        setTimeout(typeNext, reducedMotion ? 0 : 600);
+                    });
+                }
+
+                setTimeout(typeNext, reducedMotion ? 0 : 400);
+            }
+
+            // Negation: Staggered fade
+            function revealNegation() {
+                if (chapterStates.negation) return;
+                chapterStates.negation = true;
+
+                var lines = document.querySelectorAll('[data-reveal="negation"]');
+                lines.forEach(function(el, i) {
+                    setTimeout(function() {
+                        el.classList.add('visible');
+                    }, reducedMotion ? 0 : 200 + i * 900);
+                });
+            }
+
+            // Thesis: Blur-to-sharp focus
+            function revealThesis() {
+                if (chapterStates.thesis) return;
+                chapterStates.thesis = true;
+
+                var glow = document.getElementById('thesisGlow');
+                var line = document.querySelector('[data-reveal="thesis"]');
+
+                // Glow first
+                setTimeout(function() {
+                    glow.classList.add('visible');
+                }, reducedMotion ? 0 : 300);
+
+                // Then text sharpens into focus
+                setTimeout(function() {
+                    line.classList.add('visible');
+                }, reducedMotion ? 0 : 800);
+
+                // Coda
+                setTimeout(function() {
+                    document.getElementById('coda').classList.add('visible');
+                }, reducedMotion ? 0 : 3500);
+            }
+
+            // =============================================
+            // Intersection Observer
+            // =============================================
+            var observerOptions = {
+                root: null,
+                rootMargin: '-15% 0px -15% 0px',
+                threshold: 0.2
+            };
+
+            function handleIntersect(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        var chapter = entry.target.dataset.chapter;
+                        switch(chapter) {
+                            case 'method':
+                                revealMethod();
+                                break;
+                            case 'negation':
+                                revealNegation();
+                                break;
+                            case 'thesis':
+                                revealThesis();
+                                break;
+                        }
+                    }
+                });
+            }
+
+            var observer = new IntersectionObserver(handleIntersect, observerOptions);
+
+            document.querySelectorAll('[data-chapter]').forEach(function(chapter) {
+                if (chapter.dataset.chapter !== 'declaration' && chapter.dataset.chapter !== 'void') {
+                    observer.observe(chapter);
+                }
+            });
+
+            // Start with declaration
+            setTimeout(revealDeclaration, 200);
+
+        })();
+    </script>
+</body>
+</html>

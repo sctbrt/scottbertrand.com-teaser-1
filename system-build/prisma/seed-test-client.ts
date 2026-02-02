@@ -52,7 +52,7 @@ async function main() {
   }
 
   // Get the Direction Session template (or another suitable one)
-  let template = await prisma.service_templates.findFirst({
+  const template = await prisma.service_templates.findFirst({
     where: {
       OR: [
         { slug: 'direction-session' },

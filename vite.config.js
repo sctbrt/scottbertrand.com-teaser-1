@@ -96,6 +96,7 @@ export default defineConfig({
         fieldNotes: resolve(__dirname, 'src/pages/field-notes.html'),
         fieldNote: resolve(__dirname, 'src/pages/field-note.html'),
         sitemapX: resolve(__dirname, 'src/pages/sitemapX.html'),
+        theRecord: resolve(__dirname, 'src/pages/the-record/index.html'),
       },
     },
   },

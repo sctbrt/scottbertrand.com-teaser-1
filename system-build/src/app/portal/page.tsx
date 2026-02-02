@@ -82,7 +82,7 @@ export default async function PortalPage() {
             No projects yet
           </h2>
           <p className="text-sm text-[var(--text-muted)] max-w-sm mx-auto">
-            Your projects will appear here once work begins. We'll notify you when there's something to see.
+            Your projects will appear here once work begins. We&apos;ll notify you when there&apos;s something to see.
           </p>
         </div>
       ) : (

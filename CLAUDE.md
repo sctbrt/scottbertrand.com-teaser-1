@@ -1,6 +1,6 @@
 # Claude Instructions — Scott Bertrand Ecosystem
 
-## Version 4.0.4 (Current)
+## Version 4.0.5 (Current)
 
 This document is the single source of truth for the **Scott Bertrand digital ecosystem**. It supersedes all previous versions (including v1.5.1).
 
@@ -271,20 +271,44 @@ src/
 - Animated gradients on key CTAs
 - Mobile hamburger menu with transitions
 
+**Service Architecture** (v4.2.0):
+
+Bertrand Brands operates two distinct service categories with sub-brand visual identities:
+
+**B Core Services** — Strategic, discovery-led engagements
+- Direction Sessions, Audits, Brand Resets, Website Foundations
+- Solid borders, appears first in services section
+- Visual mark: B logomark (40px) + "Core Services" wordmark (Fraunces)
+
+**B Focus Studio** — Fixed-scope, fixed-price offerings
+- Website Fix Sprint ($750), One-Page Website Rebuild ($1,250), Brandmarking Package ($950)
+- Dashed borders, separated by horizontal divider
+- Visual mark: B logomark (40px) + "Focus Studio" wordmark (Fraunces)
+- Shared intake page at `/focus-studio`
+
+**Visual Hierarchy Rule**: Core Services always takes visual precedence over Focus Studio.
+
 **Unique Features**:
 - RGB border animations on secondary CTAs
 - Ethereal text glow on hover states
 - Three RGB spotlights (mobile hero only)
 - Formspree integration for contact form
 - Pricing gate system with magic link access
+- Sub-brand visual system (Core Services + Focus Studio)
 
 **Key Files**:
 ```
 src/
 ├── index.html
 ├── thanks.html          # Form submission confirmation
-├── css/
-│   └── style.css
+├── pages/
+│   └── ads/
+│       ├── direction-session.html
+│       ├── founders-check.html
+│       └── focus-studio.html    # B Focus Studio intake
+├── styles/
+│   ├── tokens.css
+│   └── main.css
 └── assets/
     ├── bertrand-brands-logomark.png
     └── bertrand-brands-wordmark.png
@@ -292,6 +316,7 @@ src/
 
 **Vercel Configuration** (`vercel.json`):
 - Redirects: /about, /services, /process, /contact → hash anchors
+- Rewrites: /focus-studio → /pages/ads/focus-studio.html
 - Security headers: X-Content-Type-Options, X-Frame-Options, Referrer-Policy
 
 ### 6.3 notes.scottbertrand.com (Blog)
@@ -527,6 +552,7 @@ These rules override all other instincts:
 | 4.0.2 | Jan 2026 | Pricing gate integration with system-build, simplified notification flow, cross-subdomain cookies |
 | 4.0.3 | Jan 2026 | Client Portal v1 + Admin CRM v1 locked specs (Feb 3 launch target) |
 | 4.0.4 | Jan 2026 | Payment Integration v1 (Stripe Payment Links) |
+| 4.0.5 | Jan 2026 | Bertrand Brands service architecture (B Core Services + B Focus Studio sub-brands) |
 
 ---
 
