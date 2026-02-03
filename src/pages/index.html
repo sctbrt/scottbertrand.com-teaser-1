@@ -314,6 +314,10 @@
             position: relative;
             z-index: 2;
         }
+        /* Brighten intro wordmark in dark mode */
+        [data-theme="dark"] .intro__wordmark {
+            filter: brightness(2) contrast(1.1);
+        }
         @keyframes introLightsIn {
             to { opacity: 1; }
         }
@@ -442,6 +446,10 @@
             height: 18px;
             width: auto;
             object-fit: contain;
+        }
+        /* Brighten wordmark in dark mode */
+        [data-theme="dark"] .header__logo-text {
+            filter: brightness(2) contrast(1.1);
         }
         .header__nav {
             display: flex;
@@ -1092,6 +1100,10 @@
             height: 14px;
             width: auto;
             object-fit: contain;
+        }
+        /* Brighten footer wordmark in dark mode */
+        [data-theme="dark"] .footer__name {
+            filter: brightness(2) contrast(1.1);
         }
         .footer__text {
             font-size: 0.75rem;
