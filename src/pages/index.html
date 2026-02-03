@@ -214,11 +214,11 @@
         /* Mobile intro fix - ensure content stays within bounds */
         @media (max-width: 640px) {
             .intro__content {
-                gap: 0.75rem;
-                flex-wrap: nowrap;
+                justify-content: center;
             }
-            .intro__wordmark {
-                max-width: 40vw;
+            .intro__logo-wordmark {
+                max-width: 70vw;
+                height: clamp(32px, 7vw, 50px);
             }
         }
 
@@ -269,48 +269,15 @@
             100% { transform: rotate(600deg) translateX(35vw) rotate(-600deg); }
         }
 
-        /* Logo */
-        .intro__logo-wrap {
-            position: relative;
-            width: clamp(80px, 15vw, 120px);
-            height: clamp(50px, 10vw, 75px);
-            z-index: 2;
-            flex-shrink: 0;
-        }
-        .intro__logo {
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transform: scale(0.9);
-            animation: introLogoIn 1s ease-out 0.3s forwards;
-        }
-
-        /* Vertical divider - grows from center */
-        .intro__divider {
-            width: 1px;
-            height: 40px;
-            background: var(--text-subtle);
-            transform: scaleY(0);
-            opacity: 0.4;
-            animation: introDividerGrow 0.6s ease-out 1s forwards;
-            z-index: 2;
-            flex-shrink: 0;
-        }
-        @keyframes introDividerGrow {
-            to {
-                transform: scaleY(1);
-            }
-        }
-
-        /* Wordmark - fades in after divider */
-        .intro__wordmark {
-            height: clamp(24px, 5vw, 40px);
+        /* Combined logo wordmark */
+        .intro__logo-wordmark {
+            height: clamp(40px, 8vw, 60px);
             width: auto;
-            max-width: 50vw;
+            max-width: 80vw;
             object-fit: contain;
             opacity: 0;
-            transform: translateX(-10px);
-            animation: introWordmarkIn 0.8s ease-out 1.4s forwards;
+            transform: scale(0.95);
+            animation: introLogoIn 1s ease-out 0.5s forwards;
             position: relative;
             z-index: 2;
         }
@@ -331,9 +298,7 @@
         }
         @media (prefers-reduced-motion: reduce) {
             .intro__orbit-light,
-            .intro__logo,
-            .intro__wordmark,
-            .intro__divider {
+            .intro__logo-wordmark {
                 animation: none;
                 opacity: 1;
                 transform: none;
@@ -352,8 +317,6 @@
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
             /* Ensure header creates proper stacking context on iOS */
             isolation: isolate;
-            /* Clip any content that might bleed through from below */
-            background: var(--bg);
         }
         .header.visible {
             opacity: 1;
@@ -425,20 +388,10 @@
         .header__logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
             text-decoration: none;
             color: inherit;
         }
-        .header__logo-mark {
-            width: 32px;
-            height: 32px;
-        }
-        .header__logo-divider {
-            color: var(--text-subtle);
-            font-weight: 200;
-            opacity: 0.4;
-        }
-        .header__logo-text {
+        .header__logo-wordmark {
             height: 18px;
             width: auto;
             object-fit: contain;
@@ -586,11 +539,8 @@
             .header__logo {
                 flex-shrink: 0;
             }
-            .header__logo-text {
-                height: 12px;
-            }
-            .header__logo-divider {
-                display: none;
+            .header__logo-wordmark {
+                height: 16px;
             }
             .header__nav {
                 display: none;
@@ -605,12 +555,11 @@
             }
         }
 
-        /* SB Monogram */
+        /* SB Monogram - off-white asset, invert and brighten for dark mode */
         .sb-monogram {
             display: block;
             object-fit: contain;
-            /* Default: brighten for visibility on dark backgrounds */
-            filter: brightness(2) contrast(1.1);
+            filter: invert(1) brightness(2);
         }
         /* Dark version for light mode backgrounds */
         [data-theme="light"] .sb-monogram {
@@ -1076,20 +1025,10 @@
         .footer__brand {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
             text-decoration: none;
         }
-        .footer__mark {
-            width: 32px;
-            height: 20px;
-        }
-        .footer__divider {
-            color: var(--text-subtle);
-            font-weight: 200;
-            opacity: 0.4;
-        }
-        .footer__name {
-            height: 14px;
+        .footer__logo-wordmark {
+            height: 18px;
             width: auto;
             object-fit: contain;
         }
@@ -1148,11 +1087,7 @@
                 <div class="intro__orbit-light intro__orbit-light--yellow"></div>
                 <div class="intro__orbit-light intro__orbit-light--blue"></div>
             </div>
-            <div class="intro__logo-wrap">
-                <img src="/assets/sb-dotted-logomark.png" alt="" class="intro__logo sb-monogram" width="120" height="75">
-            </div>
-            <div class="intro__divider"></div>
-            <img src="/assets/scott-bertrand-wordmark-light.png?v=4" alt="Scott Bertrand" class="intro__wordmark" height="40">
+            <img src="/assets/scott-bertrand-logo-wordmark-light.png?v=6" alt="Scott Bertrand" class="intro__logo-wordmark" height="50">
         </div>
         <div class="intro__prompt" id="introPrompt">Tap to begin</div>
     </div>
@@ -1164,9 +1099,7 @@
             <div class="header__glass">
                 <div class="header__inner">
                     <a href="/" class="header__logo">
-                        <img src="/assets/sb-dotted-logomark.png" alt="SB" class="header__logo-mark sb-monogram" width="50" height="32">
-                        <span class="header__logo-divider">|</span>
-                        <img src="/assets/scott-bertrand-wordmark-light.png?v=4" alt="Scott Bertrand" class="header__logo-text sb-monogram" height="18">
+                        <img src="/assets/scott-bertrand-logo-wordmark-light.png?v=6" alt="Scott Bertrand" class="header__logo-wordmark sb-monogram" height="18">
                     </a>
                     <nav class="header__nav">
                         <a href="/about" class="header__link">About</a>
@@ -1233,9 +1166,7 @@
 
         <footer class="footer" id="contact">
             <a href="https://scottbertrand.com" class="footer__brand">
-                <img src="/assets/sb-dotted-logomark.png" alt="SB" class="footer__mark sb-monogram" width="32" height="20">
-                <span class="footer__divider">|</span>
-                <img src="/assets/scott-bertrand-wordmark-light.png?v=4" alt="Scott Bertrand" class="footer__name sb-monogram" height="14">
+                <img src="/assets/scott-bertrand-logo-wordmark-light.png?v=6" alt="Scott Bertrand" class="footer__logo-wordmark sb-monogram" height="18">
             </a>
             <p class="footer__text">&copy; <span id="currentYear"></span> &middot; Sudbury, Canada &middot; <a href="mailto:bertrandbrands@outlook.com">bertrandbrands@outlook.com</a></p>
         </footer>
