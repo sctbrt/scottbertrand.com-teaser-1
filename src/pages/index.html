@@ -314,10 +314,6 @@
             position: relative;
             z-index: 2;
         }
-        /* Brighten intro wordmark in dark mode */
-        [data-theme="dark"] .intro__wordmark {
-            filter: brightness(2) contrast(1.1);
-        }
         @keyframes introLightsIn {
             to { opacity: 1; }
         }
@@ -446,10 +442,6 @@
             height: 18px;
             width: auto;
             object-fit: contain;
-        }
-        /* Brighten wordmark in dark mode */
-        [data-theme="dark"] .header__logo-text {
-            filter: brightness(2) contrast(1.1);
         }
         .header__nav {
             display: flex;
@@ -1101,10 +1093,6 @@
             width: auto;
             object-fit: contain;
         }
-        /* Brighten footer wordmark in dark mode */
-        [data-theme="dark"] .footer__name {
-            filter: brightness(2) contrast(1.1);
-        }
         .footer__text {
             font-size: 0.75rem;
             color: var(--text-subtle);
@@ -1164,7 +1152,7 @@
                 <img src="/assets/sb-dotted-logomark.png" alt="" class="intro__logo sb-monogram" width="120" height="75">
             </div>
             <div class="intro__divider"></div>
-            <img src="/assets/scott-bertrand-wordmark-light.png?v=3" alt="Scott Bertrand" class="intro__wordmark" height="40">
+            <img src="/assets/scott-bertrand-wordmark-light.png?v=4" alt="Scott Bertrand" class="intro__wordmark" height="40">
         </div>
         <div class="intro__prompt" id="introPrompt">Tap to begin</div>
     </div>
@@ -1178,7 +1166,7 @@
                     <a href="/" class="header__logo">
                         <img src="/assets/sb-dotted-logomark.png" alt="SB" class="header__logo-mark sb-monogram" width="50" height="32">
                         <span class="header__logo-divider">|</span>
-                        <img src="/assets/scott-bertrand-wordmark-light.png?v=3" alt="Scott Bertrand" class="header__logo-text" height="18">
+                        <img src="/assets/scott-bertrand-wordmark-light.png?v=4" alt="Scott Bertrand" class="header__logo-text" height="18">
                     </a>
                     <nav class="header__nav">
                         <a href="/about" class="header__link">About</a>
@@ -1247,7 +1235,7 @@
             <a href="https://scottbertrand.com" class="footer__brand">
                 <img src="/assets/sb-dotted-logomark.png" alt="SB" class="footer__mark sb-monogram" width="32" height="20">
                 <span class="footer__divider">|</span>
-                <img src="/assets/scott-bertrand-wordmark-light.png?v=3" alt="Scott Bertrand" class="footer__name" height="14">
+                <img src="/assets/scott-bertrand-wordmark-light.png?v=4" alt="Scott Bertrand" class="footer__name" height="14">
             </a>
             <p class="footer__text">&copy; <span id="currentYear"></span> &middot; Sudbury, Canada &middot; <a href="mailto:bertrandbrands@outlook.com">bertrandbrands@outlook.com</a></p>
         </footer>
