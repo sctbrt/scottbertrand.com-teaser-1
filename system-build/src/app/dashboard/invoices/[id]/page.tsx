@@ -55,14 +55,14 @@ export default async function InvoiceDetailPage({ params, searchParams }: Invoic
         <div>
           <Link
             href="/dashboard/invoices"
-            className="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 mb-4"
+            className="inline-flex items-center text-sm text-[var(--text-muted)] hover:text-[var(--text)] mb-4"
           >
             ← Back to Invoices
           </Link>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+          <h1 className="text-2xl font-semibold text-[var(--text)]">
             Create New Invoice
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-[var(--text-muted)] mt-1">
             Invoice #{nextNumber}
           </p>
         </div>
@@ -112,21 +112,21 @@ export default async function InvoiceDetailPage({ params, searchParams }: Invoic
       <div>
         <Link
           href="/dashboard/invoices"
-          className="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 mb-4"
+          className="inline-flex items-center text-sm text-[var(--text-muted)] hover:text-[var(--text)] mb-4"
         >
           ← Back to Invoices
         </Link>
         <div className="flex items-start justify-between">
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+              <h1 className="text-2xl font-semibold text-[var(--text)]">
                 Invoice {invoice.invoiceNumber}
               </h1>
               <span className={`text-sm px-3 py-1 rounded-full ${getStatusColor(invoice.status)}`}>
                 {invoice.status}
               </span>
             </div>
-            <p className="text-gray-500 dark:text-gray-400 mt-1">
+            <p className="text-[var(--text-muted)] mt-1">
               <Link
                 href={`/dashboard/clients/${invoice.clients.id}`}
                 className="hover:underline"
@@ -154,21 +154,21 @@ export default async function InvoiceDetailPage({ params, searchParams }: Invoic
         {/* Left Column - Invoice Preview */}
         <div className="lg:col-span-2 space-y-6">
           {/* Invoice Preview Card */}
-          <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] overflow-hidden">
             {/* Invoice Header */}
-            <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+            <div className="p-6 border-b border-[var(--border)]">
               <div className="flex justify-between items-start">
                 <div>
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                  <h2 className="text-xl font-semibold text-[var(--text)]">
                     Bertrand Brands
                   </h2>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                  <p className="text-sm text-[var(--text-muted)] mt-1">
                     bertrandbrands.com
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Invoice Number</p>
-                  <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                  <p className="text-sm text-[var(--text-muted)]">Invoice Number</p>
+                  <p className="text-lg font-semibold text-[var(--text)]">
                     {invoice.invoiceNumber}
                   </p>
                 </div>
@@ -176,38 +176,38 @@ export default async function InvoiceDetailPage({ params, searchParams }: Invoic
             </div>
 
             {/* Bill To & Dates */}
-            <div className="p-6 border-b border-gray-200 dark:border-gray-700 grid grid-cols-2 gap-6">
+            <div className="p-6 border-b border-[var(--border)] grid grid-cols-2 gap-6">
               <div>
-                <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">
+                <p className="text-xs text-[var(--text-subtle)] uppercase tracking-wider mb-2">
                   Bill To
                 </p>
-                <p className="font-medium text-gray-900 dark:text-gray-100">
+                <p className="font-medium text-[var(--text)]">
                   {invoice.clients.companyName || invoice.clients.contactName}
                 </p>
                 {invoice.clients.companyName && (
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-[var(--text-muted)]">
                     {invoice.clients.contactName}
                   </p>
                 )}
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-[var(--text-muted)]">
                   {invoice.clients.contactEmail}
                 </p>
               </div>
               <div className="text-right">
                 <div className="mb-4">
-                  <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">
+                  <p className="text-xs text-[var(--text-subtle)] uppercase tracking-wider mb-1">
                     Invoice Date
                   </p>
-                  <p className="text-gray-900 dark:text-gray-100">
+                  <p className="text-[var(--text)]">
                     {formatDate(invoice.createdAt)}
                   </p>
                 </div>
                 {invoice.dueDate && (
                   <div>
-                    <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">
+                    <p className="text-xs text-[var(--text-subtle)] uppercase tracking-wider mb-1">
                       Due Date
                     </p>
-                    <p className={`${isOverdue(invoice.dueDate, invoice.status) ? 'text-red-600 dark:text-red-400 font-medium' : 'text-gray-900 dark:text-gray-100'}`}>
+                    <p className={`${isOverdue(invoice.dueDate, invoice.status) ? 'text-[var(--error-text)] font-medium' : 'text-[var(--text)]'}`}>
                       {formatDate(invoice.dueDate)}
                     </p>
                   </div>
@@ -219,29 +219,29 @@ export default async function InvoiceDetailPage({ params, searchParams }: Invoic
             <div className="p-6">
               <table className="w-full">
                 <thead>
-                  <tr className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+                  <tr className="text-xs text-[var(--text-subtle)] uppercase tracking-wider">
                     <th className="text-left pb-3">Description</th>
                     <th className="text-right pb-3 w-20">Qty</th>
                     <th className="text-right pb-3 w-28">Rate</th>
                     <th className="text-right pb-3 w-28">Amount</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
+                <tbody className="divide-y divide-[var(--border)]">
                   {lineItems.map((item: InvoiceLineItem, index: number) => (
                     <tr key={index}>
                       <td className="py-3">
-                        <p className="text-gray-900 dark:text-gray-100">{item.description}</p>
+                        <p className="text-[var(--text)]">{item.description}</p>
                         {item.details && (
-                          <p className="text-sm text-gray-500 dark:text-gray-400">{item.details}</p>
+                          <p className="text-sm text-[var(--text-muted)]">{item.details}</p>
                         )}
                       </td>
-                      <td className="py-3 text-right text-gray-700 dark:text-gray-300">
+                      <td className="py-3 text-right text-[var(--text)]">
                         {item.quantity}
                       </td>
-                      <td className="py-3 text-right text-gray-700 dark:text-gray-300">
+                      <td className="py-3 text-right text-[var(--text)]">
                         {formatCurrency(item.rate)}
                       </td>
-                      <td className="py-3 text-right text-gray-900 dark:text-gray-100 font-medium">
+                      <td className="py-3 text-right text-[var(--text)] font-medium">
                         {formatCurrency(item.quantity * item.rate)}
                       </td>
                     </tr>
@@ -251,22 +251,22 @@ export default async function InvoiceDetailPage({ params, searchParams }: Invoic
             </div>
 
             {/* Totals */}
-            <div className="p-6 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700">
+            <div className="p-6 bg-[var(--surface-2)]/50 border-t border-[var(--border)]">
               <div className="flex justify-end">
                 <div className="w-64 space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500 dark:text-gray-400">Subtotal</span>
-                    <span className="text-gray-900 dark:text-gray-100">{formatCurrency(Number(invoice.subtotal))}</span>
+                    <span className="text-[var(--text-muted)]">Subtotal</span>
+                    <span className="text-[var(--text)]">{formatCurrency(Number(invoice.subtotal))}</span>
                   </div>
                   {Number(invoice.tax) > 0 && (
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-500 dark:text-gray-400">Tax</span>
-                      <span className="text-gray-900 dark:text-gray-100">{formatCurrency(Number(invoice.tax))}</span>
+                      <span className="text-[var(--text-muted)]">Tax</span>
+                      <span className="text-[var(--text)]">{formatCurrency(Number(invoice.tax))}</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-lg font-semibold pt-2 border-t border-gray-200 dark:border-gray-600">
-                    <span className="text-gray-900 dark:text-gray-100">Total</span>
-                    <span className="text-gray-900 dark:text-gray-100">{formatCurrency(Number(invoice.total))}</span>
+                  <div className="flex justify-between text-lg font-semibold pt-2 border-t border-[var(--border)]">
+                    <span className="text-[var(--text)]">Total</span>
+                    <span className="text-[var(--text)]">{formatCurrency(Number(invoice.total))}</span>
                   </div>
                 </div>
               </div>
@@ -274,11 +274,11 @@ export default async function InvoiceDetailPage({ params, searchParams }: Invoic
 
             {/* Notes */}
             {invoice.notes && (
-              <div className="p-6 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">
+              <div className="p-6 border-t border-[var(--border)]">
+                <p className="text-xs text-[var(--text-subtle)] uppercase tracking-wider mb-2">
                   Notes
                 </p>
-                <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+                <p className="text-sm text-[var(--text)] whitespace-pre-wrap">
                   {invoice.notes}
                 </p>
               </div>
@@ -289,50 +289,50 @@ export default async function InvoiceDetailPage({ params, searchParams }: Invoic
         {/* Right Column - Details & Edit */}
         <div className="space-y-6">
           {/* Status & Dates */}
-          <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+          <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
+            <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-4">
               Invoice Details
             </h2>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-500 dark:text-gray-400">Status</span>
+                <span className="text-[var(--text-muted)]">Status</span>
                 <span className={`px-2 py-0.5 rounded-full text-xs ${getStatusColor(invoice.status)}`}>
                   {invoice.status}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500 dark:text-gray-400">Created</span>
-                <span className="text-gray-900 dark:text-gray-100">
+                <span className="text-[var(--text-muted)]">Created</span>
+                <span className="text-[var(--text)]">
                   {formatDate(invoice.createdAt)}
                 </span>
               </div>
               {invoice.dueDate && (
                 <div className="flex justify-between">
-                  <span className="text-gray-500 dark:text-gray-400">Due Date</span>
-                  <span className="text-gray-900 dark:text-gray-100">
+                  <span className="text-[var(--text-muted)]">Due Date</span>
+                  <span className="text-[var(--text)]">
                     {formatDate(invoice.dueDate)}
                   </span>
                 </div>
               )}
               {invoice.paidAt && (
                 <div className="flex justify-between">
-                  <span className="text-gray-500 dark:text-gray-400">Paid</span>
-                  <span className="text-green-600 dark:text-green-400">
+                  <span className="text-[var(--text-muted)]">Paid</span>
+                  <span className="text-[var(--success-text)]">
                     {formatDate(invoice.paidAt)}
                   </span>
                 </div>
               )}
               <div className="flex justify-between">
-                <span className="text-gray-500 dark:text-gray-400">Currency</span>
-                <span className="text-gray-900 dark:text-gray-100">{invoice.currency}</span>
+                <span className="text-[var(--text-muted)]">Currency</span>
+                <span className="text-[var(--text)]">{invoice.currency}</span>
               </div>
             </div>
           </div>
 
           {/* Edit Form (for draft invoices) */}
           {invoice.status === 'DRAFT' && (
-            <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-              <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+            <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
+              <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-4">
                 Edit Invoice
               </h2>
               <InvoiceForm
@@ -346,24 +346,24 @@ export default async function InvoiceDetailPage({ params, searchParams }: Invoic
 
           {/* PDF Download */}
           {invoice.file_assets && (
-            <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-              <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+            <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
+              <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-4">
                 PDF Version
               </h2>
               <a
                 href={`/api/files/${invoice.file_assets.id}/download`}
-                className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="flex items-center gap-3 p-3 bg-[var(--surface-2)]/50 rounded-lg hover:bg-[var(--accent-subtle)] transition-colors"
               >
-                <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded flex items-center justify-center">
-                  <svg className="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-10 h-10 bg-red-500/20 rounded flex items-center justify-center">
+                  <svg className="w-5 h-5 text-[var(--error-text)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                  <p className="text-sm font-medium text-[var(--text)]">
                     Download PDF
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-[var(--text-muted)]">
                     {invoice.file_assets.originalName}
                   </p>
                 </div>
@@ -402,12 +402,12 @@ function generateNextInvoiceNumber(lastNumber?: string | null): string {
 
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
-    DRAFT: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300',
-    SENT: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-    VIEWED: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
-    PAID: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-    OVERDUE: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
-    CANCELLED: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300',
+    DRAFT: 'bg-zinc-500/20 text-zinc-400 border border-zinc-500/30',
+    SENT: 'bg-sky-500/20 text-sky-400 border border-sky-500/30',
+    VIEWED: 'bg-violet-500/20 text-violet-400 border border-violet-500/30',
+    PAID: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
+    OVERDUE: 'bg-rose-500/20 text-rose-400 border border-rose-500/30',
+    CANCELLED: 'bg-zinc-500/20 text-zinc-400 border border-zinc-500/30',
   }
   return colors[status] || colors.DRAFT
 }

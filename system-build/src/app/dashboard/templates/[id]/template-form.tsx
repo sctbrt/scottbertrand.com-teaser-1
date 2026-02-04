@@ -47,7 +47,7 @@ export function TemplateForm({ template }: TemplateFormProps) {
       <div>
         <label
           htmlFor="name"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text)] mb-1"
         >
           Template Name *
         </label>
@@ -57,14 +57,14 @@ export function TemplateForm({ template }: TemplateFormProps) {
           name="name"
           required
           defaultValue={template?.name || ''}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+          className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
         />
       </div>
 
       <div>
         <label
           htmlFor="slug"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text)] mb-1"
         >
           Slug *
         </label>
@@ -75,9 +75,9 @@ export function TemplateForm({ template }: TemplateFormProps) {
           required
           defaultValue={template?.slug || ''}
           placeholder="e.g., brand-identity"
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+          className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
         />
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-xs text-[var(--text-muted)] mt-1">
           Used for URLs and references
         </p>
       </div>
@@ -85,7 +85,7 @@ export function TemplateForm({ template }: TemplateFormProps) {
       <div>
         <label
           htmlFor="description"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text)] mb-1"
         >
           Description
         </label>
@@ -94,7 +94,7 @@ export function TemplateForm({ template }: TemplateFormProps) {
           name="description"
           rows={3}
           defaultValue={template?.description || ''}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 resize-none"
+          className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] resize-none"
         />
       </div>
 
@@ -102,7 +102,7 @@ export function TemplateForm({ template }: TemplateFormProps) {
         <div>
           <label
             htmlFor="price"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-sm font-medium text-[var(--text)] mb-1"
           >
             Price *
           </label>
@@ -114,13 +114,13 @@ export function TemplateForm({ template }: TemplateFormProps) {
             min="0"
             step="0.01"
             defaultValue={template?.price ? Number(template.price) : ''}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+            className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
         </div>
         <div>
           <label
             htmlFor="estimatedDays"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-sm font-medium text-[var(--text)] mb-1"
           >
             Est. Days
           </label>
@@ -130,14 +130,14 @@ export function TemplateForm({ template }: TemplateFormProps) {
             name="estimatedDays"
             min="1"
             defaultValue={template?.estimatedDays || ''}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+            className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
         </div>
       </div>
 
       {/* Scope Items */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-[var(--text)] mb-2">
           Scope Items
         </label>
         <div className="space-y-2">
@@ -151,12 +151,12 @@ export function TemplateForm({ template }: TemplateFormProps) {
                   updated[index] = e.target.value
                   setScope(updated)
                 }}
-                className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm"
+                className="flex-1 px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] text-sm"
               />
               <button
                 type="button"
                 onClick={() => setScope(scope.filter((_, i) => i !== index))}
-                className="p-2 text-gray-400 hover:text-red-600 dark:hover:text-red-400"
+                className="p-2 text-gray-400 hover:text-red-500"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -167,7 +167,7 @@ export function TemplateForm({ template }: TemplateFormProps) {
           <button
             type="button"
             onClick={() => setScope([...scope, ''])}
-            className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            className="text-sm text-[var(--text-muted)] hover:text-[var(--text)]"
           >
             + Add Scope Item
           </button>
@@ -176,7 +176,7 @@ export function TemplateForm({ template }: TemplateFormProps) {
 
       {/* Deliverables */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-[var(--text)] mb-2">
           Deliverables
         </label>
         <div className="space-y-2">
@@ -190,12 +190,12 @@ export function TemplateForm({ template }: TemplateFormProps) {
                   updated[index] = e.target.value
                   setDeliverables(updated)
                 }}
-                className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm"
+                className="flex-1 px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] text-sm"
               />
               <button
                 type="button"
                 onClick={() => setDeliverables(deliverables.filter((_, i) => i !== index))}
-                className="p-2 text-gray-400 hover:text-red-600 dark:hover:text-red-400"
+                className="p-2 text-gray-400 hover:text-red-500"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -206,7 +206,7 @@ export function TemplateForm({ template }: TemplateFormProps) {
           <button
             type="button"
             onClick={() => setDeliverables([...deliverables, ''])}
-            className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            className="text-sm text-[var(--text-muted)] hover:text-[var(--text)]"
           >
             + Add Deliverable
           </button>
@@ -215,7 +215,7 @@ export function TemplateForm({ template }: TemplateFormProps) {
 
       {/* Default Checklist */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-[var(--text)] mb-2">
           Default Checklist (auto-created when assigned to project)
         </label>
         <div className="space-y-2">
@@ -230,12 +230,12 @@ export function TemplateForm({ template }: TemplateFormProps) {
                   updated[index] = { ...updated[index], title: e.target.value }
                   setChecklistItems(updated)
                 }}
-                className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm"
+                className="flex-1 px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] text-sm"
               />
               <button
                 type="button"
                 onClick={() => setChecklistItems(checklistItems.filter((_, i) => i !== index))}
-                className="p-2 text-gray-400 hover:text-red-600 dark:hover:text-red-400"
+                className="p-2 text-gray-400 hover:text-red-500"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -246,7 +246,7 @@ export function TemplateForm({ template }: TemplateFormProps) {
           <button
             type="button"
             onClick={() => setChecklistItems([...checklistItems, { title: '' }])}
-            className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            className="text-sm text-[var(--text-muted)] hover:text-[var(--text)]"
           >
             + Add Checklist Item
           </button>
@@ -260,22 +260,22 @@ export function TemplateForm({ template }: TemplateFormProps) {
           name="isActive"
           value="true"
           defaultChecked={template?.isActive ?? true}
-          className="rounded border-gray-300 dark:border-gray-600"
+          className="rounded border-[var(--border)]"
         />
-        <span className="text-sm text-gray-700 dark:text-gray-300">
+        <span className="text-sm text-[var(--text)]">
           Active (available for new projects)
         </span>
       </label>
 
       {state?.error && (
-        <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-          <p className="text-sm text-red-600 dark:text-red-400">{state.error}</p>
+        <div className="p-3 bg-[var(--error-bg)] border border-[var(--error-border)] rounded-lg">
+          <p className="text-sm text-[var(--error-text)]">{state.error}</p>
         </div>
       )}
 
       {state?.success && (
-        <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-          <p className="text-sm text-green-600 dark:text-green-400">
+        <div className="p-3 bg-[var(--success-bg)] border border-[var(--success-border)] rounded-lg">
+          <p className="text-sm text-[var(--success-text)]">
             {template ? 'Template updated successfully' : 'Template created successfully'}
           </p>
         </div>
@@ -284,7 +284,7 @@ export function TemplateForm({ template }: TemplateFormProps) {
       <button
         type="submit"
         disabled={isPending}
-        className="w-full px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full px-4 py-2 bg-[var(--text)] text-[var(--bg)] rounded-lg text-sm font-medium hover:opacity-85 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isPending ? 'Saving...' : template ? 'Update Template' : 'Create Template'}
       </button>

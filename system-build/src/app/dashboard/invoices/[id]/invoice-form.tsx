@@ -121,7 +121,7 @@ export function InvoiceForm({
         <div>
           <label
             htmlFor="clientId"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-sm font-medium text-[var(--text)] mb-1"
           >
             Client *
           </label>
@@ -134,7 +134,7 @@ export function InvoiceForm({
               setClientId(e.target.value)
               setProjectId('') // Reset project when client changes
             }}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+            className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           >
             <option value="">Select a client</option>
             {clients.map((client) => (
@@ -147,7 +147,7 @@ export function InvoiceForm({
         <div>
           <label
             htmlFor="projectId"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-sm font-medium text-[var(--text)] mb-1"
           >
             Project
           </label>
@@ -156,7 +156,7 @@ export function InvoiceForm({
             name="projectId"
             value={projectId}
             onChange={(e) => setProjectId(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+            className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           >
             <option value="">No project</option>
             {filteredProjects.map((project) => (
@@ -172,7 +172,7 @@ export function InvoiceForm({
       <div>
         <label
           htmlFor="dueDate"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text)] mb-1"
         >
           Due Date
         </label>
@@ -181,13 +181,13 @@ export function InvoiceForm({
           id="dueDate"
           name="dueDate"
           defaultValue={invoice?.dueDate ? formatDateInput(invoice.dueDate) : getDefaultDueDate()}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+          className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
         />
       </div>
 
       {/* Line Items */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label className="block text-sm font-medium text-[var(--text)] mb-2">
           Line Items
         </label>
         <div className="space-y-3">
@@ -199,7 +199,7 @@ export function InvoiceForm({
                   placeholder="Description"
                   value={item.description}
                   onChange={(e) => updateLineItem(index, 'description', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 text-sm"
+                  className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] text-sm"
                 />
               </div>
               <div className="w-20">
@@ -210,7 +210,7 @@ export function InvoiceForm({
                   step="1"
                   value={item.quantity}
                   onChange={(e) => updateLineItem(index, 'quantity', parseFloat(e.target.value) || 0)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 text-sm"
+                  className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] text-sm"
                 />
               </div>
               <div className="w-28">
@@ -221,16 +221,16 @@ export function InvoiceForm({
                   step="0.01"
                   value={item.rate}
                   onChange={(e) => updateLineItem(index, 'rate', parseFloat(e.target.value) || 0)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 text-sm"
+                  className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] text-sm"
                 />
               </div>
-              <div className="w-28 py-2 text-right text-sm text-gray-700 dark:text-gray-300">
+              <div className="w-28 py-2 text-right text-sm text-[var(--text)]">
                 {formatCurrency(item.quantity * item.rate)}
               </div>
               <button
                 type="button"
                 onClick={() => removeLineItem(index)}
-                className="p-2 text-gray-400 hover:text-red-600 dark:hover:text-red-400"
+                className="p-2 text-gray-400 hover:text-red-500"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -241,7 +241,7 @@ export function InvoiceForm({
           <button
             type="button"
             onClick={addLineItem}
-            className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            className="text-sm text-[var(--text-muted)] hover:text-[var(--text)]"
           >
             + Add Line Item
           </button>
@@ -250,7 +250,7 @@ export function InvoiceForm({
 
       {/* Tax Rate */}
       <div className="flex items-center gap-4">
-        <label htmlFor="taxRate" className="text-sm text-gray-700 dark:text-gray-300">
+        <label htmlFor="taxRate" className="text-sm text-[var(--text)]">
           Tax Rate (%)
         </label>
         <input
@@ -261,26 +261,26 @@ export function InvoiceForm({
           step="0.01"
           value={taxRate}
           onChange={(e) => setTaxRate(parseFloat(e.target.value) || 0)}
-          className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 text-sm"
+          className="w-24 px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] text-sm"
         />
       </div>
 
       {/* Totals */}
-      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4">
+      <div className="bg-[var(--surface-2)]/50 rounded-lg p-4">
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
-            <span className="text-gray-500 dark:text-gray-400">Subtotal</span>
-            <span className="text-gray-900 dark:text-gray-100">{formatCurrency(subtotal)}</span>
+            <span className="text-[var(--text-muted)]">Subtotal</span>
+            <span className="text-[var(--text)]">{formatCurrency(subtotal)}</span>
           </div>
           {taxRate > 0 && (
             <div className="flex justify-between">
-              <span className="text-gray-500 dark:text-gray-400">Tax ({taxRate}%)</span>
-              <span className="text-gray-900 dark:text-gray-100">{formatCurrency(tax)}</span>
+              <span className="text-[var(--text-muted)]">Tax ({taxRate}%)</span>
+              <span className="text-[var(--text)]">{formatCurrency(tax)}</span>
             </div>
           )}
-          <div className="flex justify-between text-lg font-semibold pt-2 border-t border-gray-200 dark:border-gray-600">
-            <span className="text-gray-900 dark:text-gray-100">Total</span>
-            <span className="text-gray-900 dark:text-gray-100">{formatCurrency(total)}</span>
+          <div className="flex justify-between text-lg font-semibold pt-2 border-t border-[var(--border)]">
+            <span className="text-[var(--text)]">Total</span>
+            <span className="text-[var(--text)]">{formatCurrency(total)}</span>
           </div>
         </div>
       </div>
@@ -289,7 +289,7 @@ export function InvoiceForm({
       <div>
         <label
           htmlFor="notes"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text)] mb-1"
         >
           Notes
         </label>
@@ -299,19 +299,19 @@ export function InvoiceForm({
           rows={3}
           defaultValue={invoice?.notes || ''}
           placeholder="Payment terms, additional notes..."
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 resize-none"
+          className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] resize-none"
         />
       </div>
 
       {state?.error && (
-        <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-          <p className="text-sm text-red-600 dark:text-red-400">{state.error}</p>
+        <div className="p-3 bg-[var(--error-bg)] border border-[var(--error-border)] rounded-lg">
+          <p className="text-sm text-[var(--error-text)]">{state.error}</p>
         </div>
       )}
 
       {state?.success && (
-        <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-          <p className="text-sm text-green-600 dark:text-green-400">
+        <div className="p-3 bg-[var(--success-bg)] border border-[var(--success-border)] rounded-lg">
+          <p className="text-sm text-[var(--success-text)]">
             {invoice ? 'Invoice updated successfully' : 'Invoice created successfully'}
           </p>
         </div>
@@ -320,7 +320,7 @@ export function InvoiceForm({
       <button
         type="submit"
         disabled={isPending || lineItems.length === 0 || !clientId}
-        className="w-full px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full px-4 py-2 bg-[var(--text)] text-[var(--bg)] rounded-lg text-sm font-medium hover:opacity-85 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isPending ? 'Saving...' : invoice ? 'Update Invoice' : 'Create Invoice'}
       </button>

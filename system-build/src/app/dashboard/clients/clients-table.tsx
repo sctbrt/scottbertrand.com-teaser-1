@@ -101,8 +101,8 @@ export function ClientsTable({ clients, showArchived }: ClientsTableProps) {
     <>
       {/* Selection Actions Bar */}
       {selectedIds.size > 0 && (
-        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg px-4 py-3 flex items-center justify-between">
-          <span className="text-sm text-amber-800 dark:text-amber-200">
+        <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg px-4 py-3 flex items-center justify-between">
+          <span className="text-sm text-amber-600">
             {selectedIds.size} client{selectedIds.size === 1 ? '' : 's'} selected
           </span>
           <div className="flex gap-2">
@@ -128,15 +128,15 @@ export function ClientsTable({ clients, showArchived }: ClientsTableProps) {
 
       {/* Error Message */}
       {error && (
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg px-4 py-3">
-          <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
+        <div className="bg-[var(--error-bg)] border border-[var(--error-border)] rounded-lg px-4 py-3">
+          <p className="text-sm text-[var(--error-text)]">{error}</p>
         </div>
       )}
 
       {/* Table */}
-      <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-          <thead className="bg-gray-50 dark:bg-gray-800">
+      <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] overflow-hidden">
+        <table className="min-w-full divide-y divide-[var(--border)]">
+          <thead className="bg-[var(--surface-2)]">
             <tr>
               <th className="px-4 py-3 text-left">
                 <input
@@ -144,31 +144,31 @@ export function ClientsTable({ clients, showArchived }: ClientsTableProps) {
                   checked={allDeletableSelected && deletableClients.length > 0}
                   onChange={toggleSelectAll}
                   disabled={deletableClients.length === 0}
-                  className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-amber-600 focus:ring-amber-500 disabled:opacity-50"
+                  className="w-4 h-4 rounded border-[var(--border)] text-amber-600 focus:ring-amber-500 disabled:opacity-50"
                   title="Select all on this page"
                 />
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider">
                 Client
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider">
                 Contact
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider">
                 Projects
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider">
                 Latest Project
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider">
                 Added
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+          <tbody className="divide-y divide-[var(--border)]">
             {clients.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+                <td colSpan={6} className="px-6 py-12 text-center text-[var(--text-muted)]">
                   {showArchived ? 'No archived clients' : 'No clients found'}
                 </td>
               </tr>
@@ -178,8 +178,8 @@ export function ClientsTable({ clients, showArchived }: ClientsTableProps) {
                 return (
                   <tr
                     key={client.id}
-                    className={`hover:bg-gray-50 dark:hover:bg-gray-800/50 ${
-                      selectedIds.has(client.id) ? 'bg-amber-50 dark:bg-amber-900/10' : ''
+                    className={`hover:bg-[var(--accent-subtle)] ${
+                      selectedIds.has(client.id) ? 'bg-amber-500/5' : ''
                     } ${client.isArchived ? 'opacity-60' : ''}`}
                   >
                     <td className="px-4 py-4">
@@ -188,44 +188,44 @@ export function ClientsTable({ clients, showArchived }: ClientsTableProps) {
                         checked={selectedIds.has(client.id)}
                         onChange={() => toggleSelect(client.id)}
                         disabled={hasData && !showArchived}
-                        className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-amber-600 focus:ring-amber-500 disabled:opacity-50"
+                        className="w-4 h-4 rounded border-[var(--border)] text-amber-600 focus:ring-amber-500 disabled:opacity-50"
                         title={hasData ? 'Client has projects or invoices' : ''}
                       />
                     </td>
                     <td className="px-6 py-4">
                       <Link href={`/dashboard/clients/${client.id}`} className="block">
-                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                        <p className="text-sm font-medium text-[var(--text)]">
                           {client.companyName || client.contactName}
                           {client.isArchived && (
-                            <span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400">
+                            <span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-zinc-500/20 text-zinc-400">
                               Archived
                             </span>
                           )}
                         </p>
                         {client.companyName && (
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                          <p className="text-sm text-[var(--text-muted)]">
                             {client.contactName}
                           </p>
                         )}
                       </Link>
                     </td>
                     <td className="px-6 py-4">
-                      <p className="text-sm text-gray-700 dark:text-gray-300">
+                      <p className="text-sm text-[var(--text)]">
                         {client.contactEmail}
                       </p>
                       {client.phone && (
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-[var(--text-muted)]">
                           {client.phone}
                         </p>
                       )}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">
+                    <td className="px-6 py-4 text-sm text-[var(--text)]">
                       {client._count.projects}
                     </td>
                     <td className="px-6 py-4">
                       {client.projects[0] ? (
                         <div>
-                          <p className="text-sm text-gray-700 dark:text-gray-300 truncate max-w-[200px]">
+                          <p className="text-sm text-[var(--text)] truncate max-w-[200px]">
                             {client.projects[0].name}
                           </p>
                           <span
@@ -235,10 +235,10 @@ export function ClientsTable({ clients, showArchived }: ClientsTableProps) {
                           </span>
                         </div>
                       ) : (
-                        <span className="text-sm text-gray-400 dark:text-gray-500">—</span>
+                        <span className="text-sm text-[var(--text-subtle)]">—</span>
                       )}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                    <td className="px-6 py-4 text-sm text-[var(--text-muted)]">
                       {formatDate(client.createdAt)}
                     </td>
                   </tr>
@@ -252,11 +252,11 @@ export function ClientsTable({ clients, showArchived }: ClientsTableProps) {
       {/* Archive Confirmation Modal */}
       {showArchiveModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+          <div className="bg-[var(--surface)] rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
+            <h3 className="text-lg font-semibold text-[var(--text)] mb-2">
               Archive Clients
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <p className="text-[var(--text-muted)] mb-6">
               You are about to archive <span className="font-semibold">{selectedIds.size}</span>{' '}
               client{selectedIds.size === 1 ? '' : 's'}. Archived clients will be hidden from the
               main list but can be restored later.
@@ -265,7 +265,7 @@ export function ClientsTable({ clients, showArchived }: ClientsTableProps) {
               <button
                 onClick={() => setShowArchiveModal(false)}
                 disabled={isPending}
-                className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                className="px-4 py-2 text-sm text-[var(--text)] hover:bg-[var(--accent-subtle)] rounded-lg transition-colors"
               >
                 Cancel
               </button>
@@ -284,23 +284,23 @@ export function ClientsTable({ clients, showArchived }: ClientsTableProps) {
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+          <div className="bg-[var(--surface)] rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
+            <h3 className="text-lg font-semibold text-[var(--text)] mb-2">
               Delete Clients
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-2">
+            <p className="text-[var(--text-muted)] mb-2">
               You are about to permanently delete{' '}
               <span className="font-semibold">{selectedIds.size}</span> client
               {selectedIds.size === 1 ? '' : 's'}.
             </p>
-            <p className="text-red-600 dark:text-red-400 text-sm mb-6">
+            <p className="text-[var(--error-text)] text-sm mb-6">
               This action cannot be undone. The client account and associated user will be removed.
             </p>
             <div className="flex gap-3 justify-end">
               <button
                 onClick={() => setShowDeleteModal(false)}
                 disabled={isPending}
-                className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                className="px-4 py-2 text-sm text-[var(--text)] hover:bg-[var(--accent-subtle)] rounded-lg transition-colors"
               >
                 Cancel
               </button>
@@ -321,12 +321,12 @@ export function ClientsTable({ clients, showArchived }: ClientsTableProps) {
 
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
-    DRAFT: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300',
-    PENDING_APPROVAL: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300',
-    IN_PROGRESS: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-    ON_HOLD: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300',
-    COMPLETED: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-    CANCELLED: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
+    DRAFT: 'bg-zinc-500/20 text-zinc-400 border border-zinc-500/30',
+    PENDING_APPROVAL: 'bg-amber-500/20 text-amber-400 border border-amber-500/30',
+    IN_PROGRESS: 'bg-sky-500/20 text-sky-400 border border-sky-500/30',
+    ON_HOLD: 'bg-orange-500/20 text-orange-400 border border-orange-500/30',
+    COMPLETED: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
+    CANCELLED: 'bg-rose-500/20 text-rose-400 border border-rose-500/30',
   }
   return colors[status] || colors.DRAFT
 }

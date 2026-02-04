@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ClientForm } from './client-form'
 import { GenerateLoginLink } from './generate-login-link'
+import { DeleteClientButton } from './delete-client-button'
 
 interface ClientDetailPageProps {
   params: Promise<{ id: string }>
@@ -19,14 +20,14 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
         <div>
           <Link
             href="/dashboard/clients"
-            className="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 mb-4"
+            className="inline-flex items-center text-sm text-[var(--text-muted)] hover:text-[var(--text)] mb-4"
           >
             ← Back to Clients
           </Link>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+          <h1 className="text-2xl font-semibold text-[var(--text)]">
             Add New Client
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-[var(--text-muted)] mt-1">
             Create a new client account with portal access
           </p>
         </div>
@@ -78,17 +79,17 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
       <div>
         <Link
           href="/dashboard/clients"
-          className="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 mb-4"
+          className="inline-flex items-center text-sm text-[var(--text-muted)] hover:text-[var(--text)] mb-4"
         >
           ← Back to Clients
         </Link>
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+            <h1 className="text-2xl font-semibold text-[var(--text)]">
               {client.companyName || client.contactName}
             </h1>
             {client.companyName && (
-              <p className="text-gray-500 dark:text-gray-400 mt-1">
+              <p className="text-[var(--text-muted)] mt-1">
                 {client.contactName}
               </p>
             )}
@@ -96,13 +97,13 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
           <div className="flex gap-3">
             <Link
               href={`/dashboard/projects/new?clientId=${client.id}`}
-              className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              className="px-4 py-2 bg-[var(--surface-2)] text-[var(--text)] rounded-lg text-sm font-medium hover:bg-[var(--accent-subtle)] transition-colors"
             >
               New Project
             </Link>
             <Link
               href={`/dashboard/invoices/new?clientId=${client.id}`}
-              className="px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
+              className="px-4 py-2 bg-[var(--text)] text-[var(--bg)] rounded-lg text-sm font-medium hover:opacity-85 transition-colors"
             >
               New Invoice
             </Link>
@@ -112,27 +113,27 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
 
       {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400">Total Projects</p>
-          <p className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mt-1">
+        <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-4">
+          <p className="text-sm text-[var(--text-muted)]">Total Projects</p>
+          <p className="text-2xl font-semibold text-[var(--text)] mt-1">
             {client.projects.length}
           </p>
         </div>
-        <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400">Total Invoiced</p>
-          <p className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mt-1">
+        <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-4">
+          <p className="text-sm text-[var(--text-muted)]">Total Invoiced</p>
+          <p className="text-2xl font-semibold text-[var(--text)] mt-1">
             {formatCurrency(totalInvoiced)}
           </p>
         </div>
-        <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400">Paid</p>
-          <p className="text-2xl font-semibold text-green-600 dark:text-green-400 mt-1">
+        <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-4">
+          <p className="text-sm text-[var(--text-muted)]">Paid</p>
+          <p className="text-2xl font-semibold text-[var(--success-text)] mt-1">
             {formatCurrency(totalPaid)}
           </p>
         </div>
-        <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400">Outstanding</p>
-          <p className="text-2xl font-semibold text-orange-600 dark:text-orange-400 mt-1">
+        <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-4">
+          <p className="text-sm text-[var(--text-muted)]">Outstanding</p>
+          <p className="text-2xl font-semibold text-orange-500 mt-1">
             {formatCurrency(totalOutstanding)}
           </p>
         </div>
@@ -142,26 +143,26 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
         {/* Left Column - Client Info */}
         <div className="space-y-6">
           {/* Contact Information */}
-          <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+          <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
+            <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-4">
               Contact Information
             </h2>
             <div className="space-y-4">
               <div>
-                <p className="text-xs text-gray-400 dark:text-gray-500">Email</p>
+                <p className="text-xs text-[var(--text-subtle)]">Email</p>
                 <a
                   href={`mailto:${client.contactEmail}`}
-                  className="text-gray-900 dark:text-gray-100 hover:underline"
+                  className="text-[var(--text)] hover:underline"
                 >
                   {client.contactEmail}
                 </a>
               </div>
               {client.phone && (
                 <div>
-                  <p className="text-xs text-gray-400 dark:text-gray-500">Phone</p>
+                  <p className="text-xs text-[var(--text-subtle)]">Phone</p>
                   <a
                     href={`tel:${client.phone}`}
-                    className="text-gray-900 dark:text-gray-100 hover:underline"
+                    className="text-[var(--text)] hover:underline"
                   >
                     {client.phone}
                   </a>
@@ -169,12 +170,12 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
               )}
               {client.website && (
                 <div>
-                  <p className="text-xs text-gray-400 dark:text-gray-500">Website</p>
+                  <p className="text-xs text-[var(--text-subtle)]">Website</p>
                   <a
                     href={client.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-900 dark:text-gray-100 hover:underline"
+                    className="text-[var(--text)] hover:underline"
                   >
                     {client.website}
                   </a>
@@ -184,24 +185,24 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
           </div>
 
           {/* Portal Access */}
-          <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+          <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
+            <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-4">
               Portal Access
             </h2>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Login Email</span>
-                <span className="text-sm text-gray-900 dark:text-gray-100">{client.users.email}</span>
+                <span className="text-sm text-[var(--text-muted)]">Login Email</span>
+                <span className="text-sm text-[var(--text)]">{client.users.email}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Email Verified</span>
-                <span className={`text-sm ${client.users.emailVerified ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'}`}>
+                <span className="text-sm text-[var(--text-muted)]">Email Verified</span>
+                <span className={`text-sm ${client.users.emailVerified ? 'text-[var(--success-text)]' : 'text-yellow-500'}`}>
                   {client.users.emailVerified ? 'Yes' : 'Pending'}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Account Created</span>
-                <span className="text-sm text-gray-900 dark:text-gray-100">
+                <span className="text-sm text-[var(--text-muted)]">Account Created</span>
+                <span className="text-sm text-[var(--text)]">
                   {formatDate(client.users.createdAt)}
                 </span>
               </div>
@@ -213,43 +214,56 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
 
           {/* Notes */}
           {client.notes && (
-            <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-              <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+            <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
+              <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-4">
                 Notes
               </h2>
-              <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+              <p className="text-sm text-[var(--text)] whitespace-pre-wrap">
                 {client.notes}
               </p>
             </div>
           )}
 
           {/* Edit Client */}
-          <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+          <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
+            <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-4">
               Edit Client
             </h2>
             <ClientForm client={client} />
+          </div>
+
+          {/* Danger Zone */}
+          <div className="bg-[var(--surface)] rounded-lg border border-red-500/30 p-6">
+            <h2 className="text-sm font-medium text-[var(--error-text)] uppercase tracking-wider mb-4">
+              Danger Zone
+            </h2>
+            <DeleteClientButton
+              clientId={client.id}
+              clientName={client.companyName || client.contactName}
+              hasProjects={client.projects.length > 0}
+              hasInvoices={client.invoices.length > 0}
+            />
           </div>
         </div>
 
         {/* Right Column - Projects & Invoices */}
         <div className="lg:col-span-2 space-y-6">
           {/* Projects */}
-          <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700">
-            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-              <h2 className="font-medium text-gray-900 dark:text-gray-100">
+          <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)]">
+            <div className="px-6 py-4 border-b border-[var(--border)] flex items-center justify-between">
+              <h2 className="font-medium text-[var(--text)]">
                 Projects ({client.projects.length})
               </h2>
               <Link
                 href={`/dashboard/projects/new?clientId=${client.id}`}
-                className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                className="text-sm text-[var(--text-muted)] hover:text-[var(--text)]"
               >
                 + Add Project
               </Link>
             </div>
-            <div className="divide-y divide-gray-100 dark:divide-gray-700">
+            <div className="divide-y divide-[var(--border)]">
               {client.projects.length === 0 ? (
-                <p className="px-6 py-8 text-sm text-gray-500 dark:text-gray-400 text-center">
+                <p className="px-6 py-8 text-sm text-[var(--text-muted)] text-center">
                   No projects yet
                 </p>
               ) : (
@@ -257,14 +271,14 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
                   <Link
                     key={project.id}
                     href={`/dashboard/projects/${project.id}`}
-                    className="px-6 py-4 block hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                    className="px-6 py-4 block hover:bg-[var(--accent-subtle)]/50 transition-colors"
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                        <p className="text-sm font-medium text-[var(--text)]">
                           {project.name}
                         </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        <p className="text-xs text-[var(--text-muted)] mt-1">
                           {project.service_templates?.name || 'Custom Project'} · {project._count.tasks} tasks · {project._count.milestones} milestones
                         </p>
                       </div>
@@ -279,21 +293,21 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
           </div>
 
           {/* Recent Invoices */}
-          <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700">
-            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-              <h2 className="font-medium text-gray-900 dark:text-gray-100">
+          <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)]">
+            <div className="px-6 py-4 border-b border-[var(--border)] flex items-center justify-between">
+              <h2 className="font-medium text-[var(--text)]">
                 Recent Invoices
               </h2>
               <Link
                 href={`/dashboard/invoices?clientId=${client.id}`}
-                className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                className="text-sm text-[var(--text-muted)] hover:text-[var(--text)]"
               >
                 View all →
               </Link>
             </div>
-            <div className="divide-y divide-gray-100 dark:divide-gray-700">
+            <div className="divide-y divide-[var(--border)]">
               {client.invoices.length === 0 ? (
-                <p className="px-6 py-8 text-sm text-gray-500 dark:text-gray-400 text-center">
+                <p className="px-6 py-8 text-sm text-[var(--text-muted)] text-center">
                   No invoices yet
                 </p>
               ) : (
@@ -301,20 +315,20 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
                   <Link
                     key={invoice.id}
                     href={`/dashboard/invoices/${invoice.id}`}
-                    className="px-6 py-4 block hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                    className="px-6 py-4 block hover:bg-[var(--accent-subtle)]/50 transition-colors"
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                        <p className="text-sm font-medium text-[var(--text)]">
                           {invoice.invoiceNumber}
                         </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        <p className="text-xs text-[var(--text-muted)] mt-1">
                           {formatDate(invoice.createdAt)}
                           {invoice.dueDate && ` · Due ${formatDate(invoice.dueDate)}`}
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                        <p className="text-sm font-medium text-[var(--text)]">
                           {formatCurrency(Number(invoice.total))}
                         </p>
                         <span className={`text-xs px-2 py-0.5 rounded-full ${getInvoiceStatusColor(invoice.status)}`}>
@@ -330,25 +344,25 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
 
           {/* Related Leads */}
           {client.leads.length > 0 && (
-            <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700">
-              <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                <h2 className="font-medium text-gray-900 dark:text-gray-100">
+            <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)]">
+              <div className="px-6 py-4 border-b border-[var(--border)]">
+                <h2 className="font-medium text-[var(--text)]">
                   Related Leads
                 </h2>
               </div>
-              <div className="divide-y divide-gray-100 dark:divide-gray-700">
+              <div className="divide-y divide-[var(--border)]">
                 {client.leads.map((lead) => (
                   <Link
                     key={lead.id}
                     href={`/dashboard/leads/${lead.id}`}
-                    className="px-6 py-4 block hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                    className="px-6 py-4 block hover:bg-[var(--accent-subtle)]/50 transition-colors"
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-gray-700 dark:text-gray-300">
+                        <p className="text-sm text-[var(--text)]">
                           {lead.email}
                         </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                        <p className="text-xs text-[var(--text-muted)]">
                           {formatDate(lead.createdAt)}
                         </p>
                       </div>
@@ -385,36 +399,36 @@ function formatDate(date: Date) {
 
 function getProjectStatusColor(status: string) {
   const colors: Record<string, string> = {
-    DRAFT: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300',
-    PENDING_APPROVAL: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300',
-    IN_PROGRESS: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-    ON_HOLD: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300',
-    COMPLETED: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-    CANCELLED: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
+    DRAFT: 'bg-zinc-500/20 text-zinc-400 border border-zinc-500/30',
+    PENDING_APPROVAL: 'bg-amber-500/20 text-amber-400 border border-amber-500/30',
+    IN_PROGRESS: 'bg-sky-500/20 text-sky-400 border border-sky-500/30',
+    ON_HOLD: 'bg-orange-500/20 text-orange-400 border border-orange-500/30',
+    COMPLETED: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
+    CANCELLED: 'bg-rose-500/20 text-rose-400 border border-rose-500/30',
   }
   return colors[status] || colors.DRAFT
 }
 
 function getInvoiceStatusColor(status: string) {
   const colors: Record<string, string> = {
-    DRAFT: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300',
-    SENT: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-    VIEWED: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
-    PAID: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-    OVERDUE: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
-    CANCELLED: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300',
+    DRAFT: 'bg-zinc-500/20 text-zinc-400 border border-zinc-500/30',
+    SENT: 'bg-sky-500/20 text-sky-400 border border-sky-500/30',
+    VIEWED: 'bg-violet-500/20 text-violet-400 border border-violet-500/30',
+    PAID: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
+    OVERDUE: 'bg-rose-500/20 text-rose-400 border border-rose-500/30',
+    CANCELLED: 'bg-zinc-500/20 text-zinc-400 border border-zinc-500/30',
   }
   return colors[status] || colors.DRAFT
 }
 
 function getLeadStatusColor(status: string) {
   const colors: Record<string, string> = {
-    NEW: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-    CONTACTED: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300',
-    QUALIFIED: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-    CONVERTED: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
-    DISQUALIFIED: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
-    ARCHIVED: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300',
+    NEW: 'bg-sky-500/20 text-sky-400 border border-sky-500/30',
+    CONTACTED: 'bg-amber-500/20 text-amber-400 border border-amber-500/30',
+    QUALIFIED: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
+    CONVERTED: 'bg-violet-500/20 text-violet-400 border border-violet-500/30',
+    DISQUALIFIED: 'bg-rose-500/20 text-rose-400 border border-rose-500/30',
+    ARCHIVED: 'bg-zinc-500/20 text-zinc-400 border border-zinc-500/30',
   }
   return colors[status] || colors.NEW
 }

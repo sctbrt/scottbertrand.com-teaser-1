@@ -8,11 +8,12 @@ import type { LeadListItem } from '@/lib/data/leads'
 
 interface LeadsTableProps {
   leads: LeadListItem[]
+  currentStatus?: string
 }
 
 const STATUSES = ['NEW', 'CONTACTED', 'QUALIFIED', 'CONVERTED', 'DISQUALIFIED', 'ARCHIVED']
 
-export function LeadsTable({ leads }: LeadsTableProps) {
+export function LeadsTable({ leads, currentStatus }: LeadsTableProps) {
   const router = useRouter()
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const [showModal, setShowModal] = useState(false)
@@ -94,30 +95,32 @@ export function LeadsTable({ leads }: LeadsTableProps) {
     <>
       {/* Selection Actions Bar */}
       {selectedIds.size > 0 && (
-        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg px-4 py-3 flex items-center justify-between">
-          <span className="text-sm text-amber-800 dark:text-amber-200">
+        <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg px-4 py-3 flex items-center justify-between">
+          <span className="text-sm text-amber-600">
             {selectedIds.size} lead{selectedIds.size === 1 ? '' : 's'} selected
           </span>
-          <button
-            onClick={() => setShowModal(true)}
-            className="px-3 py-1.5 text-sm bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors"
-          >
-            Archive Selected
-          </button>
+          {currentStatus !== 'ARCHIVED' && (
+            <button
+              onClick={() => setShowModal(true)}
+              className="px-3 py-1.5 text-sm bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors"
+            >
+              Archive Selected
+            </button>
+          )}
         </div>
       )}
 
       {/* Error Message */}
       {error && (
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg px-4 py-3">
-          <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
+        <div className="bg-[var(--error-bg)] border border-[var(--error-border)] rounded-lg px-4 py-3">
+          <p className="text-sm text-[var(--error-text)]">{error}</p>
         </div>
       )}
 
       {/* Table */}
-      <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-          <thead className="bg-gray-50 dark:bg-gray-800">
+      <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] overflow-hidden">
+        <table className="min-w-full divide-y divide-[var(--border)]">
+          <thead className="bg-[var(--surface-2)]">
             <tr>
               <th className="px-4 py-3 text-left">
                 <input
@@ -125,31 +128,31 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                   checked={allSelectableSelected && selectableLeads.length > 0}
                   onChange={toggleSelectAll}
                   disabled={selectableLeads.length === 0}
-                  className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-amber-600 focus:ring-amber-500 disabled:opacity-50"
+                  className="w-4 h-4 rounded border-[var(--border)] text-amber-600 focus:ring-amber-500 disabled:opacity-50"
                   title="Select all on this page"
                 />
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider">
                 Contact
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider">
                 Service
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider">
                 Status
               </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider">
                 Notes
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider">
                 Created
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+          <tbody className="divide-y divide-[var(--border)]">
             {leads.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+                <td colSpan={6} className="px-6 py-12 text-center text-[var(--text-muted)]">
                   No leads found
                 </td>
               </tr>
@@ -160,8 +163,8 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                 return (
                   <tr
                     key={lead.id}
-                    className={`hover:bg-gray-50 dark:hover:bg-gray-800/50 ${
-                      selectedIds.has(lead.id) ? 'bg-amber-50 dark:bg-amber-900/10' : ''
+                    className={`hover:bg-[var(--accent-subtle)] ${
+                      selectedIds.has(lead.id) ? 'bg-amber-500/5' : ''
                     }`}
                   >
                     <td className="px-4 py-4">
@@ -170,19 +173,19 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                         checked={selectedIds.has(lead.id)}
                         onChange={() => toggleSelect(lead.id)}
                         disabled={isConverted}
-                        className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-amber-600 focus:ring-amber-500 disabled:opacity-50"
+                        className="w-4 h-4 rounded border-[var(--border)] text-amber-600 focus:ring-amber-500 disabled:opacity-50"
                         title={isConverted ? 'Converted leads cannot be archived' : ''}
                       />
                     </td>
                     <td className="px-6 py-4">
                       <Link href={`/dashboard/leads/${lead.id}`} className="block">
-                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                        <p className="text-sm font-medium text-[var(--text)]">
                           {lead.name || 'No name'}
                         </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{lead.email}</p>
+                        <p className="text-sm text-[var(--text-muted)]">{lead.email}</p>
                       </Link>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">
+                    <td className="px-6 py-4 text-sm text-[var(--text)]">
                       {lead.service_templates?.name || lead.service || '—'}
                     </td>
                     <td className="px-6 py-4">
@@ -212,8 +215,8 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                         onClick={() => openNotesPanel(lead)}
                         className={`p-1.5 rounded-lg transition-colors ${
                           lead.internalNotes
-                            ? 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 hover:bg-amber-100 dark:hover:bg-amber-900/30'
-                            : 'text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                            ? 'text-amber-500 bg-amber-500/10 hover:bg-amber-500/20'
+                            : 'text-[var(--text-subtle)] hover:text-[var(--text-muted)] hover:bg-[var(--accent-subtle)]'
                         }`}
                         title={lead.internalNotes ? 'View/edit notes' : 'Add notes'}
                       >
@@ -227,7 +230,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                         </svg>
                       </button>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                    <td className="px-6 py-4 text-sm text-[var(--text-muted)]">
                       {formatDate(lead.createdAt)}
                     </td>
                   </tr>
@@ -241,9 +244,9 @@ export function LeadsTable({ leads }: LeadsTableProps) {
       {/* Archive Confirmation Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Archive Leads</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+          <div className="bg-[var(--surface)] rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
+            <h3 className="text-lg font-semibold text-[var(--text)] mb-2">Archive Leads</h3>
+            <p className="text-[var(--text-muted)] mb-6">
               You are about to archive <span className="font-semibold">{selectedIds.size}</span> lead
               {selectedIds.size === 1 ? '' : 's'}. This will move them to the Archived status. You can
               restore them later if needed.
@@ -252,7 +255,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
               <button
                 onClick={() => setShowModal(false)}
                 disabled={isPending}
-                className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                className="px-4 py-2 text-sm text-[var(--text)] hover:bg-[var(--accent-subtle)] rounded-lg transition-colors"
               >
                 Cancel
               </button>
@@ -272,12 +275,12 @@ export function LeadsTable({ leads }: LeadsTableProps) {
       {notesPanel && (
         <div className="fixed inset-0 z-50 flex justify-end">
           <div className="absolute inset-0 bg-black/30" onClick={() => setNotesPanel(null)} />
-          <div className="relative w-full max-w-md bg-white dark:bg-gray-800 shadow-xl flex flex-col">
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Internal Notes</h3>
+          <div className="relative w-full max-w-md bg-[var(--surface)] shadow-xl flex flex-col">
+            <div className="flex items-center justify-between p-4 border-b border-[var(--border)]">
+              <h3 className="text-lg font-semibold text-[var(--text)]">Internal Notes</h3>
               <button
                 onClick={() => setNotesPanel(null)}
-                className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                className="p-1 text-[var(--text-subtle)] hover:text-[var(--text)]"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -289,16 +292,16 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                 value={notesPanel.notes}
                 onChange={(e) => setNotesPanel({ ...notesPanel, notes: e.target.value })}
                 placeholder="Add internal notes about this lead..."
-                className="w-full h-64 p-3 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
+                className="w-full h-64 p-3 text-sm border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
               />
-              <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
+              <p className="text-xs text-[var(--text-subtle)] mt-2">
                 These notes are only visible to admins.
               </p>
             </div>
-            <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex gap-3 justify-end">
+            <div className="p-4 border-t border-[var(--border)] flex gap-3 justify-end">
               <button
                 onClick={() => setNotesPanel(null)}
-                className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                className="px-4 py-2 text-sm text-[var(--text)] hover:bg-[var(--accent-subtle)] rounded-lg transition-colors"
               >
                 Cancel
               </button>

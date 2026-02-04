@@ -11,16 +11,11 @@ import type { Adapter, AdapterUser, AdapterAccount, AdapterSession, Verification
 function CustomPrismaAdapter(): Adapter {
   return {
     async createUser(data) {
-      const user = await prisma.users.create({
-        data: {
-          email: data.email,
-          name: data.name,
-          image: data.image,
-          emailVerified: data.emailVerified,
-          role: 'CLIENT', // Default role for new users
-        },
-      })
-      return { ...user, role: user.role } as AdapterUser & { role: Role }
+      // Security: Do not auto-create users from magic link sign-in.
+      // Users must be created by an admin via the dashboard first.
+      // If Auth.js calls this, it means someone clicked a magic link
+      // for an email that has no user record — block it.
+      throw new Error('User registration is not open. Please contact your administrator.')
     },
 
     async getUser(id) {
@@ -170,6 +165,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       from: 'Bertrand Brands <hello@bertrandbrands.com>',
       // Custom magic link email
       sendVerificationRequest: async ({ identifier, url, provider }) => {
+        // Security: Only send magic links to emails that already have a user record.
+        // If no user exists, silently return — the client sees the same
+        // "check your email" page regardless (prevents email enumeration).
+        const existingUser = await prisma.users.findUnique({
+          where: { email: identifier },
+          select: { id: true },
+        })
+        if (!existingUser) {
+          console.log('[Auth] Magic link requested for unknown email — skipped')
+          return
+        }
+
         const { Resend: ResendClient } = await import('resend')
         const resend = new ResendClient(process.env.RESEND_API_KEY)
 
@@ -212,33 +219,41 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
 
     async signIn({ user }) {
-      // Log sign-in activity (only for existing users to avoid FK constraint errors)
-      if (user.id) {
-        try {
-          // Verify user exists in database before logging
-          const existingUser = await prisma.users.findUnique({
-            where: { id: user.id },
-            select: { id: true },
-          })
-          if (existingUser) {
-            await prisma.activity_logs.create({
-              data: {
-                userId: user.id,
-                action: 'SIGN_IN',
-                entityType: 'User',
-                entityId: user.id,
-                details: {
-                  method: 'magic-link',
-                  timestamp: new Date().toISOString(),
-                },
-              },
-            })
-          }
-        } catch (error) {
-          // Don't block sign-in if activity logging fails
-          console.error('Failed to log sign-in activity:', error)
-        }
+      // Security: Only allow sign-in for users that already exist in the database.
+      // This blocks any edge case where a magic link is used for an unregistered email.
+      if (!user.id) {
+        console.log('[Auth] Sign-in blocked — no user ID (unregistered email)')
+        return false
       }
+
+      const existingUser = await prisma.users.findUnique({
+        where: { id: user.id },
+        select: { id: true },
+      })
+      if (!existingUser) {
+        console.log('[Auth] Sign-in blocked — user not found in database:', user.id)
+        return false
+      }
+
+      // Log sign-in activity
+      try {
+        await prisma.activity_logs.create({
+          data: {
+            userId: user.id,
+            action: 'SIGN_IN',
+            entityType: 'User',
+            entityId: user.id,
+            details: {
+              method: 'magic-link',
+              timestamp: new Date().toISOString(),
+            },
+          },
+        })
+      } catch (error) {
+        // Don't block sign-in if activity logging fails
+        console.error('Failed to log sign-in activity:', error)
+      }
+
       return true
     },
   },

@@ -39,7 +39,7 @@ export function LeadActions({ lead }: LeadActionsProps) {
         value={lead.status}
         onChange={(e) => handleStatusChange(e.target.value)}
         disabled={isUpdating}
-        className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm"
+        className="px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] text-sm"
       >
         <option value="NEW">New</option>
         <option value="CONTACTED">Contacted</option>
@@ -55,7 +55,7 @@ export function LeadActions({ lead }: LeadActionsProps) {
           <button
             type="submit"
             disabled={isMarkingSpam}
-            className="px-3 py-2 text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 text-sm disabled:opacity-50"
+            className="px-3 py-2 text-orange-500 hover:text-orange-400 text-sm disabled:opacity-50"
           >
             {isMarkingSpam ? 'Marking...' : 'Mark Spam'}
           </button>
@@ -67,7 +67,7 @@ export function LeadActions({ lead }: LeadActionsProps) {
         <button
           type="submit"
           disabled={isDeleting}
-          className="px-3 py-2 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 text-sm disabled:opacity-50"
+          className="px-3 py-2 text-[var(--error-text)] hover:text-red-500 text-sm disabled:opacity-50"
           onClick={(e) => {
             if (!confirm('Are you sure you want to delete this lead?')) {
               e.preventDefault()
@@ -80,7 +80,7 @@ export function LeadActions({ lead }: LeadActionsProps) {
 
       {/* Error Messages */}
       {(statusState?.error || spamState?.error || deleteState?.error) && (
-        <p className="text-sm text-red-600 dark:text-red-400">
+        <p className="text-sm text-[var(--error-text)]">
           {statusState?.error || spamState?.error || deleteState?.error}
         </p>
       )}

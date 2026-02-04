@@ -26,7 +26,7 @@ export function ClientForm({ client }: ClientFormProps) {
         <div>
           <label
             htmlFor="contactName"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-sm font-medium text-[var(--text)] mb-1"
           >
             Contact Name *
           </label>
@@ -36,13 +36,13 @@ export function ClientForm({ client }: ClientFormProps) {
             name="contactName"
             required
             defaultValue={client?.contactName || ''}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+            className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
         </div>
         <div>
           <label
             htmlFor="companyName"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-sm font-medium text-[var(--text)] mb-1"
           >
             Company Name
           </label>
@@ -51,7 +51,7 @@ export function ClientForm({ client }: ClientFormProps) {
             id="companyName"
             name="companyName"
             defaultValue={client?.companyName || ''}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+            className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
         </div>
       </div>
@@ -59,7 +59,7 @@ export function ClientForm({ client }: ClientFormProps) {
       <div>
         <label
           htmlFor="contactEmail"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text)] mb-1"
         >
           Email Address *
         </label>
@@ -69,10 +69,10 @@ export function ClientForm({ client }: ClientFormProps) {
           name="contactEmail"
           required
           defaultValue={client?.contactEmail || ''}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+          className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
         />
         {!client && (
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-xs text-[var(--text-muted)] mt-1">
             This will be used for portal login (magic link)
           </p>
         )}
@@ -82,7 +82,7 @@ export function ClientForm({ client }: ClientFormProps) {
         <div>
           <label
             htmlFor="phone"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-sm font-medium text-[var(--text)] mb-1"
           >
             Phone
           </label>
@@ -91,13 +91,13 @@ export function ClientForm({ client }: ClientFormProps) {
             id="phone"
             name="phone"
             defaultValue={client?.phone || ''}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+            className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
         </div>
         <div>
           <label
             htmlFor="website"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-sm font-medium text-[var(--text)] mb-1"
           >
             Website
           </label>
@@ -107,7 +107,7 @@ export function ClientForm({ client }: ClientFormProps) {
             name="website"
             placeholder="https://"
             defaultValue={client?.website || ''}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+            className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
         </div>
       </div>
@@ -115,7 +115,7 @@ export function ClientForm({ client }: ClientFormProps) {
       <div>
         <label
           htmlFor="notes"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text)] mb-1"
         >
           Notes
         </label>
@@ -124,19 +124,19 @@ export function ClientForm({ client }: ClientFormProps) {
           name="notes"
           rows={3}
           defaultValue={client?.notes || ''}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 resize-none"
+          className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] resize-none"
         />
       </div>
 
       {state?.error && (
-        <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-          <p className="text-sm text-red-600 dark:text-red-400">{state.error}</p>
+        <div className="p-3 bg-[var(--error-bg)] border border-[var(--error-border)] rounded-lg">
+          <p className="text-sm text-[var(--error-text)]">{state.error}</p>
         </div>
       )}
 
       {state?.success && (
-        <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-          <p className="text-sm text-green-600 dark:text-green-400">
+        <div className="p-3 bg-[var(--success-bg)] border border-[var(--success-border)] rounded-lg">
+          <p className="text-sm text-[var(--success-text)]">
             {client ? 'Client updated successfully' : 'Client created successfully'}
           </p>
         </div>
@@ -145,7 +145,7 @@ export function ClientForm({ client }: ClientFormProps) {
       <button
         type="submit"
         disabled={isPending}
-        className="w-full px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full px-4 py-2 bg-[var(--text)] text-[var(--bg)] rounded-lg text-sm font-medium hover:opacity-85 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isPending ? 'Saving...' : client ? 'Update Client' : 'Create Client'}
       </button>

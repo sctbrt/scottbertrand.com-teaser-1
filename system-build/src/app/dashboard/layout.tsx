@@ -2,8 +2,7 @@
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
-import { DashboardNav } from './components/dashboard-nav'
-import { DashboardHeader } from './components/dashboard-header'
+import { DashboardShell } from './components/dashboard-shell'
 
 export default async function DashboardLayout({
   children,
@@ -34,18 +33,8 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen">
-      <DashboardHeader user={session.user} />
-
-      <div className="flex">
-        <DashboardNav counts={navCounts} />
-
-        <main className="flex-1 p-6 lg:p-8">
-          <div className="max-w-7xl mx-auto">
-            {children}
-          </div>
-        </main>
-      </div>
-    </div>
+    <DashboardShell user={session.user} counts={navCounts}>
+      {children}
+    </DashboardShell>
   )
 }

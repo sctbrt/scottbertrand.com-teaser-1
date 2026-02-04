@@ -50,10 +50,10 @@ export default async function LeadsPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+          <h1 className="text-2xl font-semibold text-[var(--text)]">
             Leads
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-[var(--text-muted)] mt-1">
             Manage intake submissions and lead conversion
           </p>
         </div>
@@ -75,7 +75,7 @@ export default async function LeadsPage({
             active={status === s}
           />
         ))}
-        <span className="text-gray-300 dark:text-gray-600 mx-1">|</span>
+        <span className="text-[var(--text-subtle)] mx-1">|</span>
         <FilterChip
           label={`Archived (${statusCountMap['ARCHIVED'] || 0})`}
           href="/dashboard/leads?status=ARCHIVED"
@@ -84,19 +84,19 @@ export default async function LeadsPage({
       </div>
 
       {/* Leads Table with Selection */}
-      <LeadsTable leads={leads} />
+      <LeadsTable leads={leads} currentStatus={status} />
 
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-between">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-[var(--text-muted)]">
             Showing {(page - 1) * perPage + 1} to {Math.min(page * perPage, totalCount)} of {totalCount} leads
           </p>
           <div className="flex gap-2">
             {page > 1 && (
               <Link
                 href={`/dashboard/leads?page=${page - 1}${status ? `&status=${status}` : ''}`}
-                className="px-3 py-1.5 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="px-3 py-1.5 text-sm bg-[var(--surface)] border border-[var(--border)] rounded hover:bg-[var(--accent-subtle)]"
               >
                 Previous
               </Link>
@@ -104,7 +104,7 @@ export default async function LeadsPage({
             {page < totalPages && (
               <Link
                 href={`/dashboard/leads?page=${page + 1}${status ? `&status=${status}` : ''}`}
-                className="px-3 py-1.5 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="px-3 py-1.5 text-sm bg-[var(--surface)] border border-[var(--border)] rounded hover:bg-[var(--accent-subtle)]"
               >
                 Next
               </Link>
@@ -130,8 +130,8 @@ function FilterChip({
       href={href}
       className={`px-3 py-1.5 text-sm rounded-full transition-colors ${
         active
-          ? 'bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900'
-          : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+          ? 'bg-[var(--text)] text-[var(--bg)]'
+          : 'bg-[var(--surface-2)] text-[var(--text-muted)] hover:bg-[var(--accent-subtle)]'
       }`}
     >
       {label}

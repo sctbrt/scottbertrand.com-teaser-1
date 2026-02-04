@@ -81,13 +81,13 @@ export default async function DashboardPage() {
         <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-amber-500/10 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-orange-500/10 to-transparent rounded-full blur-2xl translate-y-1/2 -translate-x-1/4" />
         <div className="relative">
-          <p className="text-sm font-medium text-amber-600 dark:text-amber-400 tracking-wider uppercase mb-2">
+          <p className="text-sm font-medium text-amber-500 tracking-wider uppercase mb-2">
             {greeting}
           </p>
-          <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100 tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-semibold text-[var(--text)] tracking-tight">
             Welcome back, <span className="bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent">Scott</span>
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2 text-lg">
+          <p className="text-[var(--text-muted)] mt-2 text-lg">
             {subGreeting}
           </p>
         </div>

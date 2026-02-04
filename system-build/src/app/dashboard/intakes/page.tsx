@@ -12,10 +12,10 @@ export default async function IntakesPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+          <h1 className="text-2xl font-semibold text-[var(--text)]">
             Intakes
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-[var(--text-muted)] mt-1">
             Review intake submissions and manage routing decisions
           </p>
         </div>
@@ -52,14 +52,14 @@ export default async function IntakesPage() {
               d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
             />
           </svg>
-          <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+          <h3 className="text-lg font-medium text-[var(--text)] mb-2">
             Intake System Ready
           </h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+          <p className="text-sm text-[var(--text-muted)] mb-4">
             Run the Prisma migration to enable the intake tracking system. Intakes
             from the website form and AI phone intake (Beside) will appear here.
           </p>
-          <p className="text-xs text-gray-400 dark:text-gray-500 font-mono">
+          <p className="text-xs text-[var(--text-subtle)] font-mono">
             npx prisma migrate dev --name add-intake-system
           </p>
         </div>
@@ -67,43 +67,43 @@ export default async function IntakesPage() {
 
       {/* Intake Workflow Documentation */}
       <div className="glass p-6">
-        <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+        <h2 className="text-lg font-medium text-[var(--text)] mb-4">
           Intake Workflow
         </h2>
         <div className="grid md:grid-cols-4 gap-6 text-sm">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-medium">1</span>
-              <span className="font-medium text-gray-900 dark:text-gray-100">Intake Received</span>
+              <span className="font-medium text-[var(--text)]">Intake Received</span>
             </div>
-            <p className="text-gray-500 dark:text-gray-400 pl-8">
+            <p className="text-[var(--text-muted)] pl-8">
               From web form, AI phone (Beside), or manual entry
             </p>
           </div>
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-medium">2</span>
-              <span className="font-medium text-gray-900 dark:text-gray-100">Review & Decide</span>
+              <span className="font-medium text-[var(--text)]">Review & Decide</span>
             </div>
-            <p className="text-gray-500 dark:text-gray-400 pl-8">
+            <p className="text-[var(--text-muted)] pl-8">
               Set fit decision: YES / MAYBE / NO (required)
             </p>
           </div>
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-medium">3</span>
-              <span className="font-medium text-gray-900 dark:text-gray-100">Route</span>
+              <span className="font-medium text-[var(--text)]">Route</span>
             </div>
-            <p className="text-gray-500 dark:text-gray-400 pl-8">
+            <p className="text-[var(--text-muted)] pl-8">
               Focus Studio Kickoff, Core Discovery, or Hold
             </p>
           </div>
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="w-6 h-6 rounded-full bg-violet-500/20 text-violet-400 flex items-center justify-center text-xs font-medium">4</span>
-              <span className="font-medium text-gray-900 dark:text-gray-100">Close</span>
+              <span className="font-medium text-[var(--text)]">Close</span>
             </div>
-            <p className="text-gray-500 dark:text-gray-400 pl-8">
+            <p className="text-[var(--text-muted)] pl-8">
               Booking link sent or recommendation email delivered
             </p>
           </div>
@@ -133,11 +133,11 @@ function StatusCard({
           : ''
       }`}
     >
-      <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{label}</p>
+      <p className="text-sm text-[var(--text-muted)] mb-1">{label}</p>
       <p className={`text-2xl font-semibold ${
         highlight && count > 0
           ? 'text-amber-400'
-          : 'text-gray-900 dark:text-gray-100'
+          : 'text-[var(--text)]'
       }`}>
         {count}
       </p>

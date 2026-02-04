@@ -36,15 +36,15 @@ export function LeadNotes({ leadId, initialNotes }: LeadNotesProps) {
   }
 
   return (
-    <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+    <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+        <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider">
           Internal Notes
         </h2>
         {!isEditing && (
           <button
             onClick={() => setIsEditing(true)}
-            className="text-xs text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300"
+            className="text-xs text-amber-500 hover:text-amber-400"
           >
             {notes ? 'Edit' : 'Add Notes'}
           </button>
@@ -52,7 +52,7 @@ export function LeadNotes({ leadId, initialNotes }: LeadNotesProps) {
       </div>
 
       {error && (
-        <p className="text-sm text-red-600 dark:text-red-400 mb-3">{error}</p>
+        <p className="text-sm text-[var(--error-text)] mb-3">{error}</p>
       )}
 
       {isEditing ? (
@@ -61,13 +61,13 @@ export function LeadNotes({ leadId, initialNotes }: LeadNotesProps) {
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Add internal notes about this lead..."
-            className="w-full h-32 p-3 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
+            className="w-full h-32 p-3 text-sm border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
           />
           <div className="flex gap-2 justify-end">
             <button
               onClick={handleCancel}
               disabled={isSaving}
-              className="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              className="px-3 py-1.5 text-sm text-[var(--text-muted)] hover:bg-[var(--accent-subtle)] rounded-lg transition-colors"
             >
               Cancel
             </button>
@@ -81,11 +81,11 @@ export function LeadNotes({ leadId, initialNotes }: LeadNotesProps) {
           </div>
         </div>
       ) : notes ? (
-        <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+        <p className="text-sm text-[var(--text)] whitespace-pre-wrap">
           {notes}
         </p>
       ) : (
-        <p className="text-sm text-gray-400 dark:text-gray-500 italic">
+        <p className="text-sm text-[var(--text-subtle)] italic">
           No notes yet. Click &quot;Add Notes&quot; to add internal notes.
         </p>
       )}

@@ -19,6 +19,7 @@
   /* === Text Colors === */
   --text: #111111;                  /* Primary text - near black */
   --text-muted: #5c5c5c;            /* Secondary text - WCAG AA compliant */
+  --text-subtle: #999999;           /* Tertiary text - labels, helper text */
 
   /* === Border Colors === */
   --border: rgba(0, 0, 0, 0.08);    /* Default border */
@@ -145,6 +146,7 @@
   /* === Text Colors === */
   --text: #F7F6F3;
   --text-muted: #a0a0a0;
+  --text-subtle: #666666;
 
   /* === Border Colors === */
   --border: rgba(255, 255, 255, 0.08);

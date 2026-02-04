@@ -68,7 +68,7 @@ export function InvoiceActions({ invoice }: InvoiceActionsProps) {
           <button
             type="submit"
             disabled={isSending}
-            className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors disabled:opacity-50"
+            className="px-4 py-2 bg-[var(--surface-2)] text-[var(--text)] rounded-lg text-sm font-medium hover:bg-[var(--accent-subtle)] transition-colors disabled:opacity-50"
           >
             {isSending ? 'Sending...' : 'Resend'}
           </button>
@@ -80,7 +80,7 @@ export function InvoiceActions({ invoice }: InvoiceActionsProps) {
         value={invoice.status}
         onChange={(e) => handleStatusChange(e.target.value)}
         disabled={isUpdating}
-        className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm"
+        className="px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] text-sm"
       >
         <option value="DRAFT">Draft</option>
         <option value="SENT">Sent</option>
@@ -96,7 +96,7 @@ export function InvoiceActions({ invoice }: InvoiceActionsProps) {
           <button
             type="submit"
             disabled={isDeleting}
-            className="px-3 py-2 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 text-sm disabled:opacity-50"
+            className="px-3 py-2 text-[var(--error-text)] hover:text-red-500 text-sm disabled:opacity-50"
             onClick={(e) => {
               if (!confirm('Are you sure you want to delete this invoice?')) {
                 e.preventDefault()
@@ -110,7 +110,7 @@ export function InvoiceActions({ invoice }: InvoiceActionsProps) {
 
       {/* Error Messages */}
       {(sendState?.error || statusState?.error || deleteState?.error) && (
-        <p className="text-sm text-red-600 dark:text-red-400">
+        <p className="text-sm text-[var(--error-text)]">
           {sendState?.error || statusState?.error || deleteState?.error}
         </p>
       )}

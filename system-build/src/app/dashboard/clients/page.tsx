@@ -82,16 +82,16 @@ export default async function ClientsPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+          <h1 className="text-2xl font-semibold text-[var(--text)]">
             Clients
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-[var(--text-muted)] mt-1">
             Manage client accounts and relationships
           </p>
         </div>
         <Link
           href="/dashboard/clients/new"
-          className="px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
+          className="px-4 py-2 bg-[var(--text)] text-[var(--bg)] rounded-lg text-sm font-medium hover:opacity-85 transition-colors"
         >
           Add Client
         </Link>
@@ -104,7 +104,7 @@ export default async function ClientsPage({
           className={`px-3 py-1.5 text-sm rounded-full transition-colors ${
             !showArchived
               ? 'bg-amber-600 text-white'
-              : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+              : 'bg-[var(--surface-2)] text-[var(--text)] hover:bg-[var(--accent-subtle)]'
           }`}
         >
           Active
@@ -114,7 +114,7 @@ export default async function ClientsPage({
           className={`px-3 py-1.5 text-sm rounded-full transition-colors ${
             showArchived
               ? 'bg-amber-600 text-white'
-              : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+              : 'bg-[var(--surface-2)] text-[var(--text)] hover:bg-[var(--accent-subtle)]'
           }`}
         >
           Archived {archivedCount > 0 && `(${archivedCount})`}
@@ -122,26 +122,26 @@ export default async function ClientsPage({
       </div>
 
       {/* Search */}
-      <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+      <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-4">
         <form method="GET" className="flex gap-4">
           <input
             type="text"
             name="search"
             defaultValue={search}
             placeholder="Search by name, company, or email..."
-            className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+            className="flex-1 px-4 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
           {showArchived && <input type="hidden" name="archived" value="true" />}
           <button
             type="submit"
-            className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+            className="px-4 py-2 bg-[var(--surface-2)] text-[var(--text)] rounded-lg hover:bg-[var(--accent-subtle)] transition-colors"
           >
             Search
           </button>
           {search && (
             <Link
-              href={buildUrl({ search: undefined, page: '1' })}
-              className="px-4 py-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+              href={buildUrl({ search: '', page: '1' })}
+              className="px-4 py-2 text-[var(--text-muted)] hover:text-[var(--text)]"
             >
               Clear
             </Link>
@@ -155,14 +155,14 @@ export default async function ClientsPage({
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-between">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-[var(--text-muted)]">
             Showing {(page - 1) * perPage + 1} to {Math.min(page * perPage, totalCount)} of {totalCount} clients
           </p>
           <div className="flex gap-2">
             {page > 1 && (
               <Link
                 href={buildUrl({ page: String(page - 1) })}
-                className="px-3 py-1.5 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="px-3 py-1.5 text-sm bg-[var(--surface)] border border-[var(--border)] rounded hover:bg-[var(--accent-subtle)]"
               >
                 Previous
               </Link>
@@ -170,7 +170,7 @@ export default async function ClientsPage({
             {page < totalPages && (
               <Link
                 href={buildUrl({ page: String(page + 1) })}
-                className="px-3 py-1.5 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="px-3 py-1.5 text-sm bg-[var(--surface)] border border-[var(--border)] rounded hover:bg-[var(--accent-subtle)]"
               >
                 Next
               </Link>

@@ -15,9 +15,10 @@ interface DashboardHeaderProps {
     name?: string | null
     role: Role
   }
+  onToggleMobileNav?: () => void
 }
 
-export function DashboardHeader({ user }: DashboardHeaderProps) {
+export function DashboardHeader({ user, onToggleMobileNav }: DashboardHeaderProps) {
   const pathname = usePathname()
 
   // Find current section from navItems
@@ -30,8 +31,19 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
     <header className="glass glass--header sticky top-0 z-40">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo / Brand */}
+          {/* Left: Hamburger + Logo / Brand */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            {/* Mobile hamburger */}
+            <button
+              onClick={onToggleMobileNav}
+              className="lg:hidden p-2 -ml-2 text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--accent-subtle)] rounded-lg transition-colors"
+              aria-label="Toggle navigation"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+            </button>
+
             <Link href="/dashboard" className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity shrink-0">
               <Image
                 src="/bertrand-brands-logomark.png"
@@ -48,7 +60,7 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
             </Link>
             {/* Full breadcrumb - desktop only */}
             <span className="hidden md:block text-[var(--text-muted)]">|</span>
-            <span className="hidden md:block text-base font-medium tracking-tight text-amber-600 dark:text-amber-400">
+            <span className="hidden md:block text-base font-medium tracking-tight text-amber-500">
               CRM
             </span>
             <span className="hidden lg:block text-[var(--text-muted)]">|</span>
@@ -56,7 +68,7 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
               {currentSection}
             </span>
             {/* Mobile: Just show current section */}
-            <span className="lg:hidden text-sm font-medium tracking-tight text-amber-600 dark:text-amber-400 truncate">
+            <span className="lg:hidden text-sm font-medium tracking-tight text-amber-500 truncate">
               {currentSection}
             </span>
           </div>

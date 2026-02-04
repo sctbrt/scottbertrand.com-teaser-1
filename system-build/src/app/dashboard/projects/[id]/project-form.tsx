@@ -47,7 +47,7 @@ export function ProjectForm({ project, clients, templates, compact }: ProjectFor
       <div>
         <label
           htmlFor="name"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text)] mb-1"
         >
           Project Name *
         </label>
@@ -57,14 +57,14 @@ export function ProjectForm({ project, clients, templates, compact }: ProjectFor
           name="name"
           required
           defaultValue={project?.name || ''}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+          className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
         />
       </div>
 
       <div>
         <label
           htmlFor="clientId"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text)] mb-1"
         >
           Client *
         </label>
@@ -73,7 +73,7 @@ export function ProjectForm({ project, clients, templates, compact }: ProjectFor
           name="clientId"
           required
           defaultValue={project?.clientId || ''}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+          className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
         >
           <option value="">Select a client</option>
           {clients.map((client) => (
@@ -87,7 +87,7 @@ export function ProjectForm({ project, clients, templates, compact }: ProjectFor
       <div>
         <label
           htmlFor="serviceTemplateId"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text)] mb-1"
         >
           Service Template
         </label>
@@ -95,7 +95,7 @@ export function ProjectForm({ project, clients, templates, compact }: ProjectFor
           id="serviceTemplateId"
           name="serviceTemplateId"
           defaultValue={project?.serviceTemplateId || ''}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+          className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
         >
           <option value="">Custom Project</option>
           {templates.map((template) => (
@@ -110,7 +110,7 @@ export function ProjectForm({ project, clients, templates, compact }: ProjectFor
         <div>
           <label
             htmlFor="status"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-sm font-medium text-[var(--text)] mb-1"
           >
             Status
           </label>
@@ -118,7 +118,7 @@ export function ProjectForm({ project, clients, templates, compact }: ProjectFor
             id="status"
             name="status"
             defaultValue={project.status}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+            className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           >
             {statuses.map((status) => (
               <option key={status} value={status}>
@@ -133,7 +133,7 @@ export function ProjectForm({ project, clients, templates, compact }: ProjectFor
         <div>
           <label
             htmlFor="description"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-sm font-medium text-[var(--text)] mb-1"
           >
             Description
           </label>
@@ -142,7 +142,7 @@ export function ProjectForm({ project, clients, templates, compact }: ProjectFor
             name="description"
             rows={4}
             defaultValue={project?.description || ''}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 resize-none"
+            className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] resize-none"
           />
         </div>
       )}
@@ -151,7 +151,7 @@ export function ProjectForm({ project, clients, templates, compact }: ProjectFor
         <div>
           <label
             htmlFor="startDate"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-sm font-medium text-[var(--text)] mb-1"
           >
             Start Date
           </label>
@@ -160,13 +160,13 @@ export function ProjectForm({ project, clients, templates, compact }: ProjectFor
             id="startDate"
             name="startDate"
             defaultValue={project?.startDate ? formatDateInput(project.startDate) : ''}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+            className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
         </div>
         <div>
           <label
             htmlFor="targetEndDate"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-sm font-medium text-[var(--text)] mb-1"
           >
             Target End Date
           </label>
@@ -175,7 +175,7 @@ export function ProjectForm({ project, clients, templates, compact }: ProjectFor
             id="targetEndDate"
             name="targetEndDate"
             defaultValue={project?.targetEndDate ? formatDateInput(project.targetEndDate) : ''}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+            className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
         </div>
       </div>
@@ -183,7 +183,7 @@ export function ProjectForm({ project, clients, templates, compact }: ProjectFor
       <div>
         <label
           htmlFor="previewUrl"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text)] mb-1"
         >
           Preview URL
         </label>
@@ -193,22 +193,22 @@ export function ProjectForm({ project, clients, templates, compact }: ProjectFor
           name="previewUrl"
           placeholder="https://preview.vercel.app/..."
           defaultValue={project?.previewUrl || ''}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100"
+          className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
         />
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-xs text-[var(--text-muted)] mt-1">
           Visible to client in their portal
         </p>
       </div>
 
       {state?.error && (
-        <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-          <p className="text-sm text-red-600 dark:text-red-400">{state.error}</p>
+        <div className="p-3 bg-[var(--error-bg)] border border-[var(--error-border)] rounded-lg">
+          <p className="text-sm text-[var(--error-text)]">{state.error}</p>
         </div>
       )}
 
       {state?.success && (
-        <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-          <p className="text-sm text-green-600 dark:text-green-400">
+        <div className="p-3 bg-[var(--success-bg)] border border-[var(--success-border)] rounded-lg">
+          <p className="text-sm text-[var(--success-text)]">
             {project ? 'Project updated successfully' : 'Project created successfully'}
           </p>
         </div>
@@ -217,7 +217,7 @@ export function ProjectForm({ project, clients, templates, compact }: ProjectFor
       <button
         type="submit"
         disabled={isPending}
-        className="w-full px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full px-4 py-2 bg-[var(--text)] text-[var(--bg)] rounded-lg text-sm font-medium hover:opacity-85 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isPending ? 'Saving...' : project ? 'Update Project' : 'Create Project'}
       </button>

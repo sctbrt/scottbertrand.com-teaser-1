@@ -18,14 +18,14 @@ export function RefreshButton() {
   return (
     <div className="flex items-center gap-3">
       {lastRefresh && (
-        <span className="text-xs text-gray-400 dark:text-gray-500">
+        <span className="text-xs text-[var(--text-subtle)]">
           Updated {formatTimeAgo(lastRefresh)}
         </span>
       )}
       <button
         onClick={handleRefresh}
         disabled={isPending}
-        className="px-3 py-1.5 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transition-colors"
+        className="px-3 py-1.5 text-sm bg-[var(--surface)] border border-[var(--border)] rounded-lg hover:bg-[var(--accent-subtle)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transition-colors"
       >
         <svg
           className={`w-4 h-4 ${isPending ? 'animate-spin' : ''}`}

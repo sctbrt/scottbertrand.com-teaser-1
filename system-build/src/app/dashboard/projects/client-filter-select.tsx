@@ -34,7 +34,7 @@ export function ClientFilterSelect({
     <select
       defaultValue={currentClientId || ''}
       onChange={handleChange}
-      className="px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+      className="px-3 py-1.5 text-sm border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)]"
     >
       <option value="">All Clients</option>
       {clients.map((client) => (

@@ -36,26 +36,26 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
       <div>
         <Link
           href="/dashboard/leads"
-          className="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 mb-4"
+          className="inline-flex items-center text-sm text-[var(--text-muted)] hover:text-[var(--text)] mb-4"
         >
           ← Back to Leads
         </Link>
         <div className="flex items-start justify-between">
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+              <h1 className="text-2xl font-semibold text-[var(--text)]">
                 {lead.name || lead.email}
               </h1>
               <span className={`text-sm px-3 py-1 rounded-full ${getStatusColor(lead.status)}`}>
                 {lead.status}
               </span>
               {lead.isSpam && (
-                <span className="text-sm px-3 py-1 rounded-full bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300">
+                <span className="text-sm px-3 py-1 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30">
                   Spam
                 </span>
               )}
             </div>
-            <p className="text-gray-500 dark:text-gray-400 mt-1">
+            <p className="text-[var(--text-muted)] mt-1">
               Submitted {formatDate(lead.createdAt)}
               {lead.source && ` via ${lead.source}`}
             </p>
@@ -68,17 +68,17 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
         {/* Left Column - Lead Details */}
         <div className="lg:col-span-2 space-y-6">
           {/* Contact Information */}
-          <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+          <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
+            <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-4">
               Contact Information
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {lead.email && (
                 <div>
-                  <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">Email</p>
+                  <p className="text-xs text-[var(--text-subtle)] mb-1">Email</p>
                   <a
                     href={`mailto:${lead.email}`}
-                    className="text-gray-900 dark:text-gray-100 hover:underline"
+                    className="text-[var(--text)] hover:underline"
                   >
                     {lead.email}
                   </a>
@@ -86,22 +86,22 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
               )}
               {lead.name && (
                 <div>
-                  <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">Name</p>
-                  <p className="text-gray-900 dark:text-gray-100">{lead.name}</p>
+                  <p className="text-xs text-[var(--text-subtle)] mb-1">Name</p>
+                  <p className="text-[var(--text)]">{lead.name}</p>
                 </div>
               )}
               {lead.companyName && (
                 <div>
-                  <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">Company</p>
-                  <p className="text-gray-900 dark:text-gray-100">{lead.companyName}</p>
+                  <p className="text-xs text-[var(--text-subtle)] mb-1">Company</p>
+                  <p className="text-[var(--text)]">{lead.companyName}</p>
                 </div>
               )}
               {lead.phone && (
                 <div>
-                  <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">Phone</p>
+                  <p className="text-xs text-[var(--text-subtle)] mb-1">Phone</p>
                   <a
                     href={`tel:${lead.phone}`}
-                    className="text-gray-900 dark:text-gray-100 hover:underline"
+                    className="text-[var(--text)] hover:underline"
                   >
                     {lead.phone}
                   </a>
@@ -109,12 +109,12 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
               )}
               {lead.website && (
                 <div>
-                  <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">Website</p>
+                  <p className="text-xs text-[var(--text-subtle)] mb-1">Website</p>
                   <a
                     href={lead.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-900 dark:text-gray-100 hover:underline"
+                    className="text-[var(--text)] hover:underline"
                   >
                     {lead.website}
                   </a>
@@ -125,21 +125,21 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
 
           {/* Service Interest */}
           {(lead.service || lead.service_templates) && (
-            <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-              <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+            <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
+              <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-4">
                 Service Interest
               </h2>
               {lead.service_templates ? (
                 <Link
                   href={`/dashboard/templates/${lead.service_templates.id}`}
-                  className="block p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  className="block p-4 bg-[var(--surface-2)]/50 rounded-lg hover:bg-[var(--accent-subtle)] transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-gray-100">
+                      <p className="font-medium text-[var(--text)]">
                         {lead.service_templates.name}
                       </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-[var(--text-muted)]">
                         {formatCurrency(Number(lead.service_templates.price))}
                       </p>
                     </div>
@@ -149,18 +149,18 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
                   </div>
                 </Link>
               ) : (
-                <p className="text-gray-700 dark:text-gray-300">{lead.service}</p>
+                <p className="text-[var(--text)]">{lead.service}</p>
               )}
             </div>
           )}
 
           {/* Message */}
           {lead.message && (
-            <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-              <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+            <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
+              <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-4">
                 Message
               </h2>
-              <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+              <p className="text-[var(--text)] whitespace-pre-wrap">
                 {lead.message}
               </p>
             </div>
@@ -168,12 +168,12 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
 
           {/* Raw Form Data */}
           {Object.keys(formData).length > 0 && (
-            <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-              <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+            <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
+              <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-4">
                 Raw Form Data
               </h2>
-              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 overflow-x-auto">
-                <pre className="text-xs text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+              <div className="bg-[var(--surface-2)] rounded-lg p-4 overflow-x-auto">
+                <pre className="text-xs text-[var(--text)] whitespace-pre-wrap">
                   {JSON.stringify(formData, null, 2)}
                 </pre>
               </div>
@@ -182,19 +182,19 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
 
           {/* Converted Client */}
           {lead.clients && (
-            <div className="bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800 p-6">
-              <h2 className="text-sm font-medium text-green-700 dark:text-green-300 uppercase tracking-wider mb-4">
+            <div className="bg-emerald-500/10 rounded-lg border border-emerald-500/20 p-6">
+              <h2 className="text-sm font-medium text-emerald-400 uppercase tracking-wider mb-4">
                 Converted to Client
               </h2>
               <Link
                 href={`/dashboard/clients/${lead.clients.id}`}
-                className="flex items-center justify-between p-4 bg-white dark:bg-green-900/30 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/40 transition-colors"
+                className="flex items-center justify-between p-4 bg-emerald-500/5 rounded-lg hover:bg-emerald-500/10 transition-colors"
               >
                 <div>
-                  <p className="font-medium text-gray-900 dark:text-gray-100">
+                  <p className="font-medium text-[var(--text)]">
                     {lead.clients.companyName || lead.clients.contactName}
                   </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="text-sm text-[var(--text-muted)]">
                     {lead.clients.users.email}
                   </p>
                 </div>
@@ -209,13 +209,13 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
         {/* Right Column - Actions & Convert */}
         <div className="space-y-6">
           {/* Timeline */}
-          <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+          <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
+            <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-4">
               Timeline
             </h2>
             <div className="relative">
               {/* Timeline line */}
-              <div className="absolute left-2 top-2 bottom-2 w-0.5 bg-gray-200 dark:bg-gray-700" />
+              <div className="absolute left-2 top-2 bottom-2 w-0.5 bg-[var(--surface-2)]" />
 
               <div className="space-y-4">
                 {/* Created */}
@@ -252,39 +252,39 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
           </div>
 
           {/* Meta Information */}
-          <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+          <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
+            <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-4">
               Lead Information
             </h2>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-500 dark:text-gray-400">Status</span>
+                <span className="text-[var(--text-muted)]">Status</span>
                 <span className={`px-2 py-0.5 rounded-full text-xs ${getStatusColor(lead.status)}`}>
                   {lead.status}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500 dark:text-gray-400">Created</span>
-                <span className="text-gray-900 dark:text-gray-100">
+                <span className="text-[var(--text-muted)]">Created</span>
+                <span className="text-[var(--text)]">
                   {formatDate(lead.createdAt)}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500 dark:text-gray-400">Updated</span>
-                <span className="text-gray-900 dark:text-gray-100">
+                <span className="text-[var(--text-muted)]">Updated</span>
+                <span className="text-[var(--text)]">
                   {formatDate(lead.updatedAt)}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-500 dark:text-gray-400">Source</span>
-                <span className="text-gray-900 dark:text-gray-100">
+                <span className="text-[var(--text-muted)]">Source</span>
+                <span className="text-[var(--text)]">
                   {lead.source || 'Unknown'}
                 </span>
               </div>
               {lead.users && (
                 <div className="flex justify-between">
-                  <span className="text-gray-500 dark:text-gray-400">Created By</span>
-                  <span className="text-gray-900 dark:text-gray-100">
+                  <span className="text-[var(--text-muted)]">Created By</span>
+                  <span className="text-[var(--text)]">
                     {lead.users.name || lead.users.email}
                   </span>
                 </div>
@@ -297,8 +297,8 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
 
           {/* Convert to Client (if not already converted) */}
           {lead.status !== 'CONVERTED' && !lead.clients && (
-            <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-              <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+            <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
+              <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-4">
                 Convert to Client
               </h2>
               <ConvertToClientForm lead={lead} templates={templates} />
@@ -306,14 +306,14 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
           )}
 
           {/* Quick Actions */}
-          <div className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
+          <div className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-6">
+            <h2 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wider mb-4">
               Quick Actions
             </h2>
             <div className="space-y-2">
               <a
                 href={`mailto:${lead.email}`}
-                className="flex items-center gap-2 w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-sm text-gray-700 dark:text-gray-300"
+                className="flex items-center gap-2 w-full px-4 py-2 bg-[var(--surface-2)] rounded-lg hover:bg-[var(--accent-subtle)] transition-colors text-sm text-[var(--text)]"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -323,7 +323,7 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
               {lead.phone && (
                 <a
                   href={`tel:${lead.phone}`}
-                  className="flex items-center gap-2 w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-sm text-gray-700 dark:text-gray-300"
+                  className="flex items-center gap-2 w-full px-4 py-2 bg-[var(--surface-2)] rounded-lg hover:bg-[var(--accent-subtle)] transition-colors text-sm text-[var(--text)]"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -336,7 +336,7 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
                   href={lead.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-sm text-gray-700 dark:text-gray-300"
+                  className="flex items-center gap-2 w-full px-4 py-2 bg-[var(--surface-2)] rounded-lg hover:bg-[var(--accent-subtle)] transition-colors text-sm text-[var(--text)]"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -354,12 +354,12 @@ export default async function LeadDetailPage({ params }: LeadDetailPageProps) {
 
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
-    NEW: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-    CONTACTED: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300',
-    QUALIFIED: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-    CONVERTED: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
-    DISQUALIFIED: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
-    ARCHIVED: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300',
+    NEW: 'bg-sky-500/20 text-sky-400 border border-sky-500/30',
+    CONTACTED: 'bg-amber-500/20 text-amber-400 border border-amber-500/30',
+    QUALIFIED: 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30',
+    CONVERTED: 'bg-violet-500/20 text-violet-400 border border-violet-500/30',
+    DISQUALIFIED: 'bg-rose-500/20 text-rose-400 border border-rose-500/30',
+    ARCHIVED: 'bg-zinc-500/20 text-zinc-400 border border-zinc-500/30',
   }
   return colors[status] || colors.NEW
 }
@@ -401,7 +401,7 @@ function TimelineItem({
         className={`absolute left-0 w-4 h-4 rounded-full border-2 ${
           isComplete
             ? 'bg-green-500 border-green-500'
-            : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600'
+            : 'bg-[var(--surface)] border-[var(--border)]'
         } ${isFirst ? 'mt-0' : ''} ${isLast ? '' : ''}`}
       />
 
@@ -409,13 +409,13 @@ function TimelineItem({
       <div className="flex-1 min-w-0">
         <p
           className={`text-sm font-medium ${
-            isComplete ? 'text-gray-900 dark:text-gray-100' : 'text-gray-400 dark:text-gray-500'
+            isComplete ? 'text-[var(--text)]' : 'text-[var(--text-subtle)]'
           }`}
         >
           {label}
         </p>
         {date && (
-          <p className="text-xs text-gray-500 dark:text-gray-400">
+          <p className="text-xs text-[var(--text-muted)]">
             {new Intl.DateTimeFormat('en-CA', {
               month: 'short',
               day: 'numeric',

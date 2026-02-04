@@ -49,9 +49,10 @@ export default async function ProjectsPage({
 
   const totalPages = Math.ceil(totalCount / perPage)
 
-  // Status counts
+  // Status counts (filtered by client if selected)
   const statusCounts = await prisma.projects.groupBy({
     by: ['status'],
+    ...(clientId ? { where: { clientId } } : {}),
     _count: { id: true },
   })
 
@@ -66,16 +67,16 @@ export default async function ProjectsPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+          <h1 className="text-2xl font-semibold text-[var(--text)]">
             Projects
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-[var(--text-muted)] mt-1">
             Manage client projects and deliverables
           </p>
         </div>
         <Link
           href="/dashboard/projects/new"
-          className="px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
+          className="px-4 py-2 bg-[var(--text)] text-[var(--bg)] rounded-lg text-sm font-medium hover:opacity-85 transition-colors"
         >
           New Project
         </Link>
@@ -113,8 +114,8 @@ export default async function ProjectsPage({
       {/* Projects Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {projects.length === 0 ? (
-          <div className="col-span-full bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-12 text-center">
-            <p className="text-gray-500 dark:text-gray-400">
+          <div className="col-span-full bg-[var(--surface)] rounded-lg border border-[var(--border)] p-12 text-center">
+            <p className="text-[var(--text-muted)]">
               No projects found
             </p>
           </div>
@@ -123,14 +124,14 @@ export default async function ProjectsPage({
             <Link
               key={project.id}
               href={`/dashboard/projects/${project.id}`}
-              className="bg-white dark:bg-[#2c2c2e] rounded-lg border border-gray-200 dark:border-gray-700 p-5 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+              className="bg-[var(--surface)] rounded-lg border border-[var(--border)] p-5 hover:border-[var(--accent-muted)] transition-colors"
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-medium text-gray-900 dark:text-gray-100 truncate">
+                  <h3 className="font-medium text-[var(--text)] truncate">
                     {project.name}
                   </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                  <p className="text-sm text-[var(--text-muted)] truncate">
                     {project.clients.companyName || project.clients.contactName}
                   </p>
                 </div>
@@ -140,20 +141,20 @@ export default async function ProjectsPage({
               </div>
 
               {project.service_templates && (
-                <p className="text-xs text-gray-400 dark:text-gray-500 mb-3">
+                <p className="text-xs text-[var(--text-subtle)] mb-3">
                   {project.service_templates.name}
                 </p>
               )}
 
-              <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+              <div className="flex items-center gap-4 text-xs text-[var(--text-muted)]">
                 <span>{project._count.tasks} tasks</span>
                 <span>{project._count.milestones} milestones</span>
                 <span>{project._count.invoices} invoices</span>
               </div>
 
               {project.targetEndDate && (
-                <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
-                  <p className="text-xs text-gray-400 dark:text-gray-500">
+                <div className="mt-3 pt-3 border-t border-[var(--border)]">
+                  <p className="text-xs text-[var(--text-subtle)]">
                     Target: {formatDate(project.targetEndDate)}
                   </p>
                 </div>
@@ -166,14 +167,14 @@ export default async function ProjectsPage({
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-between">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-[var(--text-muted)]">
             Showing {(page - 1) * perPage + 1} to {Math.min(page * perPage, totalCount)} of {totalCount} projects
           </p>
           <div className="flex gap-2">
             {page > 1 && (
               <Link
                 href={`/dashboard/projects?page=${page - 1}${status ? `&status=${status}` : ''}${clientId ? `&clientId=${clientId}` : ''}`}
-                className="px-3 py-1.5 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="px-3 py-1.5 text-sm bg-[var(--surface)] border border-[var(--border)] rounded hover:bg-[var(--accent-subtle)]"
               >
                 Previous
               </Link>
@@ -181,7 +182,7 @@ export default async function ProjectsPage({
             {page < totalPages && (
               <Link
                 href={`/dashboard/projects?page=${page + 1}${status ? `&status=${status}` : ''}${clientId ? `&clientId=${clientId}` : ''}`}
-                className="px-3 py-1.5 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="px-3 py-1.5 text-sm bg-[var(--surface)] border border-[var(--border)] rounded hover:bg-[var(--accent-subtle)]"
               >
                 Next
               </Link>
@@ -215,8 +216,8 @@ function FilterChip({
       href={href}
       className={`px-3 py-1.5 text-sm rounded-full transition-colors whitespace-nowrap ${
         active
-          ? 'bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900'
-          : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+          ? 'bg-[var(--text)] text-[var(--bg)]'
+          : 'bg-[var(--surface-2)] text-[var(--text-muted)] hover:bg-[var(--accent-subtle)]'
       }`}
     >
       {label}

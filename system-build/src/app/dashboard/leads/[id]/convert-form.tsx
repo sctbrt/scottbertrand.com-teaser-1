@@ -27,7 +27,7 @@ export function ConvertToClientForm({ lead, templates }: ConvertToClientFormProp
 
   return (
     <form action={formAction} className="space-y-4">
-      <p className="text-sm text-gray-600 dark:text-gray-400">
+      <p className="text-sm text-[var(--text-muted)]">
         Create a client account for{' '}
         <strong>{lead.name || lead.email}</strong>. They will receive portal
         access via magic link at their email address.
@@ -36,7 +36,7 @@ export function ConvertToClientForm({ lead, templates }: ConvertToClientFormProp
       <div>
         <label
           htmlFor="contactName"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text)] mb-1"
         >
           Contact Name *
         </label>
@@ -46,14 +46,14 @@ export function ConvertToClientForm({ lead, templates }: ConvertToClientFormProp
           name="contactName"
           required
           defaultValue={lead.name || ''}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 text-sm"
+          className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] text-sm"
         />
       </div>
 
       <div>
         <label
           htmlFor="companyName"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text)] mb-1"
         >
           Company Name
         </label>
@@ -62,18 +62,18 @@ export function ConvertToClientForm({ lead, templates }: ConvertToClientFormProp
           id="companyName"
           name="companyName"
           defaultValue={lead.companyName || ''}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 text-sm"
+          className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] text-sm"
         />
       </div>
 
       <div>
-        <label className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+        <label className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
           <input
             type="checkbox"
             name="createProject"
             value="true"
             defaultChecked
-            className="rounded border-gray-300 dark:border-gray-600"
+            className="rounded border-[var(--border)]"
           />
           Create an initial project
         </label>
@@ -82,7 +82,7 @@ export function ConvertToClientForm({ lead, templates }: ConvertToClientFormProp
       <div>
         <label
           htmlFor="projectName"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text)] mb-1"
         >
           Project Name
         </label>
@@ -91,21 +91,21 @@ export function ConvertToClientForm({ lead, templates }: ConvertToClientFormProp
           id="projectName"
           name="projectName"
           defaultValue={lead.companyName ? `${lead.companyName} Website` : 'New Project'}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 text-sm"
+          className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] text-sm"
         />
       </div>
 
       <div>
         <label
           htmlFor="templateId"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+          className="block text-sm font-medium text-[var(--text)] mb-1"
         >
           Service Template
         </label>
         <select
           id="templateId"
           name="templateId"
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 text-sm"
+          className="w-full px-3 py-2 border border-[var(--border)] rounded-lg bg-[var(--surface)] text-[var(--text)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] text-sm"
         >
           <option value="">Custom Project</option>
           {templates.map((template) => (
@@ -117,8 +117,8 @@ export function ConvertToClientForm({ lead, templates }: ConvertToClientFormProp
       </div>
 
       {state?.error && (
-        <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-          <p className="text-sm text-red-600 dark:text-red-400">{state.error}</p>
+        <div className="p-3 bg-[var(--error-bg)] border border-[var(--error-border)] rounded-lg">
+          <p className="text-sm text-[var(--error-text)]">{state.error}</p>
         </div>
       )}
 

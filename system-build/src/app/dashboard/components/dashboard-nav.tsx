@@ -55,46 +55,69 @@ interface DashboardNavProps {
     invoices?: number
     intakes?: number
   }
+  mobileOpen?: boolean
+  onCloseMobile?: () => void
 }
 
-export function DashboardNav({ counts }: DashboardNavProps) {
+export function DashboardNav({ counts, mobileOpen, onCloseMobile }: DashboardNavProps) {
   const pathname = usePathname()
 
   return (
-    <nav className="glass glass--nav w-64 min-h-[calc(100vh-64px)] hidden lg:block">
-      <div className="p-4">
-        <ul className="space-y-1">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href ||
-              (item.href !== '/dashboard' && pathname.startsWith(item.href))
+    <>
+      {/* Mobile overlay backdrop */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+          onClick={onCloseMobile}
+        />
+      )}
 
-            return (
-              <li key={item.name}>
-                <Link
-                  href={item.href}
-                  className={`relative flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                    isActive
-                      ? 'bg-[var(--accent-muted)] text-[var(--accent)]'
-                      : 'text-[var(--text-muted)] hover:bg-[var(--accent-subtle)] hover:text-[var(--text)]'
-                  }`}
-                >
-                  {isActive && (
-                    <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-[var(--accent)] rounded-r-full" />
-                  )}
-                  <item.icon className="w-5 h-5" />
-                  <span className="flex-1">{item.name}</span>
-                  {item.countKey && counts?.[item.countKey] ? (
-                    <span className="ml-auto px-2 py-0.5 text-xs font-medium rounded-full bg-amber-500/20 text-amber-400">
-                      {counts[item.countKey]}
-                    </span>
-                  ) : null}
-                </Link>
-              </li>
-            )
-          })}
-        </ul>
-      </div>
-    </nav>
+      {/* Navigation */}
+      <nav
+        className={`
+          glass glass--nav w-64 min-h-[calc(100vh-64px)]
+          lg:block
+          ${mobileOpen
+            ? 'fixed top-16 left-0 z-30 block shadow-xl'
+            : 'hidden'
+          }
+        `}
+      >
+        <div className="p-4">
+          <ul className="space-y-1">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href ||
+                (item.href !== '/dashboard' && pathname.startsWith(item.href))
+
+              return (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    onClick={onCloseMobile}
+                    className={`relative flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                      isActive
+                        ? 'bg-[var(--accent-muted)] text-[var(--accent)]'
+                        : 'text-[var(--text-muted)] hover:bg-[var(--accent-subtle)] hover:text-[var(--text)]'
+                    }`}
+                  >
+                    {isActive && (
+                      <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-[var(--accent)] rounded-r-full" />
+                    )}
+                    <item.icon className="w-5 h-5" />
+                    <span className="flex-1">{item.name}</span>
+                    {item.countKey && counts?.[item.countKey] ? (
+                      <span className="ml-auto px-2 py-0.5 text-xs font-medium rounded-full bg-amber-500/20 text-amber-400">
+                        {counts[item.countKey]}
+                      </span>
+                    ) : null}
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      </nav>
+    </>
   )
 }
 
