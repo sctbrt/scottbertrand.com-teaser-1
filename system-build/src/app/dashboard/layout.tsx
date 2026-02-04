@@ -33,8 +33,16 @@ export default async function DashboardLayout({
   }
 
   return (
-    <DashboardShell user={session.user} counts={navCounts}>
-      {children}
-    </DashboardShell>
+    <>
+      {/* Force dark theme immediately — prevents flash of light theme before React hydrates */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `document.documentElement.setAttribute('data-theme','dark');`,
+        }}
+      />
+      <DashboardShell user={session.user} counts={navCounts}>
+        {children}
+      </DashboardShell>
+    </>
   )
 }
