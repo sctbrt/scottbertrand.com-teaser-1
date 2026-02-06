@@ -1,407 +1,162 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light only">
+  <title>Sitemap — Scott Bertrand</title>
+  <meta name="description" content="All web properties in the Scott Bertrand ecosystem.">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://scottbertrand.com/sitemapx">
 
-    <!-- SEO -->
-    <meta name="theme-color" content="#0a0a0a">
-    <title>Ecosystem Sitemap — Scott Bertrand</title>
-    <meta name="robots" content="noindex">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
-    <!-- Favicon & Touch Icons -->
-    <link rel="icon" type="image/png" href="/assets/favicon.png">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,400&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F7F4EF;
+      --text: #2C2520;
+      --text-muted: #8C7E73;
+      --text-subtle: #B5A99B;
+      --accent: #9A6340;
+    }
 
-    <style>
-        /* === RESET === */
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { color-scheme: light only; }
 
-        /* === TOKENS === */
-        :root {
-            --bg: #0a0a0a;
-            --bg-elevated: #111111;
-            --bg-card: #161616;
-            --text: #fafafa;
-            --text-muted: #888888;
-            --text-subtle: #555555;
-            --accent: #D97706;
-            --accent-hover: #B45309;
-            --border: rgba(255, 255, 255, 0.08);
-            --font-display: 'Fraunces', Georgia, serif;
-            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-        }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 80px 40px;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
+    .container {
+      width: 100%;
+      max-width: 480px;
+    }
 
-        body {
-            font-family: var(--font-body);
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            min-height: 100vh;
-            padding: 2rem;
-        }
+    h1 {
+      font-family: 'Lora', serif;
+      font-weight: 400;
+      font-size: 1.5rem;
+      margin-bottom: 48px;
+      color: var(--text);
+    }
 
-        /* === LAYOUT === */
-        .sitemap {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+    .section {
+      margin-bottom: 40px;
+    }
 
-        .sitemap__header {
-            text-align: center;
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-        }
+    .section-label {
+      font-family: 'Outfit', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--text-subtle);
+      margin-bottom: 16px;
+    }
 
-        .sitemap__logomark {
-            width: 48px;
-            height: auto;
-            margin-bottom: 1rem;
-            filter: brightness(0) saturate(100%) invert(48%) sepia(89%) saturate(1000%) hue-rotate(4deg) brightness(88%);
-        }
+    ul {
+      list-style: none;
+    }
 
-        .sitemap__title {
-            font-family: var(--font-display);
-            font-size: clamp(1.5rem, 4vw, 2rem);
-            font-weight: 400;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
+    li {
+      margin-bottom: 12px;
+    }
 
-        .sitemap__subtitle {
-            font-size: 0.9375rem;
-            color: var(--text-muted);
-        }
+    a {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
 
-        /* === DOMAIN SECTIONS === */
-        .sitemap__domains {
-            display: grid;
-            gap: 2rem;
-        }
+    a:hover {
+      color: var(--accent);
+    }
 
-        .domain {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-        }
+    .back {
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid var(--text-subtle);
+    }
 
-        .domain__header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
+    .back a {
+      font-family: 'Outfit', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.65rem;
+      font-weight: 400;
+      color: var(--text-subtle);
+    }
 
-        .domain__icon {
-            width: 24px;
-            height: 24px;
-            color: var(--accent);
-        }
+    .back a:hover {
+      color: var(--text-muted);
+    }
 
-        .domain__name {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text);
-        }
+    @media (max-width: 600px) {
+      body { padding: 60px 24px; }
+      h1 { margin-bottom: 36px; }
+    }
 
-        .domain__name a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .domain__name a:hover {
-            color: var(--accent);
-        }
-
-        .domain__badge {
-            font-size: 0.6875rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            background: var(--accent);
-            color: white;
-            margin-left: auto;
-        }
-
-        .domain__badge--secondary {
-            background: var(--border);
-            color: var(--text-muted);
-        }
-
-        /* === PAGE LIST === */
-        .domain__pages {
-            list-style: none;
-        }
-
-        .domain__section {
-            margin-bottom: 1rem;
-        }
-
-        .domain__section:last-child {
-            margin-bottom: 0;
-        }
-
-        .domain__section-title {
-            font-size: 0.75rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-subtle);
-            margin-bottom: 0.5rem;
-        }
-
-        .page-list {
-            list-style: none;
-            display: grid;
-            gap: 0.25rem;
-        }
-
-        .page-list__item a {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 0.75rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.875rem;
-            border-radius: 6px;
-            transition: all 0.15s ease;
-        }
-
-        .page-list__item a:hover {
-            background: rgba(255, 255, 255, 0.04);
-            color: var(--text);
-        }
-
-        .page-list__item a::before {
-            content: '→';
-            color: var(--text-subtle);
-            font-size: 0.75rem;
-        }
-
-        .page-list__item a:hover::before {
-            color: var(--accent);
-        }
-
-        /* === FOOTER === */
-        .sitemap__footer {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-            text-align: center;
-            font-size: 0.8125rem;
-            color: var(--text-subtle);
-        }
-
-        .sitemap__footer a {
-            color: var(--text-muted);
-            text-decoration: none;
-        }
-
-        .sitemap__footer a:hover {
-            color: var(--accent);
-        }
-
-        /* Focus styles */
-        :focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-    </style>
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+  </style>
 </head>
 <body>
-    <main class="sitemap">
-        <header class="sitemap__header">
-            <img src="/assets/sb-logomark.png" alt="" class="sitemap__logomark">
-            <h1 class="sitemap__title">Ecosystem Sitemap</h1>
-            <p class="sitemap__subtitle">All pages across the Scott Bertrand digital properties</p>
-        </header>
 
-        <div class="sitemap__domains">
-            <!-- scottbertrand.com -->
-            <section class="domain">
-                <div class="domain__header">
-                    <svg class="domain__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-                    </svg>
-                    <span class="domain__name"><a href="https://scottbertrand.com" target="_blank">scottbertrand.com</a></span>
-                    <span class="domain__badge">Hub</span>
-                </div>
-                <div class="domain__pages">
-                    <div class="domain__section">
-                        <h3 class="domain__section-title">Main Pages</h3>
-                        <ul class="page-list">
-                            <li class="page-list__item"><a href="https://scottbertrand.com/" target="_blank">Homepage</a></li>
-                            <li class="page-list__item"><a href="https://scottbertrand.com/about" target="_blank">About</a></li>
-                            <li class="page-list__item"><a href="https://scottbertrand.com/approach" target="_blank">Approach</a></li>
-                            <li class="page-list__item"><a href="https://scottbertrand.com/contact" target="_blank">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="domain__section">
-                        <h3 class="domain__section-title">Content Pages</h3>
-                        <ul class="page-list">
-                            <li class="page-list__item"><a href="https://scottbertrand.com/field-notes" target="_blank">Field Notes</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+  <div class="container">
+    <h1>Sitemap</h1>
 
-            <!-- bertrandbrands.com -->
-            <section class="domain">
-                <div class="domain__header">
-                    <svg class="domain__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
-                    </svg>
-                    <span class="domain__name"><a href="https://bertrandbrands.com" target="_blank">bertrandbrands.com</a></span>
-                    <span class="domain__badge domain__badge--secondary">Studio</span>
-                </div>
-                <div class="domain__pages">
-                    <div class="domain__section">
-                        <h3 class="domain__section-title">Main Pages</h3>
-                        <ul class="page-list">
-                            <li class="page-list__item"><a href="https://bertrandbrands.com/" target="_blank">Homepage</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.com/#about" target="_blank">About</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.com/#process" target="_blank">How It Works</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.com/#services" target="_blank">Services</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.com/#contact" target="_blank">Contact</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.com/#portal" target="_blank">Client Portal</a></li>
-                        </ul>
-                    </div>
-                    <div class="domain__section">
-                        <h3 class="domain__section-title">Service Pages</h3>
-                        <ul class="page-list">
-                            <li class="page-list__item"><a href="https://bertrandbrands.com/services/website-audit" target="_blank">Website Audit</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.com/founders-direction-check" target="_blank">Founders Direction Check</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.com/brand-website-starter-map" target="_blank">Brand & Website Starter Map</a></li>
-                        </ul>
-                    </div>
-                    <div class="domain__section">
-                        <h3 class="domain__section-title">Landing Pages</h3>
-                        <ul class="page-list">
-                            <li class="page-list__item"><a href="https://bertrandbrands.com/sudbury-brand-website-clarity" target="_blank">Sudbury Brand & Website Clarity</a></li>
-                            <li class="page-list__item"><a href="https://bertrandbrands.com/sudbury-small-business-website-leads" target="_blank">Sudbury Small Business Website Leads</a></li>
-                        </ul>
-                    </div>
-                    <div class="domain__section">
-                        <h3 class="domain__section-title">Utility Pages</h3>
-                        <ul class="page-list">
-                            <li class="page-list__item"><a href="https://bertrandbrands.com/thanks" target="_blank">Thank You</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+    <div class="section">
+      <p class="section-label">Hub</p>
+      <ul>
+        <li><a href="https://scottbertrand.com">scottbertrand.com</a></li>
+      </ul>
+    </div>
 
-            <!-- dashboard.bertrandbrands.com -->
-            <section class="domain">
-                <div class="domain__header">
-                    <svg class="domain__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
-                    </svg>
-                    <span class="domain__name"><a href="https://dashboard.bertrandbrands.com" target="_blank">dashboard.bertrandbrands.com</a></span>
-                    <span class="domain__badge domain__badge--secondary">Internal</span>
-                </div>
-                <div class="domain__pages">
-                    <div class="domain__section">
-                        <h3 class="domain__section-title">Dashboard Pages</h3>
-                        <ul class="page-list">
-                            <li class="page-list__item"><a href="https://dashboard.bertrandbrands.com/" target="_blank">Overview</a></li>
-                            <li class="page-list__item"><a href="https://dashboard.bertrandbrands.com/leads" target="_blank">Leads</a></li>
-                            <li class="page-list__item"><a href="https://dashboard.bertrandbrands.com/clients" target="_blank">Clients</a></li>
-                            <li class="page-list__item"><a href="https://dashboard.bertrandbrands.com/projects" target="_blank">Projects</a></li>
-                            <li class="page-list__item"><a href="https://dashboard.bertrandbrands.com/invoices" target="_blank">Invoices</a></li>
-                            <li class="page-list__item"><a href="https://dashboard.bertrandbrands.com/templates" target="_blank">Templates</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+    <div class="section">
+      <p class="section-label">Studio</p>
+      <ul>
+        <li><a href="https://bertrandbrands.com">bertrandbrands.com</a></li>
+      </ul>
+    </div>
 
-            <!-- clients.scottbertrand.com -->
-            <section class="domain">
-                <div class="domain__header">
-                    <svg class="domain__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
-                    <span class="domain__name"><a href="https://clients.scottbertrand.com" target="_blank">clients.scottbertrand.com</a></span>
-                    <span class="domain__badge domain__badge--secondary">Portal</span>
-                </div>
-                <div class="domain__pages">
-                    <div class="domain__section">
-                        <h3 class="domain__section-title">Client Portal</h3>
-                        <ul class="page-list">
-                            <li class="page-list__item"><a href="https://clients.scottbertrand.com/" target="_blank">Portal Home</a></li>
-                            <li class="page-list__item"><a href="https://clients.scottbertrand.com/projects" target="_blank">My Projects</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+    <div class="section">
+      <p class="section-label">Writing</p>
+      <ul>
+        <li><a href="https://notes.scottbertrand.com">notes.scottbertrand.com</a></li>
+      </ul>
+    </div>
 
-            <!-- notes.scottbertrand.com -->
-            <section class="domain">
-                <div class="domain__header">
-                    <svg class="domain__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
-                    </svg>
-                    <span class="domain__name"><a href="https://notes.scottbertrand.com" target="_blank">notes.scottbertrand.com</a></span>
-                    <span class="domain__badge domain__badge--secondary">Blog</span>
-                </div>
-                <div class="domain__pages">
-                    <div class="domain__section">
-                        <h3 class="domain__section-title">Notes</h3>
-                        <ul class="page-list">
-                            <li class="page-list__item"><a href="https://notes.scottbertrand.com/" target="_blank">All Notes</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+    <div class="section">
+      <p class="section-label">Products</p>
+      <ul>
+        <li><a href="https://goods.scottbertrand.com">goods.scottbertrand.com</a></li>
+      </ul>
+    </div>
 
-            <!-- goods.scottbertrand.com -->
-            <section class="domain">
-                <div class="domain__header">
-                    <svg class="domain__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-                    </svg>
-                    <span class="domain__name"><a href="https://goods.scottbertrand.com" target="_blank">goods.scottbertrand.com</a></span>
-                    <span class="domain__badge domain__badge--secondary">Store</span>
-                </div>
-                <div class="domain__pages">
-                    <div class="domain__section">
-                        <h3 class="domain__section-title">Store</h3>
-                        <ul class="page-list">
-                            <li class="page-list__item"><a href="https://goods.scottbertrand.com/" target="_blank">Shop</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-        </div>
+    <div class="back">
+      <a href="/">← Back</a>
+    </div>
+  </div>
 
-        <footer class="sitemap__footer">
-            <p>Last updated: January 2026 &middot; <a href="/">Back to Scott Bertrand</a></p>
-        </footer>
-    </main>
 </body>
 </html>
