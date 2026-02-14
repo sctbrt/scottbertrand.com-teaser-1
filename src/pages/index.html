@@ -54,6 +54,7 @@
   </script>
 
   <!-- Fonts -->
+  <link rel="stylesheet" href="https://use.typekit.net/dmk8daz.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@600&family=Space+Mono:wght@700&family=DM+Serif+Display&family=Bebas+Neue&family=Cormorant+Garamond:wght@600&family=Syne:wght@700&family=Abril+Fatface&family=Bodoni+Moda:wght@700&family=Cinzel:wght@700&family=Italiana&family=Poiret+One&family=Tenor+Sans&family=Yeseva+One&family=Libre+Baskerville:wght@700&display=swap" rel="stylesheet">
@@ -151,7 +152,6 @@
     }
 
     [data-theme="dark"] .stage,
-    [data-theme="dark"] .signal-dots,
     [data-theme="dark"] .footer-links {
       position: relative;
       z-index: 1;
@@ -165,23 +165,6 @@
     /* Dark theme: capability line background */
     [data-theme="dark"] .capability-line {
       background: transparent;
-    }
-
-    /* Dark theme: signal dots more visible */
-    [data-theme="dark"] .signal-dot {
-      opacity: 0.9;
-    }
-
-    [data-theme="dark"] .signal-dot--orange {
-      box-shadow: 0 0 6px rgba(217, 123, 48, 0.5);
-    }
-
-    [data-theme="dark"] .signal-dot--purple {
-      box-shadow: 0 0 6px rgba(155, 107, 217, 0.5);
-    }
-
-    [data-theme="dark"] .signal-dot--blue {
-      box-shadow: 0 0 6px rgba(66, 100, 217, 0.5);
     }
 
     html { color-scheme: light dark; }
@@ -407,9 +390,9 @@
     }
 
     .links a {
-      font-family: 'Outfit', sans-serif;
+      font-family: halyard-display, 'Outfit', sans-serif;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       font-size: 0.72rem;
       font-weight: 500;
       color: var(--accent);
@@ -465,45 +448,6 @@
 
     .footer-links a:hover {
       color: var(--text-muted);
-    }
-
-    /* Signal Dots — Brand Mark */
-    .signal-dots {
-      position: fixed;
-      top: 40px;
-      left: 40px;
-      display: flex;
-      gap: 6px;
-      opacity: 0;
-      animation: softFade 1.0s ease 8.5s forwards;
-      z-index: 10;
-    }
-
-    .signal-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      animation: signalPulse 4s ease-in-out infinite;
-    }
-
-    .signal-dot--orange {
-      background: #D97B30;
-      animation-delay: 0s;
-    }
-
-    .signal-dot--purple {
-      background: #9B6BD9;
-      animation-delay: 0.15s;
-    }
-
-    .signal-dot--blue {
-      background: #4264D9;
-      animation-delay: 0.3s;
-    }
-
-    @keyframes signalPulse {
-      0%, 100% { opacity: 0.6; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.1); }
     }
 
     @keyframes lineSweep {
@@ -605,8 +549,6 @@
         gap: 20px;
         bottom: 28px;
       }
-      .signal-dots { top: 28px; left: 20px; gap: 5px; }
-      .signal-dot { width: 6px; height: 6px; }
     }
 
     /* Very small screens */
@@ -658,12 +600,6 @@
         <a href="https://bertrandbrands.com">Bertrand Brands</a>
       </nav>
     </div>
-  </div>
-
-  <div class="signal-dots" aria-hidden="true">
-    <div class="signal-dot signal-dot--orange"></div>
-    <div class="signal-dot signal-dot--purple"></div>
-    <div class="signal-dot signal-dot--blue"></div>
   </div>
 
   <div class="footer-links">
