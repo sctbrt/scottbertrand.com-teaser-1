@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     let location = '';
     if (ip && ip !== 'unknown' && ip !== '::1' && ip !== '127.0.0.1') {
       try {
-        const geoRes = await fetch(`http://ip-api.com/json/${ip}?fields=city,regionCode,country`);
+        const geoRes = await fetch(`https://ip-api.com/json/${ip}?fields=city,regionCode,country`);
         if (geoRes.ok) {
           const geo = await geoRes.json();
           if (geo.city) {

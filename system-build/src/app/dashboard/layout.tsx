@@ -16,8 +16,12 @@ export default async function DashboardLayout({
     redirect('/login')
   }
 
-  // Require INTERNAL_ADMIN role
+  // Require INTERNAL_ADMIN role — redirect wrong-role users to correct subdomain
   if (session.user.role !== 'INTERNAL_ADMIN') {
+    const isProduction = process.env.NODE_ENV === 'production' || !!process.env.VERCEL
+    if (isProduction && session.user.role === 'CLIENT') {
+      redirect('https://clients.bertrandgroup.ca')
+    }
     redirect('/unauthorized')
   }
 

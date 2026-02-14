@@ -16,8 +16,12 @@ export default async function PortalLayout({
     redirect('/login')
   }
 
-  // Require CLIENT role
+  // Require CLIENT role — redirect wrong-role users to correct subdomain
   if (session.user.role !== 'CLIENT') {
+    const isProduction = process.env.NODE_ENV === 'production' || !!process.env.VERCEL
+    if (isProduction && session.user.role === 'INTERNAL_ADMIN') {
+      redirect('https://dash.bertrandgroup.ca')
+    }
     redirect('/unauthorized')
   }
 

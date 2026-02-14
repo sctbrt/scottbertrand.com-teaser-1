@@ -1,8 +1,15 @@
 // Login Page - Magic Link Authentication
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
+import { headers } from 'next/headers'
 import Image from 'next/image'
 import { LoginForm } from './login-form'
+
+// Subdomain mapping by role (production only)
+const ROLE_SUBDOMAINS: Record<string, string> = {
+  INTERNAL_ADMIN: 'https://dash.bertrandgroup.ca',
+  CLIENT: 'https://clients.bertrandgroup.ca',
+}
 
 export default async function LoginPage({
   searchParams,
@@ -14,12 +21,29 @@ export default async function LoginPage({
   const params = await searchParams
 
   if (session?.user) {
-    // Redirect based on role
-    if (session.user.role === 'INTERNAL_ADMIN') {
-      redirect(params.callbackUrl || '/')
-    } else {
-      redirect(params.callbackUrl || '/')
+    const isProduction = process.env.NODE_ENV === 'production' || !!process.env.VERCEL
+    const headersList = await headers()
+    const host = headersList.get('host')?.split(':')[0] || ''
+
+    // In production, redirect to the correct subdomain for the user's role
+    if (isProduction) {
+      const correctBase = ROLE_SUBDOMAINS[session.user.role]
+      if (correctBase) {
+        const correctHost = new URL(correctBase).hostname
+        const isOnCorrectDomain = host === correctHost
+
+        if (!isOnCorrectDomain) {
+          // User landed on wrong subdomain — redirect to correct one with callbackUrl
+          const target = params.callbackUrl && params.callbackUrl !== '/'
+            ? `${correctBase}${params.callbackUrl}`
+            : correctBase
+          redirect(target)
+        }
+      }
     }
+
+    // On correct domain (or development), redirect normally
+    redirect(params.callbackUrl || '/')
   }
 
   return (

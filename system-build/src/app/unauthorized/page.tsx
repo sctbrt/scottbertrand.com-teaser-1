@@ -1,7 +1,34 @@
 // Unauthorized Page - Access Denied
+// Role-aware: redirects authenticated users to their correct subdomain
+import { auth } from '@/lib/auth'
+import { redirect } from 'next/navigation'
+import { headers } from 'next/headers'
 import Link from 'next/link'
 
-export default function UnauthorizedPage() {
+// Subdomain mapping by role (production only)
+const ROLE_SUBDOMAINS: Record<string, string> = {
+  INTERNAL_ADMIN: 'https://dash.bertrandgroup.ca',
+  CLIENT: 'https://clients.bertrandgroup.ca',
+}
+
+export default async function UnauthorizedPage() {
+  const session = await auth()
+  const headersList = await headers()
+  const host = headersList.get('host')?.split(':')[0] || ''
+
+  // If authenticated, redirect to the correct subdomain for their role
+  if (session?.user?.role) {
+    const isProduction = process.env.NODE_ENV === 'production' || !!process.env.VERCEL
+    const correctBase = ROLE_SUBDOMAINS[session.user.role]
+
+    if (isProduction && correctBase) {
+      const isOnCorrectDomain = host === new URL(correctBase).hostname
+      if (!isOnCorrectDomain) {
+        redirect(correctBase)
+      }
+    }
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f7f6f3] dark:bg-[#1c1c1e] px-4">
       <div className="w-full max-w-md">
@@ -39,7 +66,7 @@ export default function UnauthorizedPage() {
         </div>
 
         <p className="text-center text-xs text-gray-400 dark:text-gray-500 mt-6">
-          Bertrand Brands — Brand & Web Systems
+          Bertrand Group — Brands &amp; Web Systems
         </p>
       </div>
     </div>
