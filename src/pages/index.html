@@ -151,10 +151,13 @@
       100% { opacity: 1; }
     }
 
-    [data-theme="dark"] .stage,
-    [data-theme="dark"] .footer-links {
+    [data-theme="dark"] .stage {
       position: relative;
       z-index: 1;
+    }
+
+    [data-theme="dark"] .footer-links {
+      z-index: 10;
     }
 
     /* Dark theme: stage-line visibility */
